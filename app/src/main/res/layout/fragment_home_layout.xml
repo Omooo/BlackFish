@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/home_header_red"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ImageView
+                android:src="@drawable/icon_newyear_left"
+                android:scaleType="fitXY"
+                android:layout_gravity="left"
+                android:paddingTop="10dp"
+                android:layout_width="55dp"
+                android:layout_height="50dp" />
+            <LinearLayout
+                android:background="@color/home_header_red"
+                android:layout_weight="1"
+                android:layout_width="200dp"
+                android:layout_height="100dp">
+
+            </LinearLayout>
+            <ImageView
+                android:src="@drawable/icon_newyear_right"
+                android:layout_gravity="right"
+                android:scaleType="fitXY"
+                android:paddingTop="30dp"
+                android:layout_width="70dp"
+                android:layout_height="55dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
