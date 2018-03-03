@@ -1,17 +1,21 @@
 package top.omooo.blackfish;
 
-import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-
+import android.view.Window;
 
 import top.omooo.blackfish.adapter.NavigationViewPagerAdapter;
-import top.omooo.blackfish.fragment.BaseFragment;
+import top.omooo.blackfish.fragment.FinancialFragment;
 import top.omooo.blackfish.fragment.HomeFragment;
+import top.omooo.blackfish.fragment.HouseKeeperFragment;
+import top.omooo.blackfish.fragment.MallFragment;
+import top.omooo.blackfish.fragment.MineFragment;
 import top.omooo.blackfish.utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,12 +23,21 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private BottomNavigationView mNavigationView;
     private MenuItem mMenuItem;
+
+    private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        //初始化底部导航栏和
         initView();
+
+        //初始化VLayout
+        initVLayout();
     }
 
     private void initView() {
@@ -85,11 +98,22 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         NavigationViewPagerAdapter adapter = new NavigationViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(HomeFragment.newInstance());
-        adapter.addFragment(BaseFragment.newInstance());
-        adapter.addFragment(BaseFragment.newInstance());
-        adapter.addFragment(BaseFragment.newInstance());
-        adapter.addFragment(BaseFragment.newInstance());
+        adapter.addFragment(MallFragment.newInstance());
+        adapter.addFragment(FinancialFragment.newInstance());
+        adapter.addFragment(HouseKeeperFragment.newInstance());
+        adapter.addFragment(MineFragment.newInstance());
         viewPager.setAdapter(adapter);
     }
+
+    private void initVLayout() {
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+
+    }
+
+    private void loadHomePage() {
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+//        mRefreshLayout=manager
+    }
+
 
 }

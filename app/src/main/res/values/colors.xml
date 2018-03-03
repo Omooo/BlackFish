@@ -10,7 +10,9 @@
     <color name="splash_welcome_layout">#ffffff</color>
     <color name="bottom_navigation_above_divider_color">#cccccc</color>
     <color name="bottom_navigation_selected_view_color">#1296db</color>
-    <color name="home_header_yellow">#feebbb</color>
+    <color name="home_header_yellow">#FFFF00</color>
     <color name="home_header_red">#F83334</color>
+    <color name="colorDivider">#666666</color>
     <color name="test">#feebbb</color>
+    <color name="item_border_color">#F3F3F3</color>
 </resources>
