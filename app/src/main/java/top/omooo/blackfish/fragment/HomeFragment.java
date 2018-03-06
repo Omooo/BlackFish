@@ -1,5 +1,6 @@
 package top.omooo.blackfish.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -46,7 +48,13 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     final List<DelegateAdapter.Adapter> adapters = new LinkedList<>();
     private static final String TAG = "HomeFragment";
-    private UrlInfoBean mUrlInfoBean = new UrlInfoBean();
+    private UrlInfoBean mUrlInfoBean = new UrlInfoBean();   //API
+    private List<HomeSortInfo> mHomeSortInfoList;   //商品数据信息
+
+    private VirtualLayoutManager layoutManager;
+    private RecyclerView.RecycledViewPool viewPool;
+    private DelegateAdapter delegateAdapter;
+
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -60,29 +68,69 @@ public class HomeFragment extends Fragment {
         mRefreshLayout = view.findViewById(R.id.swipe_container);
         mRecyclerView = view.findViewById(R.id.rv_fragment_home_container);
 
+        initView();
+        initData();
         loadPager();
         return view;
+    }
+
+    private void initView() {
+        layoutManager = new VirtualLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        viewPool = new RecyclerView.RecycledViewPool();
+        mRecyclerView.setRecycledViewPool(viewPool);
+        viewPool.setMaxRecycledViews(0, 20);
+
+        delegateAdapter = new DelegateAdapter(layoutManager, false);
+        mRecyclerView.setAdapter(delegateAdapter);
+    }
+
+    private void initData() {
+        mHomeSortInfoList = new ArrayList<>();
+        OkHttpUtil.getInstance().startGet(mUrlInfoBean.homeGoodsUrl, new OnNetResultListener() {
+            @Override
+            public void onSuccessListener(String result) {
+                AnalysisJsonUtil jsonUtil = new AnalysisJsonUtil();
+                mHomeSortInfoList = jsonUtil.getDataFromJson(result, 0);
+                Log.i(TAG, "onSuccessListener: " + mHomeSortInfoList.size());
+//                loadGoodsInfo(mHomeSortInfoList);
+            }
+
+            @Override
+            public void onFailureListener(String result) {
+                Log.i(TAG, "onFailureListener: " + result);
+            }
+        });
     }
 
     //加载布局
     private void loadPager() {
 
-        final VirtualLayoutManager layoutManager = new VirtualLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-        mRecyclerView.setRecycledViewPool(viewPool);
-        viewPool.setMaxRecycledViews(0, 20);
-
-        final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, false);
-        mRecyclerView.setAdapter(delegateAdapter);
+//        final VirtualLayoutManager layoutManager = new VirtualLayoutManager(getActivity());
+//        mRecyclerView.setLayoutManager(layoutManager);
+//
+//        final RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+//        mRecyclerView.setRecycledViewPool(viewPool);
+//        viewPool.setMaxRecycledViews(0, 20);
+//
+//        final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, false);
+//        mRecyclerView.setAdapter(delegateAdapter);
 
         //吸边布局，用于加载标题
         final StickyLayoutHelper layoutHelper = new StickyLayoutHelper();
-        GeneralVLayoutAdapter adapter = new GeneralVLayoutAdapter(getActivity(), layoutHelper, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(50)), 1){
+        GeneralVLayoutAdapter adapter = new GeneralVLayoutAdapter(getActivity(), layoutHelper, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(65)), 1){
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false));
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false);
+                //消息中心 icon 点击事件
+                view.findViewById(R.id.iv_home_pager_message).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(TAG, "onClick: 消息中心 icon 点击事件");
+                    }
+                });
+                return new MainViewHolder(view);
             }
         };
         adapters.add(adapter);
@@ -181,7 +229,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onScrolled(final RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-                        Log.i(TAG, "onScrolled:");
+//                        Log.i(TAG, "onScrolled:");
                         if (dx > 0) {
                             recyclerView.scrollToPosition(1);
                         } else {
@@ -204,37 +252,7 @@ public class HomeFragment extends Fragment {
         };
         adapters.add(singleAdapter1);
 
-        //通栏布局，用于加载商品的主题
-        SingleLayoutHelper singleTitleHelper1 = new SingleLayoutHelper();
-        GeneralVLayoutAdapter singleTitleAdapter1 = new GeneralVLayoutAdapter(getActivity(), singleTitleHelper1, 1){
-            @Override
-            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_title_layout, parent, false);
-                final TextView textTitle = view.findViewById(R.id.tv_home_goods_title_text);
-                textTitle.setText("23333");
-                OkHttpUtil.getInstance().startGet(mUrlInfoBean.homeGoodsUrl, new OnNetResultListener() {
-                    @Override
-                    public void onSuccessListener(String result) {
-                        AnalysisJsonUtil jsonUtil = new AnalysisJsonUtil();
-                        List<HomeSortInfo> infoList = jsonUtil.getDataFromJson(result, 0);
-                        final String title = infoList.get(0).getTitle();
-                        textTitle.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                textTitle.setText(title);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailureListener(String result) {
-                        Log.i(TAG, "onFailureListener: " + result);
-                    }
-                });
-                return new MainViewHolder(view);
-            }
-        };
-        adapters.add(singleTitleAdapter1);
+        loadGoodsInfo(mHomeSortInfoList);
 
         delegateAdapter.setAdapters(adapters);
     }
@@ -249,5 +267,60 @@ public class HomeFragment extends Fragment {
         RelativeSizeSpan sizeSpan = new RelativeSizeSpan(0.5f);
         spannableString.setSpan(sizeSpan, 7, 9, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         return spannableString;
+    }
+
+    private void loadGoodsInfo(final List<HomeSortInfo> infoList) {
+        Log.i(TAG, "loadGoodsInfo: " + infoList.size());
+        //通栏布局，用于加载商品的信息
+        SingleLayoutHelper singleTitleHelper1 = new SingleLayoutHelper();
+        GeneralVLayoutAdapter singleTitleAdapter1 = new GeneralVLayoutAdapter(getActivity(), singleTitleHelper1, 1) {
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_layout, parent, false);
+                //标题
+                TextView textTitle = view.findViewById(R.id.tv_home_goods_title_text);
+                if (infoList.size() != 0) {
+                    textTitle.setText(infoList.get(1).getTitle());
+                }
+                //标题下的大图片
+                ImageView imageView = view.findViewById(R.id.iv_home_goods_big_image);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.i(TAG, "onClick: 标题下的大图片");
+                    }
+                });
+                return new MainViewHolder(view);
+            }
+        };
+        adapters.add(singleTitleAdapter1);
+
+        //网格布局，加载Grid商品信息
+        GridLayoutHelper goodsGridHelper = new GridLayoutHelper(2);
+        goodsGridHelper.setVGap(1);
+        goodsGridHelper.setHGap(1);
+        GeneralVLayoutAdapter goodsGridAdapter = new GeneralVLayoutAdapter(getActivity(), goodsGridHelper, 4){
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_grid_item, parent, false));
+            }
+
+            @Override
+            public void onBindViewHolder(MainViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                SimpleDraweeView imageview = holder.itemView.findViewById(R.id.iv_home_goods_grid_item);
+                Uri uri = Uri.parse("https://i.loli.net/2018/03/03/5a9a73b8235a6.jpg");
+                if (position == 0) {
+                    imageview.setImageURI(uri);
+                } else if (position == 1) {
+                    imageview.setImageURI(uri);
+                } else if (position == 2) {
+                    imageview.setImageURI(uri);
+                } else if (position == 3) {
+                    imageview.setImageURI(uri);
+                }
+            }
+        };
+        adapters.add(goodsGridAdapter);
     }
 }

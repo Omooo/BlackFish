@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!--透明状态栏-->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
-        <item name="android:statusBarColor">@color/splash_welcome_layout</item>
+        <item name="android:statusBarColor">@color/colorStatue</item>
     </style>
 
     //解决冷启动方案

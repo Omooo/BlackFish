@@ -15,4 +15,5 @@
     <color name="colorDivider">#666666</color>
     <color name="test">#feebbb</color>
     <color name="item_border_color">#F3F3F3</color>
+    <color name="colorStatue">#fff</color>
 </resources>
