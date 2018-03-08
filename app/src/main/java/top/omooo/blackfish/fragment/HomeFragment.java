@@ -254,6 +254,16 @@ public class HomeFragment extends Fragment {
 
         loadGoodsInfo(mHomeSortInfoList);
 
+        SingleLayoutHelper homeBottomHelper=new SingleLayoutHelper();
+        GeneralVLayoutAdapter bottomAdapter = new GeneralVLayoutAdapter(getActivity(), homeBottomHelper, 1){
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_bottom_layout,parent,false));
+
+            }
+        };
+        adapters.add(bottomAdapter);
+
         delegateAdapter.setAdapters(adapters);
     }
 

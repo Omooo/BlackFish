@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mViewPager = findViewById(R.id.vp_main_content);
+        mViewPager.setOffscreenPageLimit(4);
         mNavigationView = findViewById(R.id.bottom_navigation_view);
         //默认Item大于3的选中效果会影响ViewPager的滑动切换时的效果，故用反射去掉.
         BottomNavigationViewHelper.disableShiftMode(mNavigationView);

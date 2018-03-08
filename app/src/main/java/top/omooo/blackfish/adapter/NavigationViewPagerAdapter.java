@@ -3,6 +3,8 @@ package top.omooo.blackfish.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,11 @@ public class NavigationViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragmentList.size();
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        //去掉回传函数解决滑动ViewPager重复加载布局
     }
 
     public void addFragment(Fragment fragment) {

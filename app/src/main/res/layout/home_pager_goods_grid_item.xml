@@ -8,5 +8,5 @@
     android:id="@+id/iv_home_goods_grid_item"
     android:scaleType="fitXY"
     android:layout_width="match_parent"
-    android:layout_height="180dp"/>
+    android:layout_height="100dp"/>
 </FrameLayout>
