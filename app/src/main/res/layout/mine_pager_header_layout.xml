@@ -13,7 +13,7 @@
         android:layout_width="18dp"
         android:layout_height="18dp" />
     <com.facebook.drawee.view.SimpleDraweeView
-        android:src="@drawable/image_mine_pager_user1"
+        android:id="@+id/iv_mine_header_portrait"
         android:scaleType="fitXY"
         app:roundAsCircle="true"
         android:layout_marginLeft="15dp"
@@ -22,6 +22,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
     <TextView
+        android:id="@+id/tv_user_tel_number"
         android:text="18800209572"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="80dp"
@@ -33,9 +34,8 @@
         android:text="个人中心   "
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="80dp"
-        android:drawableRight="@drawable/icon_mine_pager_header_toright1"
+        android:drawableRight="@drawable/icon_mine_pager_header_toright"
         android:layout_marginTop="10dp"
-
         android:textColor="@color/splash_main_title_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

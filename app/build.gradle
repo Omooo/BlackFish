@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+apply plugin: "com.mob.sdk"
+
+MobSDK {
+    appKey "2490d3ee2598b"
+    appSecret "2cb4016c7b3d30c0ae29536a11741b1e"
+
+    SMSSDK {}
+}
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -9,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
