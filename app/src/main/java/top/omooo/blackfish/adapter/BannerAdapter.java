@@ -55,7 +55,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
         public BannerViewHolder(View itemView) {
             super(itemView);
             mImageBanner = itemView.findViewById(R.id.iv_home_banner);
-            mImagePoint = itemView.findViewById(R.id.iv_home_banner_point);
+            mImagePoint = itemView.findViewById(R.id.iv_home_banner_point1);
             mImageUnPoint = itemView.findViewById(R.id.iv_home_banner_point2);
         }
     }

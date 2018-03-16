@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="100dp">
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_home_banner"
         android:src="@drawable/home_banner_1"
         android:scaleType="fitXY"
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/iv_home_banner_point"
+            android:id="@+id/iv_home_banner_point1"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
             android:layout_gravity="bottom|center_horizontal"
@@ -26,6 +26,24 @@
         <ImageView
             android:layout_marginLeft="10dp"
             android:id="@+id/iv_home_banner_point2"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/icon_home_banner_selected"
+            android:layout_width="10dp"
+            android:layout_height="10dp"/>
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_home_banner_point3"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom|center_horizontal"
+            android:src="@drawable/icon_home_banner_selected"
+            android:layout_width="10dp"
+            android:layout_height="10dp"/>
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/iv_home_banner_point4"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:layout_gravity="bottom|center_horizontal"

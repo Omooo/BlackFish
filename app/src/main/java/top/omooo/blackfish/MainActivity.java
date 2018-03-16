@@ -13,10 +13,10 @@ import android.view.Window;
 
 import top.omooo.blackfish.adapter.NavigationViewPagerAdapter;
 import top.omooo.blackfish.fragment.FinancialFragment;
-import top.omooo.blackfish.fragment.HomeFragment;
 import top.omooo.blackfish.fragment.HouseKeeperFragment;
 import top.omooo.blackfish.fragment.MallFragment;
 import top.omooo.blackfish.fragment.MineFragment;
+import top.omooo.blackfish.fragment.NewHomeFragment;
 import top.omooo.blackfish.utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mViewPager = findViewById(R.id.vp_main_content);
+        //设置缓存页面
         mViewPager.setOffscreenPageLimit(4);
         mNavigationView = findViewById(R.id.bottom_navigation_view);
         //默认Item大于3的选中效果会影响ViewPager的滑动切换时的效果，故用反射去掉.
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         NavigationViewPagerAdapter adapter = new NavigationViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(HomeFragment.newInstance());
+        adapter.addFragment(NewHomeFragment.newInstance());
         adapter.addFragment(MallFragment.newInstance());
         adapter.addFragment(FinancialFragment.newInstance());
         adapter.addFragment(HouseKeeperFragment.newInstance());
