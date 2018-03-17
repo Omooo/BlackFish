@@ -1,12 +1,10 @@
 package top.omooo.blackfish.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -35,29 +33,6 @@ public class HomeBannerAdapter extends RecyclerView.Adapter<HomeBannerAdapter.Ba
     @Override
     public void onBindViewHolder(BannerViewHolder holder, int position) {
         holder.mBannerView.setImageURI(imageUrl[position]);
-        for (int i = 0; i < 4; i++) {
-            if (position == 0) {
-                holder.mPointView1.setBackgroundColor(Color.YELLOW);
-                holder.mPointView2.setBackgroundColor(Color.GRAY);
-                holder.mPointView3.setBackgroundColor(Color.GRAY);
-                holder.mPointView4.setBackgroundColor(Color.GRAY);
-            } else if (position == 1) {
-                holder.mPointView1.setBackgroundColor(Color.GRAY);
-                holder.mPointView2.setBackgroundColor(Color.YELLOW);
-                holder.mPointView3.setBackgroundColor(Color.GRAY);
-                holder.mPointView4.setBackgroundColor(Color.GRAY);
-            } else if (position == 2) {
-                holder.mPointView1.setBackgroundColor(Color.GRAY);
-                holder.mPointView2.setBackgroundColor(Color.GRAY);
-                holder.mPointView3.setBackgroundColor(Color.YELLOW);
-                holder.mPointView4.setBackgroundColor(Color.GRAY);
-            } else if (position == 3) {
-                holder.mPointView1.setBackgroundColor(Color.GRAY);
-                holder.mPointView2.setBackgroundColor(Color.GRAY);
-                holder.mPointView3.setBackgroundColor(Color.GRAY);
-                holder.mPointView4.setBackgroundColor(Color.YELLOW);
-            }
-        }
     }
 
     @Override
@@ -67,18 +42,9 @@ public class HomeBannerAdapter extends RecyclerView.Adapter<HomeBannerAdapter.Ba
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView mBannerView;
-        public ImageView mPointView1;
-        public ImageView mPointView2;
-        public ImageView mPointView3;
-        public ImageView mPointView4;
         public BannerViewHolder(View itemView) {
             super(itemView);
             mBannerView = itemView.findViewById(R.id.iv_home_banner);
-            mPointView1 = itemView.findViewById(R.id.iv_home_banner_point1);
-            mPointView2 = itemView.findViewById(R.id.iv_home_banner_point2);
-            mPointView3 = itemView.findViewById(R.id.iv_home_banner_point3);
-            mPointView4 = itemView.findViewById(R.id.iv_home_banner_point4);
-
         }
     }
 }

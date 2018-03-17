@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:layout_marginTop="10dp"
     android:orientation="vertical"
     android:gravity="center"
     android:paddingBottom="10dp">
     <ImageView
+        android:layout_marginTop="5dp"
         android:id="@+id/iv_home_one_grid_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"

@@ -69,7 +69,7 @@ public class MineFragment extends android.support.v4.app.Fragment {
         delegateAdapter = new DelegateAdapter(layoutManager, false);
         mRecyclerView.setAdapter(delegateAdapter);
 
-        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.home_header_yellow));
+//        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.home_header_yellow));
     }
 
     private void loadPager() {

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * Created by Omooo on 2018/2/25.
  */
 
-public abstract class BaseFragment extends android.support.v4.app.Fragment implements View.OnClickListener {
+public abstract class BaseFragment extends android.support.v4.app.Fragment implements View.OnClickListener{
     private boolean isVisible = false;
     private boolean isInitView = false;
     private boolean isFirstLoad = true;
@@ -87,4 +87,5 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
     public <E extends View> void setOnClick(E convertView) {
         convertView.setOnClickListener(this);
     }
+
 }
