@@ -9,6 +9,6 @@ package top.omooo.blackfish.bean;
  */
 public class UrlInfoBean {
     //首页商品信息
-    public String homeGoodsUrl = "http://wooyun.site/blackfish/home_sort.json";
+    public static final String homeGoodsUrl = "http://wooyun.site/blackfish/home_sort.json";
 
 }

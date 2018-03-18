@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FECD15</color>
 
     <color name="splash_layout">#00000000</color>
     <color name="splash_main_title_color">#222222</color>
@@ -16,4 +16,7 @@
     <color name="test">#feebbb</color>
     <color name="item_border_color">#F3F3F3</color>
     <color name="colorStatue">#fff</color>
+    <color name="colorLoginMessage">#EFAF09</color>
+    <color name="colorLoginBtnPressed">#FDF2A1</color>
+    <color name="colorLoginBtnNoPressed">#FDDD08</color>
 </resources>

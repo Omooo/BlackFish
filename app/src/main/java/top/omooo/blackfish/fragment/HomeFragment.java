@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment {
         GeneralVLayoutAdapter gridAdapter = new GeneralVLayoutAdapter(getActivity(), gridLayoutHelper, 4) {
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_one_line_grid, parent, false));
+                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_two_line_grid, parent, false));
             }
 
             @Override

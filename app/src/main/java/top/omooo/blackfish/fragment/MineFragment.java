@@ -2,6 +2,7 @@ package top.omooo.blackfish.fragment;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,13 +20,12 @@ import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
+import top.omooo.blackfish.LoginActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
 
@@ -34,6 +34,8 @@ import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
  */
 
 public class MineFragment extends android.support.v4.app.Fragment {
+
+    private Context mContext;
 
     private VirtualLayoutManager layoutManager;
     private RecyclerView.RecycledViewPool viewPool;
@@ -59,6 +61,8 @@ public class MineFragment extends android.support.v4.app.Fragment {
     }
 
     private void initView() {
+        mContext = getActivity();
+
         layoutManager = new VirtualLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -85,7 +89,8 @@ public class MineFragment extends android.support.v4.app.Fragment {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        sendCode(getActivity());
+//                        sendCode();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 });
                 return new MainViewHolder(view);
@@ -103,22 +108,19 @@ public class MineFragment extends android.support.v4.app.Fragment {
         return Uri.parse(path);
     }
 
-    public void sendCode(final Context context) {
-        RegisterPage page = new RegisterPage();
-        page.setRegisterCallback(new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    // 处理成功的结果
-                    HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
-                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
-                    String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
-                    // TODO 利用国家代码和手机号码进行后续的操作
-                    Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
-                } else{
-                    // TODO 处理错误的结果
-                }
+    public void sendCode(String country, String phone) {
+        SMSSDK.registerEventHandler(new EventHandler(){
+            @Override
+            public void afterEvent(int i, int i1, Object o) {
+                if (i == SMSSDK.RESULT_COMPLETE) {
+                    Toast.makeText(getActivity(), "短信发送成功", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(mContext, "短信发送失败", Toast.LENGTH_SHORT).show();
+                } 
+
             }
         });
-        page.show(context);
+        SMSSDK.getVerificationCode(country,phone);
     }
 }

@@ -30,6 +30,9 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
         </activity>
+        <activity android:name=".LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>
