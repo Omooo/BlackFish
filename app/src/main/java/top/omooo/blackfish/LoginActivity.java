@@ -1,8 +1,12 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +29,9 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
 
     private RelativeLayout mPwdLayout;
 
-    private static final int maxLength = 11;
+    private static final String TAG = "LoginActivity";
+    private boolean isPwdVisible = false;
+
 
     @Override
     public int getLayoutId() {
@@ -57,8 +63,9 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         mTextToSmsLogin.setOnClickListener(this);
         mTextForgetPwd.setOnClickListener(this);
 
-        mEditPhone.setOnTouchListener(this);
         mEditPhone.addTextChangedListener(this);
+        mEditPhone.setOnTouchListener(this);
+        mEditPwd.setOnTouchListener(this);
     }
 
     @Override
@@ -74,6 +81,11 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
                 break;
             case R.id.btn_login:
                 Toast.makeText(this, "登录", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("phone_number", mEditPhone.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             case R.id.tv_to_sms_login:
                 mTextMessage.setVisibility(View.VISIBLE);
@@ -91,20 +103,44 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
 
     }
 
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Drawable drawable = mEditPhone.getCompoundDrawables()[2];
-        if (drawable == null) {
-            return false;
-        }
-        if (event.getAction() != MotionEvent.ACTION_UP) {
-            return false;
-        } else {
-            if (event.getX() > mEditPhone.getWidth() - mEditPhone.getPaddingRight() - drawable.getIntrinsicWidth()) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            Drawable drawable = mEditPhone.getCompoundDrawables()[2];
+            Drawable drawable1 = mEditPwd.getCompoundDrawables()[2];
+            Drawable[] drawables = mEditPwd.getCompoundDrawables();
+            // TODO: 2018/3/19 按下垂直距离的处理
+            if (drawable != null && event.getX() > mEditPhone.getWidth() - mEditPhone.getPaddingRight() - drawable.getIntrinsicWidth()) {
+                Log.i(TAG, "onTouch: 0");
                 mEditPhone.setText("");
+            }
+            if (drawable1 != null && event.getX() > mEditPwd.getWidth() - mEditPwd.getPaddingRight() - drawable1.getIntrinsicWidth()) {
+                Log.i(TAG, "onTouch: 1");
+                if (!isPwdVisible) {
+                    Log.i(TAG, "onTouch: " + "密码可见");
+                    mEditPwd.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    Drawable pwdDrawableRight = getDrawable(R.drawable.icon_login_pwd_visiable);
+                    pwdDrawableRight.setBounds(drawable1.getBounds());
+                    mEditPwd.setCompoundDrawables(drawables[0], drawables[1], pwdDrawableRight, drawables[3]);
+                    isPwdVisible = true;
+                } else {
+                    Log.i(TAG, "onTouch: " + "密码不可见");
+                    mEditPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    Drawable pwdDrawableRight = getDrawable(R.drawable.icon_login_pwd_right);
+                    pwdDrawableRight.setBounds(drawable1.getBounds());
+                    mEditPwd.setCompoundDrawables(drawables[0], drawables[1], pwdDrawableRight, drawables[3]);
+                    isPwdVisible = false;
+                }
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        return super.equals(obj);
     }
 
     @Override

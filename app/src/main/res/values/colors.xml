@@ -19,4 +19,5 @@
     <color name="colorLoginMessage">#EFAF09</color>
     <color name="colorLoginBtnPressed">#FDF2A1</color>
     <color name="colorLoginBtnNoPressed">#FDDD08</color>
+    <color name="colorVerifyResultText">#66CCFF</color>
 </resources>

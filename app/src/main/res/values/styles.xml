@@ -19,4 +19,14 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <!--验证码TextView样式-->
+    <style name="VerifyCodeTextView">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">41dp</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#222222</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

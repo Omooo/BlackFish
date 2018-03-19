@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:src="@drawable/icon_back"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:text="输入验证码"
+        android:textSize="25sp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/splash_main_title_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_verify_phone_number"
+        android:text="短信已发送至 +86 18800209572"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/splash_main_title_color"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <top.omooo.blackfish.view.VerifyCodeView
+        android:id="@+id/verify_code_view"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_verify_timer"
+        android:text="60s 后可重新获取"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_verify_result"
+        android:text="验证成功"
+        android:textColor="@color/colorVerifyResultText"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
