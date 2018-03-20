@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
+        android:id="@+id/iv_verify_back"
         android:src="@drawable/icon_back"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"

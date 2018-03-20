@@ -2,7 +2,9 @@ package top.omooo.blackfish.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,6 +61,8 @@ public class NewHomeFragment extends BaseFragment{
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
 
+    private Drawable mHeaderDrawable;
+
 
     public static NewHomeFragment newInstance() {
         return new NewHomeFragment();
@@ -79,6 +83,9 @@ public class NewHomeFragment extends BaseFragment{
 
         //RecycleView的子View
         addItemViews();
+
+        //获取Header背景图
+        mHeaderDrawable = ContextCompat.getDrawable(mContext, R.drawable.image_home_header_bg);
     }
 
     private void addItemViews() {
@@ -99,23 +106,34 @@ public class NewHomeFragment extends BaseFragment{
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false);
+                //初始背景为完全透明
+                final RelativeLayout headerLayout = view.findViewById(R.id.rl_header_layout);
+//                mHeaderDrawable.setAlpha(0);
+//                headerLayout.setBackground(mHeaderDrawable);
                 final TextView title = view.findViewById(R.id.tv_home_title);
                 ImageView titleMessage = view.findViewById(R.id.iv_home_pager_message);
                 titleMessage.setOnClickListener(new MyOnClick("iv_home_pager_message"));
-                mRecyclerView.addOnScrollListener(new OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-
-                    @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-                        if (dy > 0) {
-                            title.setText("测试");
-                        }
-                    }
-                });
+                // TODO: 2018/3/20 处理HeaderLayout头布局颜色渐变，挖坑
+//                mRecyclerView.addOnScrollListener(new OnScrollListener() {
+//                    @Override
+//                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                        super.onScrollStateChanged(recyclerView, newState);
+//                    }
+//
+//                    @Override
+//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                        super.onScrolled(recyclerView, dx, dy);
+//
+//                        int headerHeight = headerLayout.getMeasuredHeight();
+//                        if (mRecyclerView.computeVerticalScrollOffset() < headerHeight && dy > 0) {
+//                            mHeaderDrawable.setAlpha(mRecyclerView.computeVerticalScrollOffset() / headerHeight);
+//                            headerLayout.setBackground(mHeaderDrawable);
+//                        } else {
+//                            mHeaderDrawable.setAlpha(255);
+//                            headerLayout.setBackground(mHeaderDrawable);
+//                        }
+//                    }
+//                });
                 return new MainViewHolder(view);
             }
         };

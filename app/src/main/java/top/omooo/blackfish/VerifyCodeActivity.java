@@ -3,14 +3,22 @@ package top.omooo.blackfish;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import top.omooo.blackfish.listener.InputCompleteListener;
 import top.omooo.blackfish.listener.OnVerifyCodeResultListener;
 import top.omooo.blackfish.utils.CountDownUtil;
+import top.omooo.blackfish.utils.SqlOpenHelperUtil;
 import top.omooo.blackfish.view.VerifyCodeView;
 
 /**
@@ -21,6 +29,7 @@ public class VerifyCodeActivity extends BaseActivity{
 
     private TextView mTextPhoneNumber,mTextVerifyTimer, mTextVerifyResult;
     private VerifyCodeView mVerifyCodeView;
+    private ImageView mImageBack;
 
     private OnVerifyCodeResultListener mCodeResultListener=new OnVerifyCodeResultListener() {
         @Override
@@ -41,8 +50,53 @@ public class VerifyCodeActivity extends BaseActivity{
         }
 
         @Override
-        public void submitCodeSuccess() {
+        public void submitCodeSuccess(String phoneNumber,String date) {
+            SqlOpenHelperUtil sqlOpenHelperUtil = new SqlOpenHelperUtil();
+            Connection connection = sqlOpenHelperUtil.connDB();
+            if (connection != null) {
+                Log.i(TAG, "submitCodeSuccess: 数据库连接成功");
+                // TODO: 2018/3/20 手机号重复添加
+                String insert = "insert into userinfo(phone,username,password,date) values('" + phoneNumber + "','','','" + date + "')";
+                sqlOpenHelperUtil.updateDB(connection, insert);
+//                String sql = "select id from userinfo where phone= '" + phoneNumber + "'";
+//
+//                ResultSet set = sqlOpenHelperUtil.executeSql(connection, sql);
+//                try {
+//                    String id = set.getString("id");
+//                    if (id == null || id.equals("")) {
+//                        String insert = "insert into userinfo(phone,username,password,date) values('" + phoneNumber + "','','','" + date + "')";
+//                        boolean result = sqlOpenHelperUtil.updateDB(connection, insert);
+//                        if (result) {
+//                            Log.i(TAG, "submitCodeSuccess: 新记录添加成功");
+//                        } else {
+//                            Log.i(TAG, "submitCodeSuccess: 新记录添加失败");
+//                        }
+//                    } else {
+//                        Log.i(TAG, "submitCodeSuccess: 已存在该手机号");
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
 
+                //打印表内容
+                Log.i(TAG, "/***********表内容************/");
+                String testSql = "select * from userinfo";
+                ResultSet resultSet = sqlOpenHelperUtil.executeSql(connection, testSql);
+                try {
+                    while (resultSet.next()) {
+                        String id = resultSet.getString("id");
+                        String phone = resultSet.getString("phone");
+                        String username = resultSet.getString("username");
+                        String password = resultSet.getString("password");
+                        String regDate = resultSet.getString("date");
+                        Log.i(TAG, "" + id + " " + phone + " " + username + " " + password + " " + regDate);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.i(TAG, "submitCodeSuccess: 数据库连接失败");
+            }
         }
 
         @Override
@@ -64,7 +118,6 @@ public class VerifyCodeActivity extends BaseActivity{
     };
 
     private String phoneNumber = "";
-    private int s = 60;
 
     private static final String TAG = "VerifyCodeActivity";
     @Override
@@ -78,6 +131,7 @@ public class VerifyCodeActivity extends BaseActivity{
         mTextVerifyTimer = findView(R.id.tv_verify_timer);
         mTextVerifyResult = findView(R.id.tv_verify_result);
         mVerifyCodeView = findView(R.id.verify_code_view);
+        mImageBack = findView(R.id.iv_verify_back);
 
         mTextVerifyTimer.setText("");
         mTextVerifyResult.setText("");
@@ -106,6 +160,7 @@ public class VerifyCodeActivity extends BaseActivity{
     @Override
     public void initListener() {
         mTextVerifyTimer.setOnClickListener(this);
+        mImageBack.setOnClickListener(this);
     }
 
     @Override
@@ -114,6 +169,9 @@ public class VerifyCodeActivity extends BaseActivity{
             case R.id.tv_verify_result:
                 Log.i(TAG, "processClick: 点击重新获取验证码");
                 sendCode("86", phoneNumber);
+                break;
+            case R.id.iv_verify_back:
+                finish();
                 break;
         }
     }
@@ -141,13 +199,14 @@ public class VerifyCodeActivity extends BaseActivity{
     }
 
     //提交验证码
-    private void submitCode(String country, String phoneNumber, String code) {
+    private void submitCode(String country, final String phoneNumber, String code) {
         SMSSDK.registerEventHandler(new EventHandler(){
             @Override
             public void afterEvent(int i, int i1, Object o) {
                 if (i1 == SMSSDK.RESULT_COMPLETE) {
                     Log.i(TAG, "submitCode: 验证成功");
-                    mCodeResultListener.submitCodeSuccess();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    mCodeResultListener.submitCodeSuccess(phoneNumber, df.format(new Date()));
                 } else {
                     Log.i(TAG, "submitCode: 验证失败");
                     mCodeResultListener.submitCodeFailure();

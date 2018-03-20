@@ -73,6 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         switch (view.getId()) {
             case R.id.iv_login_cancel:
                 finish();
+                this.overridePendingTransition(0, R.anim.activity_login_top_out);
                 break;
             case R.id.tv_hint_message:
                 mTextMessage.setVisibility(View.GONE);

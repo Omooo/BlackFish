@@ -12,7 +12,7 @@ public interface OnVerifyCodeResultListener {
 
     void sendCodeFailure(); //发送失败
 
-    void submitCodeSuccess(); //验证成功
+    void submitCodeSuccess(String phoneNumber, String date); //验证成功
 
     void submitCodeFailure(); //验证失败
 }

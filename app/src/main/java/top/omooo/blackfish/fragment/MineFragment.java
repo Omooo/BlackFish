@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -23,8 +22,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 import top.omooo.blackfish.LoginActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
@@ -106,21 +103,5 @@ public class MineFragment extends android.support.v4.app.Fragment {
                 + resources.getResourceTypeName(id) + "/"
                 + resources.getResourceEntryName(id);
         return Uri.parse(path);
-    }
-
-    public void sendCode(String country, String phone) {
-        SMSSDK.registerEventHandler(new EventHandler(){
-            @Override
-            public void afterEvent(int i, int i1, Object o) {
-                if (i == SMSSDK.RESULT_COMPLETE) {
-                    Toast.makeText(getActivity(), "短信发送成功", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(mContext, "短信发送失败", Toast.LENGTH_SHORT).show();
-                } 
-
-            }
-        });
-        SMSSDK.getVerificationCode(country,phone);
     }
 }

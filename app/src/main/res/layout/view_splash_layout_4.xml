@@ -9,7 +9,7 @@
         android:id="@+id/iv_splash_banner4"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/icon_splash_4" />
     <TextView
@@ -34,9 +34,14 @@
     <Button
         android:id="@+id/btn_splash_view_end"
         android:text="开启新体验"
+        android:background="@drawable/shape_btn_no_pressed"
         android:layout_below="@+id/tv_splash_subtitle4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:textColor="@color/splash_main_title_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
