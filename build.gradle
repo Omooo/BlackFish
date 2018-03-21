@@ -6,6 +6,8 @@ buildscript {
         google()
         jcenter()
 
+        mavenCentral()
+
         //短信验证依赖包
         maven {
             url "http://mvn.mob.com/android"

@@ -15,8 +15,8 @@ import top.omooo.blackfish.adapter.NavigationViewPagerAdapter;
 import top.omooo.blackfish.fragment.FinancialFragment;
 import top.omooo.blackfish.fragment.HouseKeeperFragment;
 import top.omooo.blackfish.fragment.MallFragment;
-import top.omooo.blackfish.fragment.MineFragment;
 import top.omooo.blackfish.fragment.NewHomeFragment;
+import top.omooo.blackfish.fragment.NewMineFragment;
 import top.omooo.blackfish.utils.BottomNavigationViewHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(MallFragment.newInstance());
         adapter.addFragment(FinancialFragment.newInstance());
         adapter.addFragment(HouseKeeperFragment.newInstance());
-        adapter.addFragment(MineFragment.newInstance());
+        adapter.addFragment(NewMineFragment.newInstance());
         viewPager.setAdapter(adapter);
     }
 

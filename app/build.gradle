@@ -44,4 +44,6 @@ dependencies {
     }
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation files('src/main/libs/mysql-connector-java-5.1.30-bin.jar')
+
+    compile 'com.zhihu.android:matisse:0.4.3'
 }

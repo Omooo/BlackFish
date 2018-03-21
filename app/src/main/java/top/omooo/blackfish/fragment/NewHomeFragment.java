@@ -56,7 +56,7 @@ public class NewHomeFragment extends BaseFragment{
     private RecyclerView.RecycledViewPool viewPool;
     private DelegateAdapter delegateAdapter;
 
-    private String[] bannerImageUri;
+    private String[] bannerImageUri={"https://i.loli.net/2018/03/20/5ab10bb02ca5e.jpg","https://i.loli.net/2018/03/20/5ab10bbf58326.jpg","https://i.loli.net/2018/03/20/5ab10bb02ca5e.jpg","https://i.loli.net/2018/03/20/5ab10bbf58326.jpg"};
 
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
