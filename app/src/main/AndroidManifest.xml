@@ -41,6 +41,8 @@
 
         <activity android:name=".MinePageActivity.SuggestionActivity"/>
 
+        <activity android:name=".MinePageActivity.ActivityMyBankCard"/>
+
     </application>
 
 </manifest>

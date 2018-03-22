@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="我的银行卡"
+        style="@style/TitleHeaderTextViewStyle"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_my_back_card"
+        android:background="@color/colorWhite"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabTextColor="@color/colorDivider"
+        app:tabSelectedTextColor="@color/splash_main_title_color"
+        app:tabMode="fixed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.design.widget.TabLayout>
+</LinearLayout>

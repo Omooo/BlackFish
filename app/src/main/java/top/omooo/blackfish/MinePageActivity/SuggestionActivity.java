@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +26,7 @@ import java.util.List;
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.FrescoEngine;
+import top.omooo.blackfish.utils.RequestPermissionUtil;
 import top.omooo.blackfish.view.CustomToast;
 
 /**
@@ -39,6 +41,7 @@ public class SuggestionActivity extends BaseActivity {
     private Button mButtonSubmit;
 
     private Context mContext;
+    private static final int REQUEST_CODE = 1;
 
     @Override
     public int getLayoutId() {
@@ -48,7 +51,10 @@ public class SuggestionActivity extends BaseActivity {
     @Override
     public void initViews() {
 
-        requestPermission();
+        if (Build.VERSION.SDK_INT >= 23) {
+//            requestPermission();
+            RequestPermissionUtil.reqPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE,"申请必要权限用于读取内存卡",REQUEST_CODE);
+        }
         mContext = SuggestionActivity.this;
         getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
@@ -150,15 +156,15 @@ public class SuggestionActivity extends BaseActivity {
     }
 
     private boolean requestPermission() {
-        //1. 检查是否已经有该权限
+        //检查是否已经有该权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            //2. 权限没有开启，请求权限
+            //权限没有开启，请求权限
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             return true;
         }else{
-            //权限已经开启，做相应事情
+            //权限已经开启
             return true;
         }
     }
@@ -166,11 +172,13 @@ public class SuggestionActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 0) {
+        if (requestCode == REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //同意
+                CustomToast.show(this,"权限申请成功");
             } else {
                 //权限被拒绝
+                CustomToast.show(this,"权限已被拒绝");
             }
         }
     }
