@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import top.omooo.blackfish.MinePageActivity.AboutActivity;
 import top.omooo.blackfish.MinePageActivity.ActivityMyBankCard;
+import top.omooo.blackfish.MinePageActivity.MineSettingActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.AdjustViewUtil;
 
@@ -114,6 +115,7 @@ public class NewMineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.iv_mine_header_setting:
                 //设置
+                startActivity(new Intent(getActivity(), MineSettingActivity.class));
                 break;
             case R.id.iv_mine_portrait:
                 //个人头像

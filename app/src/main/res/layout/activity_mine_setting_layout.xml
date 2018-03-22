@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="设置"
+        style="@style/TitleHeaderTextViewStyle" />
+
+    <TextView
+        android:id="@+id/tv_setting_login_pwd"
+        android:text="登陆密码"
+        android:layout_marginTop="1dp"
+        style="@style/MinePagerTextListStyle"/>
+    <TextView
+        style="@style/DividerTextView"/>
+    <TextView
+        android:id="@+id/tv_setting_pay_pwd"
+        android:text="支付密码"
+        style="@style/MinePagerTextListStyle"/>
+    <TextView
+        style="@style/DividerTextView"/>
+    <TextView
+        android:id="@+id/tv_setting_manger_address"
+        android:text="收货地址管理"
+        style="@style/MinePagerTextListStyle"/>
+    <TextView
+        android:layout_marginTop="100dp"
+        android:id="@+id/btn_setting_exit_login"
+        android:text="退出登录"
+        android:textSize="17sp"
+        android:background="@color/colorWhite"
+        android:textColor="@color/colorExitLogin"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</LinearLayout>

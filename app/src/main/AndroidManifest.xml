@@ -43,6 +43,8 @@
 
         <activity android:name=".MinePageActivity.ActivityMyBankCard"/>
 
+        <activity android:name=".MinePageActivity.MineSettingActivity"/>
+
     </application>
 
 </manifest>
