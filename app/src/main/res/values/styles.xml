@@ -103,4 +103,11 @@
         <item name="android:windowEnterAnimation">@anim/view_bottom_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/view_bottom_dialog_out</item>
     </style>
+
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/shape_dialog</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>

@@ -47,6 +47,8 @@
 
         <activity android:name=".MinePageActivity.CertifyCardActivity"/>
 
+        <activity android:name=".KeeperPageActivity.AddBillActivity"/>
+
     </application>
 
 </manifest>

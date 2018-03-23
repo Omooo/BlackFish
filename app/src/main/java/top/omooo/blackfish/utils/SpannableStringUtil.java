@@ -2,6 +2,7 @@ package top.omooo.blackfish.utils;
 
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.widget.TextView;
 
 /**
@@ -13,6 +14,7 @@ import android.widget.TextView;
  */
 public class SpannableStringUtil {
 
+    private static SpannableString mSpannableString;
     /**
      * 设置前景色
      * @param textView
@@ -22,9 +24,16 @@ public class SpannableStringUtil {
      * @param text
      */
     public static void setForegroundText(TextView textView, int start, int end, int color, String text) {
-        SpannableString spannableString = new SpannableString(text);
+        mSpannableString = new SpannableString(text);
         ForegroundColorSpan span = new ForegroundColorSpan(color);
-        spannableString.setSpan(span, start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
-        textView.setText(spannableString);
+        mSpannableString.setSpan(span, start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+        textView.setText(mSpannableString);
+    }
+
+    public static void setRelativeSizeText(TextView textView, int start, int end,float relativeSize, String text) {
+        mSpannableString = new SpannableString(text);
+        RelativeSizeSpan sizeSpan = new RelativeSizeSpan(relativeSize);
+        mSpannableString.setSpan(sizeSpan, start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+        textView.setText(mSpannableString);
     }
 }

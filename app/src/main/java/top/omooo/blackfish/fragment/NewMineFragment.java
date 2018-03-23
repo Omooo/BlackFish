@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import top.omooo.blackfish.LoginActivity;
 import top.omooo.blackfish.MinePageActivity.AboutActivity;
 import top.omooo.blackfish.MinePageActivity.ActivityMyBankCard;
 import top.omooo.blackfish.MinePageActivity.MineSettingActivity;
@@ -122,6 +123,7 @@ public class NewMineFragment extends BaseFragment {
                 break;
             case R.id.tv_mine_personal_center:
                 //个人中心
+                startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
             case R.id.tv_mine_grid_pay:
                 //待付款
