@@ -2,6 +2,7 @@ package top.omooo.blackfish.MinePageActivity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import top.omooo.blackfish.BaseActivity;
@@ -16,6 +17,7 @@ import top.omooo.blackfish.view.CustomToast;
 public class AboutActivity extends BaseActivity {
 
     private TextView mTextVersion,mTextSug,mTextContact, mTextCheck;
+    private ImageView mImageBack;
     @Override
     public int getLayoutId() {
         return R.layout.activity_about_black_fish;
@@ -24,12 +26,12 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initViews() {
 
-        getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
         mTextVersion = findView(R.id.tv_about_version);
         mTextSug = findView(R.id.tv_about_sug);
         mTextContact = findView(R.id.tv_about_contact);
         mTextCheck = findView(R.id.tv_about_check);
+
+        mImageBack = findView(R.id.tv_mine_about_back);
 
         new AdjustViewUtil().adjustTextViewPic(mTextVersion, 1, 0, 0, 130, 130);
     }
@@ -39,6 +41,7 @@ public class AboutActivity extends BaseActivity {
         mTextSug.setOnClickListener(this);
         mTextContact.setOnClickListener(this);
         mTextCheck.setOnClickListener(this);
+        mImageBack.setOnClickListener(this);
     }
 
     @Override
@@ -53,6 +56,9 @@ public class AboutActivity extends BaseActivity {
             case R.id.tv_about_check:
 //                Toast.makeText(this, "检查更新", Toast.LENGTH_SHORT).show();
                 CustomToast.show(this,"当前已经是最新版本");
+                break;
+            case R.id.tv_mine_about_back:
+                finish();
                 break;
             default:break;
         }

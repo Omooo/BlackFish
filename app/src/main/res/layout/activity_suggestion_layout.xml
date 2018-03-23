@@ -4,9 +4,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="意见反馈"
-        style="@style/TitleHeaderTextViewStyle"/>
+    <FrameLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/tv_mine_sug_back"
+            android:src="@drawable/icon_to_left"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:text="意见反馈"
+            style="@style/HeaderTitleStyle"/>
+    </FrameLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_marginTop="10dp"

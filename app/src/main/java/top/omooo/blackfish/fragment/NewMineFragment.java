@@ -75,10 +75,10 @@ public class NewMineFragment extends BaseFragment {
         mAdjustViewUtil.adjustTextViewPic(mTextAbout, 0,10,5,70, 60);
 
         //调整drawableTop图片的大小
-        mAdjustViewUtil.adjustTextViewPic(mTextPay, 1, 0, 15, 85, 85);
-        mAdjustViewUtil.adjustTextViewPic(mTextSend, 1, 0, 15, 95, 95);
-        mAdjustViewUtil.adjustTextViewPic(mTextGet, 1, 0, 15, 88, 88);
-        mAdjustViewUtil.adjustTextViewPic(mTextAfterSale, 1, 0, 15, 85, 85);
+        mAdjustViewUtil.adjustTextViewPic(mTextPay, 1, 0, 15, 90, 90);
+        mAdjustViewUtil.adjustTextViewPic(mTextSend, 1, 0, 15, 90, 90);
+        mAdjustViewUtil.adjustTextViewPic(mTextGet, 1, 0, 15, 90, 90);
+        mAdjustViewUtil.adjustTextViewPic(mTextAfterSale, 1, 0, 15, 90, 90);
 
         mSimpleDraweeView.setImageURI(getUriFromDrawableRes(mContext, R.drawable.image_mine_pager_user));
 

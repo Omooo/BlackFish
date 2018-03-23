@@ -45,6 +45,8 @@
 
         <activity android:name=".MinePageActivity.MineSettingActivity"/>
 
+        <activity android:name=".MinePageActivity.CertifyCardActivity"/>
+
     </application>
 
 </manifest>

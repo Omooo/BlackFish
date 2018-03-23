@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -39,6 +40,7 @@ public class SuggestionActivity extends BaseActivity {
     private EditText mEditSug, mEditPhone;
     private SimpleDraweeView mAddImage;
     private Button mButtonSubmit;
+    private ImageView mImageBack;
 
     private Context mContext;
     private static final int REQUEST_CODE = 1;
@@ -66,6 +68,8 @@ public class SuggestionActivity extends BaseActivity {
         mAddImage = findView(R.id.iv_sug_add_image);
         mButtonSubmit = findView(R.id.btn_sug_submit);
 
+        mImageBack = findView(R.id.tv_mine_sug_back);
+
         //默认选择反馈类型为：体验与界面
         switchType(mTextSugFace,true);
         mAddImage.setImageURI(getUriFromDrawableRes(mContext,R.drawable.icon_sug_add_image));
@@ -78,6 +82,8 @@ public class SuggestionActivity extends BaseActivity {
 
         mAddImage.setOnClickListener(this);
         mButtonSubmit.setOnClickListener(this);
+        mImageBack.setOnClickListener(this);
+
     }
 
     @Override
@@ -102,6 +108,9 @@ public class SuggestionActivity extends BaseActivity {
                 } else {
                     CustomToast.show(mContext,"请填写反馈内容，不少于三个字");
                 }
+                break;
+            case R.id.tv_mine_sug_back:
+                finish();
                 break;
             default:break;
         }

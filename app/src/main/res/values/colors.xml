@@ -25,4 +25,6 @@
     <color name="colorCustomToastBg">#666666</color>
     <color name="colorSugType">#FECD15</color>
     <color name="colorExitLogin">#FF0033</color>
+    <color name="colorCustomDialogNavBtn">#0071FF</color>
+    <color name="colorCustomDialogPosBtn">#0E79FF</color>
 </resources>

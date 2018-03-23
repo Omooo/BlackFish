@@ -33,6 +33,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         mView = new SparseArray<>();
         setContentView(getLayoutId());
+        getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         initViews();
         initListener();
         initData();

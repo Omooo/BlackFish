@@ -2,29 +2,43 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:divider="@drawable/shape_divider_layout"
+    android:showDividers="middle"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="设置"
-        style="@style/TitleHeaderTextViewStyle" />
+    <FrameLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/tv_mine_setting_back"
+            android:src="@drawable/icon_to_left"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:text="设置"
+            style="@style/HeaderTitleStyle"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_setting_login_pwd"
-        android:text="登陆密码"
+        style="@style/MinePagerTextListStyle"
         android:layout_marginTop="1dp"
-        style="@style/MinePagerTextListStyle"/>
-    <TextView
-        style="@style/DividerTextView"/>
+        android:text="登陆密码"/>
+
     <TextView
         android:id="@+id/tv_setting_pay_pwd"
-        android:text="支付密码"
-        style="@style/MinePagerTextListStyle"/>
-    <TextView
-        style="@style/DividerTextView"/>
+        style="@style/MinePagerTextListStyle"
+        android:text="支付密码"/>
+
     <TextView
         android:id="@+id/tv_setting_manger_address"
-        android:text="收货地址管理"
-        style="@style/MinePagerTextListStyle"/>
+        style="@style/MinePagerTextListStyle"
+        android:text="收货地址管理"/>
+
     <TextView
         android:layout_marginTop="100dp"
         android:id="@+id/btn_setting_exit_login"

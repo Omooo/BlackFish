@@ -47,7 +47,7 @@
 
     <style name="DividerTextView">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_height">0.2dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:background">@color/colorDivider</item>
     </style>
@@ -71,7 +71,36 @@
         <item name="android:drawableLeft">@drawable/icon_to_left</item>
     </style>
 
+    <style name="HeaderTitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/splash_main_title_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="DetailActivityTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/colorWhite</item>
+    </style>
+
+    <style name="BottomDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/shape_bottom_dialog_bg</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--悬浮于Activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--Dialog以外的区域模糊效果-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--Dialog进入以及退出动画-->
+        <item name="android:windowAnimationStyle">@style/BottomDialogAnimation</item>
+    </style>
+    <style name="BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/view_bottom_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/view_bottom_dialog_out</item>
     </style>
 </resources>
