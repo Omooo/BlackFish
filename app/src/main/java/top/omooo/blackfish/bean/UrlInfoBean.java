@@ -11,4 +11,7 @@ public class UrlInfoBean {
     //首页商品信息
     public static final String homeGoodsUrl = "http://wooyun.site/blackfish/home_sort.json";
 
+    //银行卡信息
+    public static final String bankCardsInfo = "https://api.51datakey.com/conf/api/v3/banks/all";
+
 }

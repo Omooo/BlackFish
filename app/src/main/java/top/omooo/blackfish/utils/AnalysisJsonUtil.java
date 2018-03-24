@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.omooo.blackfish.bean.BankCardsInfo;
 import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
 
@@ -21,6 +22,7 @@ public class AnalysisJsonUtil {
 
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
+    private List<BankCardsInfo> mBankCardsInfos;
     private JSONObject mJSONObject;
     private JSONArray mJSONArray;
 
@@ -32,9 +34,9 @@ public class AnalysisJsonUtil {
      */
     public List getDataFromJson(String json,int type) {
         try {
-            mJSONObject = new JSONObject(json);
             if (type == 0) {
                 //首页的商品信息
+                mJSONObject = new JSONObject(json);
                 mHomeSortInfos = new ArrayList<>();
                 mHomeSortItemInfos = new ArrayList<>();
                 mJSONArray = mJSONObject.getJSONArray("home_sort");
@@ -52,6 +54,23 @@ public class AnalysisJsonUtil {
                     mHomeSortInfos.add(new HomeSortInfo(title, sortImageUrl, mHomeSortItemInfos));
                 }
                 return mHomeSortInfos;
+            } else if (type == 1) {
+                //银行卡信息
+                mBankCardsInfos = new ArrayList<>();
+                mJSONArray = new JSONArray(json);
+                mJSONObject = (JSONObject) mJSONArray.get(0);
+                JSONArray jsonArray = mJSONObject.getJSONArray("bank_list");
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    jsonObject = (JSONObject) jsonArray.get(i);
+                    String abbr = jsonObject.getString("abbr");
+                    String name = jsonObject.getString("name");
+                    String logo_url = jsonObject.getString("logo_uri");
+                    mBankCardsInfos.add(new BankCardsInfo(logo_url, name, abbr));
+                }
+                return mBankCardsInfos;
+            } else {
+                return null;
             }
         } catch (JSONException e) {
             e.printStackTrace();

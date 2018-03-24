@@ -1,6 +1,7 @@
 package top.omooo.blackfish.KeeperPageActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -51,7 +52,7 @@ public class AddBillActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_add_bank_bill:
-                CustomToast.show(mContext,"信用卡账单");
+                startActivity(new Intent(this, AddCreditBillActivity.class));
                 break;
             case R.id.rl_add_wd_bill:
                 CustomToast.show(mContext,"网贷账单");

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import top.omooo.blackfish.KeeperPageActivity.AddBillActivity;
+import top.omooo.blackfish.KeeperPageActivity.AddCreditBillActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.AdjustViewUtil;
 import top.omooo.blackfish.utils.DensityUtil;
@@ -90,6 +91,7 @@ public class HouseKeeperFragment extends BaseFragment {
     public void processClick(View view) {
         switch (view.getId()) {
             case R.id.iv_keeper_add:
+                startActivity(new Intent(getActivity(),AddBillActivity.class));
                 break;
             case R.id.tv_keeper_show_money:
                 if (!isShowMoney) {
@@ -116,7 +118,8 @@ public class HouseKeeperFragment extends BaseFragment {
                 CustomToast.show(mContext,"我要贷款");
                 break;
             case R.id.cv_keeper:
-                CustomToast.show(mContext, "缩放效果");
+                // TODO: 2018/3/23 CardView点击后的缩放效果
+                startActivity(new Intent(getActivity(),AddBillActivity.class));
                 break;
             case R.id.btn_keeper_add_bill:
                 startActivity(new Intent(mContext, AddBillActivity.class));
@@ -176,7 +179,7 @@ public class HouseKeeperFragment extends BaseFragment {
             if (index == 0) {
                 startActivity(new Intent(mContext, AddBillActivity.class));
             } else if (index == 1) {
-                CustomToast.show(mContext, "添加信用卡账单");
+                startActivity(new Intent(mContext, AddCreditBillActivity.class));
             } else {
                 return;
             }

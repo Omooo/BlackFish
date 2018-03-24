@@ -27,4 +27,7 @@
     <color name="colorExitLogin">#FF0033</color>
     <color name="colorCustomDialogNavBtn">#0071FF</color>
     <color name="colorCustomDialogPosBtn">#0E79FF</color>
+    <color name="colorQQEmailText">#42A2F9</color>
+    <color name="colorOtherEmailText">#FCC93D</color>
+    <color name="colorBankTextName">#505050</color>
 </resources>

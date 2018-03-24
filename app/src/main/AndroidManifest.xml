@@ -49,6 +49,8 @@
 
         <activity android:name=".KeeperPageActivity.AddBillActivity"/>
 
+        <activity android:name=".KeeperPageActivity.AddCreditBillActivity"/>
+
     </application>
 
 </manifest>
