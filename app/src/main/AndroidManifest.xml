@@ -51,6 +51,8 @@
 
         <activity android:name=".KeeperPageActivity.AddCreditBillActivity"/>
 
+        <activity android:name=".MinePageActivity.SetPwdActivity"/>
+
     </application>
 
 </manifest>

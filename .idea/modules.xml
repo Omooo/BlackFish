@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BlackFish.iml" filepath="$PROJECT_DIR$/BlackFish.iml" />
-      <module fileurl="file://C:\Users\lenovo\AndroidStudioProjects\BlackFish\BlackFish.iml" filepath="C:\Users\lenovo\AndroidStudioProjects\BlackFish\BlackFish.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\lenovo\AndroidStudioProjects\BlackFish\app\app.iml" filepath="C:\Users\lenovo\AndroidStudioProjects\BlackFish\app\app.iml" />
     </modules>
   </component>
 </project>

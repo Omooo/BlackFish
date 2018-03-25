@@ -1,6 +1,7 @@
 package top.omooo.blackfish.MinePageActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ public class MineSettingActivity extends BaseActivity {
     private TextView mTextPayPwd;
     private TextView mTextManagerAddress;
     private TextView mTextExitLogin;
+
+    private String phone = "18800209572";
 
     @Override
     public int getLayoutId() {
@@ -52,23 +55,27 @@ public class MineSettingActivity extends BaseActivity {
 
     @Override
     public void processClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.tv_setting_login_pwd:
-                CustomToast.show(mContext,"待开发");
+                intent = new Intent(this, SetPwdActivity.class);
+                intent.putExtra("phoneNumber", phone);
+                startActivity(intent);
                 break;
             case R.id.tv_setting_pay_pwd:
-                CustomToast.show(mContext,"待开发");
+                CustomToast.show(mContext, "待开发");
                 break;
             case R.id.tv_setting_manger_address:
-                CustomToast.show(mContext,"待开发");
+                CustomToast.show(mContext, "待开发");
                 break;
             case R.id.btn_setting_exit_login:
-                CustomToast.show(mContext,"待开发");
+                CustomToast.show(mContext, "待开发");
                 break;
             case R.id.tv_mine_setting_back:
                 finish();
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 

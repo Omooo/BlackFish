@@ -1,5 +1,6 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -42,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         //初始化VLayout
         initVLayout();
+
+        //处理来自登录成功的跳转
+        Intent intent = getIntent();
+        String flag = intent.getStringExtra("flag");
+        if (flag != null) {
+            if (flag.equals("verifyCodeActivity")) {
+                //跳转到我的MineFragment
+                mViewPager.setCurrentItem(4);
+            }
+        }
     }
 
     private void initView() {

@@ -55,28 +55,25 @@ public class VerifyCodeActivity extends BaseActivity{
             Connection connection = sqlOpenHelperUtil.connDB();
             if (connection != null) {
                 Log.i(TAG, "submitCodeSuccess: 数据库连接成功");
-                // TODO: 2018/3/20 手机号重复添加
-                String insert = "insert into userinfo(phone,username,password,date) values('" + phoneNumber + "','','','" + date + "')";
-                sqlOpenHelperUtil.updateDB(connection, insert);
-//                String sql = "select id from userinfo where phone= '" + phoneNumber + "'";
-//
-//                ResultSet set = sqlOpenHelperUtil.executeSql(connection, sql);
-//                try {
-//                    String id = set.getString("id");
-//                    if (id == null || id.equals("")) {
-//                        String insert = "insert into userinfo(phone,username,password,date) values('" + phoneNumber + "','','','" + date + "')";
-//                        boolean result = sqlOpenHelperUtil.updateDB(connection, insert);
-//                        if (result) {
-//                            Log.i(TAG, "submitCodeSuccess: 新记录添加成功");
-//                        } else {
-//                            Log.i(TAG, "submitCodeSuccess: 新记录添加失败");
-//                        }
-//                    } else {
-//                        Log.i(TAG, "submitCodeSuccess: 已存在该手机号");
-//                    }
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
+                String sql = "select id from userinfo where phone= '" + phoneNumber + "'";
+                ResultSet set = sqlOpenHelperUtil.executeSql(connection, sql);
+                String phoneId = null;
+                try {
+                    while (set.next()) {
+                        phoneId = set.getString("id");
+                        Log.i(TAG, "submitCodeSuccess: id" + phoneId);
+                    }
+                    if (null == phoneId || phoneId.equals("")) {
+                        Log.i(TAG, "submitCodeSuccess: 不存在手机号为" + phoneNumber + "的记录");
+                        //添加记录
+                        String insert = "insert into userinfo(phone,username,password,date) values('" + phoneNumber + "','','','" + date + "')";
+                        sqlOpenHelperUtil.updateDB(connection, insert);
+                    } else {
+                        Log.i(TAG, "submitCodeSuccess: 存在手机号为" + phoneNumber + "的记录");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
                 //打印表内容
                 Log.i(TAG, "/***********表内容************/");
@@ -97,6 +94,12 @@ public class VerifyCodeActivity extends BaseActivity{
             } else {
                 Log.i(TAG, "submitCodeSuccess: 数据库连接失败");
             }
+            finish();
+            //跳转到MineFragment并清空Activity任务栈
+            Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
+            intent.putExtra("flag", "verifyCodeActivity");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+            startActivity(intent);
         }
 
         @Override

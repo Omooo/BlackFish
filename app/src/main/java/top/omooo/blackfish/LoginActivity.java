@@ -86,6 +86,7 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
                 bundle.putString("phone_number", mEditPhone.getText().toString());
                 Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
                 intent.putExtras(bundle);
+//                finish();
                 startActivity(intent);
                 break;
             case R.id.tv_to_sms_login:

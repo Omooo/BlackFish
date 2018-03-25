@@ -1,17 +1,15 @@
 package top.omooo.blackfish.MinePageActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-
-import java.util.List;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
-import top.omooo.blackfish.utils.FrescoEngine;
 import top.omooo.blackfish.utils.RequestPermissionUtil;
 import top.omooo.blackfish.view.CustomToast;
 
@@ -98,7 +91,7 @@ public class SuggestionActivity extends BaseActivity {
                 switchType(mTextOther,true);
                 break;
             case R.id.iv_sug_add_image:
-//                selectImage(1);
+                selectImage(0x01);
                 break;
             case R.id.btn_sug_submit:
                 if (mEditSug.getText().length() > 3) {
@@ -131,27 +124,21 @@ public class SuggestionActivity extends BaseActivity {
         }
     }
 
-    // TODO: 2018/3/21 图片选择器，不支持Fresco 卒 
     private void selectImage(int requestCode) {
-        Matisse.from(SuggestionActivity.this)
-                .choose(MimeType.allOf())
-                .countable(true)
-                .maxSelectable(5)
-//                .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
-//                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
-                .imageEngine(new FrescoEngine())
-                .forResult(requestCode);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        List<Uri> mSelected;
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            mSelected = Matisse.obtainResult(data);
-            mAddImage.setImageURI(mSelected.get(0));
+        if (requestCode == 0x01 && resultCode == Activity.RESULT_OK && null != data) {
+            Uri uri = data.getData();
+            mAddImage.setImageURI(uri);
+        } else {
+            return;
         }
     }
 
@@ -162,20 +149,6 @@ public class SuggestionActivity extends BaseActivity {
                 + resources.getResourceTypeName(id) + "/"
                 + resources.getResourceEntryName(id);
         return Uri.parse(path);
-    }
-
-    private boolean requestPermission() {
-        //检查是否已经有该权限
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            //权限没有开启，请求权限
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-            return true;
-        }else{
-            //权限已经开启
-            return true;
-        }
     }
 
     @Override
