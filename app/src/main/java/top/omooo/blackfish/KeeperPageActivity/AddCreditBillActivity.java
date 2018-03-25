@@ -74,6 +74,7 @@ public class AddCreditBillActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 1:
+                        // TODO: 2018/3/25 妈耶数据显示不出来？
                         mGridBankCards.setAdapter(new GridAdapter(mBankCardsInfos,mContext));
                         Log.i(TAG, "handleMessage: " + mBankCardsInfos.size() + mBankCardsInfos.get(0).getName());
                         break;

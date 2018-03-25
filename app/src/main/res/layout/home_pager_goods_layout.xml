@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/linear_home_pager_goods_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -44,11 +45,49 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/icon_home_pager_goods_title_to_right"/>
     </RelativeLayout>
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_home_goods_big_image"
         android:scaleType="fitXY"
-        android:src="@drawable/image_home_goods_big"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>
-
+    <!--脏！-->
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_home_goods_item_1"
+            android:layout_weight="1"
+            android:layout_marginRight="0.1dp"
+            android:scaleType="fitXY"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_home_goods_item_2"
+            android:layout_weight="1"
+            android:layout_marginLeft="0.1dp"
+            android:scaleType="fitXY"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/colorWhite"
+        android:layout_marginTop="0.2dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_home_goods_item_3"
+            android:layout_weight="1"
+            android:layout_marginRight="0.1dp"
+            android:scaleType="fitXY"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_home_goods_item_4"
+            android:layout_weight="1"
+            android:layout_marginLeft="0.1dp"
+            android:scaleType="fitXY"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 </LinearLayout>

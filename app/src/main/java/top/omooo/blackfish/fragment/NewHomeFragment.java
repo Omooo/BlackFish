@@ -3,7 +3,9 @@ package top.omooo.blackfish.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +39,6 @@ import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
-import top.omooo.blackfish.listener.OnSetDataListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
 
@@ -60,8 +62,13 @@ public class NewHomeFragment extends BaseFragment{
 
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
+    private Handler mHandler;
 
     private Drawable mHeaderDrawable;
+
+    private LinearLayout mLinearGoodsLayout1;
+    private LinearLayout mLinearGoodsLayout2;
+    private LinearLayout mLinearGoodsLayout3;
 
 
     public static NewHomeFragment newInstance() {
@@ -86,6 +93,8 @@ public class NewHomeFragment extends BaseFragment{
 
         //获取Header背景图
         mHeaderDrawable = ContextCompat.getDrawable(mContext, R.drawable.image_home_header_bg);
+
+
     }
 
     private void addItemViews() {
@@ -245,21 +254,130 @@ public class NewHomeFragment extends BaseFragment{
 
         // TODO: 2018/3/18 根据数据总数添加多少商品类别数
         for (int i = 0; i < 3; i++) {
-            loadGoodsInfo(new OnSetDataListener() {
-                @Override
-                public void setData(View view, String typeId) {
-                    switch (typeId) {
-                        case "textTitle":
-                            ((TextView) view).setText("2333");
-                            break;
-                    }
-
-                }
-            });
-
+            loadGoodsInfo(i);
+            Log.i(TAG, "addItemViews: 加载布局：" + i);
         }
 
+        loadData();
+
         delegateAdapter.setAdapters(adapters);
+    }
+
+    private void loadData() {
+
+        mHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                RelativeLayout titleLayout;
+                TextView textView;
+                SimpleDraweeView bigTitleImage;
+                LinearLayout linearLayoutItem1;
+                LinearLayout linearLayoutItem2;
+                switch (msg.what) {
+                    case 10001:
+                        HomeSortInfo homeSortInfo1 = (HomeSortInfo) msg.getData().get("homeSortInfo");
+                        Log.i(TAG, "handleMessage: 触发 10001   " + homeSortInfo1.getTitle());
+
+                        //标题
+                        titleLayout = (RelativeLayout) mLinearGoodsLayout1.getChildAt(0);
+                        titleLayout.setOnClickListener(new MyOnClick("goodsTitleLayout_1"));
+                        textView = (TextView) titleLayout.getChildAt(1);
+                        textView.setText(homeSortInfo1.getTitle());
+
+                        //标题图片
+                        bigTitleImage = (SimpleDraweeView) mLinearGoodsLayout1.getChildAt(1);
+                        bigTitleImage.setOnClickListener(new MyOnClick("iv_home_goods_big_image_1"));
+                        bigTitleImage.setImageURI(homeSortInfo1.getSortImageUrl());
+
+                        //GridItem
+                        mHomeSortItemInfos = homeSortInfo1.getItemInfos();
+                        Log.i(TAG, "handleMessage: sortItemsSize " + mHomeSortItemInfos.size());
+                        linearLayoutItem1 = (LinearLayout) mLinearGoodsLayout1.getChildAt(2);
+                        for (int i = 0; i < linearLayoutItem1.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem1.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        linearLayoutItem2 = (LinearLayout) mLinearGoodsLayout1.getChildAt(3);
+                        for (int i = 0; i < linearLayoutItem2.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem2.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i + 2);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        break;
+                    case 10002:
+                        HomeSortInfo homeSortInfo2 = mHomeSortInfos.get(1);
+                        Log.i(TAG, "handleMessage: 触发 10002   " + homeSortInfo2.getTitle());
+                        // TODO: 2018/3/25 /*********空指针************/ 
+                        if (mLinearGoodsLayout2 == null) {
+                            Log.i(TAG, "handleMessage: mLinearGoodsLayout2 为空");
+                            break;
+                        }
+                        //标题
+                        titleLayout = (RelativeLayout) mLinearGoodsLayout2.getChildAt(0);
+                        titleLayout.setOnClickListener(new MyOnClick("goodsTitleLayout_1"));
+                        textView = (TextView) titleLayout.getChildAt(1);
+                        textView.setText(homeSortInfo2.getTitle());
+
+                        //标题图片
+                        bigTitleImage = (SimpleDraweeView) mLinearGoodsLayout1.getChildAt(1);
+                        bigTitleImage.setOnClickListener(new MyOnClick("iv_home_goods_big_image_1"));
+                        bigTitleImage.setImageURI(homeSortInfo2.getSortImageUrl());
+
+                        //GridItem
+                        mHomeSortItemInfos = homeSortInfo2.getItemInfos();
+                        Log.i(TAG, "handleMessage: sortItemsSize " + mHomeSortItemInfos.size());
+                        linearLayoutItem1 = (LinearLayout) mLinearGoodsLayout1.getChildAt(2);
+                        for (int i = 0; i < linearLayoutItem1.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem1.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        linearLayoutItem2 = (LinearLayout) mLinearGoodsLayout1.getChildAt(3);
+                        for (int i = 0; i < linearLayoutItem2.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem2.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i + 2);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        break;
+                    case 10003:
+                        Log.i(TAG, "handleMessage: 触发 10003");
+                        HomeSortInfo homeSortInfo3 = mHomeSortInfos.get(2);
+
+                        //标题
+                        titleLayout = (RelativeLayout) mLinearGoodsLayout1.getChildAt(0);
+                        titleLayout.setOnClickListener(new MyOnClick("goodsTitleLayout_1"));
+                        textView = (TextView) titleLayout.getChildAt(1);
+                        textView.setText(homeSortInfo3.getTitle());
+
+                        //标题图片
+                        bigTitleImage = (SimpleDraweeView) mLinearGoodsLayout1.getChildAt(1);
+                        bigTitleImage.setOnClickListener(new MyOnClick("iv_home_goods_big_image_1"));
+                        bigTitleImage.setImageURI(homeSortInfo3.getSortImageUrl());
+
+                        //GridItem
+                        mHomeSortItemInfos = homeSortInfo3.getItemInfos();
+                        Log.i(TAG, "handleMessage: sortItemsSize " + mHomeSortItemInfos.size());
+                        linearLayoutItem1 = (LinearLayout) mLinearGoodsLayout1.getChildAt(2);
+                        for (int i = 0; i < linearLayoutItem1.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem1.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        linearLayoutItem2 = (LinearLayout) mLinearGoodsLayout1.getChildAt(3);
+                        for (int i = 0; i < linearLayoutItem2.getChildCount(); i++) {
+                            SimpleDraweeView imageView = (SimpleDraweeView) linearLayoutItem2.getChildAt(i);
+                            HomeSortItemInfo itemInfo = mHomeSortItemInfos.get(i + 2);
+                            imageView.setImageURI(itemInfo.getGoodsImageUrl());
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+
+        });
     }
 
 
@@ -279,9 +397,14 @@ public class NewHomeFragment extends BaseFragment{
             public void onSuccessListener(String result) {
                 mHomeSortInfos = jsonUtil.getDataFromJson(result, 0);
                 Log.i(TAG, "onSuccessListener: " + "数据条数：" + mHomeSortInfos.size());
-//                loadGoodsInfo(mHomeSortInfos);
-                // TODO: 2018/3/18  数据持久化
-
+                for (int i = 0; i < 2; i++) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("homeSortInfo", (Serializable) mHomeSortInfos.get(i));
+                    Message message = Message.obtain();
+                    message.what = 10001 + i;
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
+                }
             }
 
             @Override
@@ -301,56 +424,36 @@ public class NewHomeFragment extends BaseFragment{
         return (int) (dpValue * scale + 0.5f);
     }
 
-    private void loadGoodsInfo(final OnSetDataListener listener) {
+    private void loadGoodsInfo(int index) {
 
-        //通栏布局，用于加载商品的信息
-        SingleLayoutHelper singleTitleHelper1 = new SingleLayoutHelper();
-        GeneralVLayoutAdapter singleTitleAdapter1 = new GeneralVLayoutAdapter(getActivity(), singleTitleHelper1, 1) {
-            @Override
-            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_layout, parent, false);
-                //标题
-                TextView textTitle = view.findViewById(R.id.tv_home_goods_title_text);
-                listener.setData(textTitle, "textTitle");
-                //标题的布局
-                RelativeLayout titleLayout = view.findViewById(R.id.rl_goods_title_layout);
-                titleLayout.setOnClickListener(new MyOnClick("goodsTitleLayout_1"));
-                //标题下的大图片
-                ImageView imageView = view.findViewById(R.id.iv_home_goods_big_image);
-
-                imageView.setOnClickListener(new MyOnClick("iv_home_goods_big_image_1"));
-                return new MainViewHolder(view);
-            }
-        };
-        adapters.add(singleTitleAdapter1);
-
-        //网格布局，加载Grid商品信息
-        GridLayoutHelper goodsGridHelper = new GridLayoutHelper(2);
-        goodsGridHelper.setVGap(1);
-        goodsGridHelper.setHGap(1);
-        GeneralVLayoutAdapter goodsGridAdapter = new GeneralVLayoutAdapter(getActivity(), goodsGridHelper, 4) {
-            @Override
-            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MainViewHolder(LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_grid_item, parent, false));
-            }
-
-            @Override
-            public void onBindViewHolder(MainViewHolder holder, int position) {
-                super.onBindViewHolder(holder, position);
-                SimpleDraweeView imageview = holder.itemView.findViewById(R.id.iv_home_goods_grid_item);
-                Uri uri = Uri.parse("https://i.loli.net/2018/03/03/5a9a73b8235a6.jpg");
-                if (position == 0) {
-                    imageview.setImageURI(uri);
-                } else if (position == 1) {
-                    imageview.setImageURI(uri);
-                } else if (position == 2) {
-                    imageview.setImageURI(uri);
-                } else if (position == 3) {
-                    imageview.setImageURI(uri);
+        if (index == 0) {
+            Log.i(TAG, "loadGoodsInfo: " + index);
+            SingleLayoutHelper singleTitleHelper1 = new SingleLayoutHelper();
+            GeneralVLayoutAdapter singleTitleAdapter1 = new GeneralVLayoutAdapter(getActivity(), singleTitleHelper1, 1) {
+                @Override
+                public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_layout, parent, false);
+                    mLinearGoodsLayout1 = view.findViewById(R.id.linear_home_pager_goods_layout);
+                    return new MainViewHolder(view);
                 }
-            }
-        };
-        adapters.add(goodsGridAdapter);
+            };
+            adapters.add(singleTitleAdapter1);
+        } else if (index == 1) {
+            Log.i(TAG, "loadGoodsInfo: " + index);
+            SingleLayoutHelper singleTitleHelper1 = new SingleLayoutHelper();
+            GeneralVLayoutAdapter singleTitleAdapter2 = new GeneralVLayoutAdapter(getActivity(), singleTitleHelper1, 1) {
+                @Override
+                public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_goods_layout, parent, false);
+                    mLinearGoodsLayout2 = view.findViewById(R.id.linear_home_pager_goods_layout);
+                    return new MainViewHolder(view);
+                }
+            };
+            adapters.add(singleTitleAdapter2);
+        } else {
+            return;
+        }
+
     }
 
     private class MyOnClick implements View.OnClickListener {
@@ -396,6 +499,11 @@ public class NewHomeFragment extends BaseFragment{
                     break;
                 case "iv_home_goods_big_image_1":
                     Log.i(TAG, "onClick: " + "商品标题 1 下的大图片被点击");
+                    break;
+                case "goodsItem1":
+                    Log.i(TAG, "onClick: " + "商品标题 goodItem1被点击");
+                    break;
+                default:break;
             }
         }
 

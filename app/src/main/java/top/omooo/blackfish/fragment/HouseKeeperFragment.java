@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,7 +38,6 @@ public class HouseKeeperFragment extends BaseFragment {
     private AdjustViewUtil mAdjustViewUtil;
     private boolean isShowMoney = false;
     private String money = "233.00";
-
 
     public static HouseKeeperFragment newInstance() {
         return new HouseKeeperFragment();
@@ -68,6 +69,15 @@ public class HouseKeeperFragment extends BaseFragment {
         mAdjustViewUtil.adjustTextViewPic(mTextGrid4, 1, 0, 0, 180, 180);
 
         mAdjustViewUtil.adjustTextViewPic(mTextGift, 0, 0, 0, 50, 50);
+
+        mCardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Animation animation = setLongClickAnimation(mCardView);
+                animation.start();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -118,8 +128,7 @@ public class HouseKeeperFragment extends BaseFragment {
                 CustomToast.show(mContext,"我要贷款");
                 break;
             case R.id.cv_keeper:
-                // TODO: 2018/3/23 CardView点击后的缩放效果
-                startActivity(new Intent(getActivity(),AddBillActivity.class));
+                setClickAnimation(mCardView);
                 break;
             case R.id.btn_keeper_add_bill:
                 startActivity(new Intent(mContext, AddBillActivity.class));
@@ -184,5 +193,51 @@ public class HouseKeeperFragment extends BaseFragment {
                 return;
             }
         }
+    }
+
+    //CardView的缩放效果
+    private void setClickAnimation(View view) {
+        Animation animation = new ScaleAnimation(0.95f, 1, 0.95f, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(300);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startActivity(new Intent(getActivity(),AddBillActivity.class));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        view.startAnimation(animation);
+    }
+
+    // TODO: 2018/3/25 CardView长按缩放效果
+    private Animation setLongClickAnimation(View view) {
+        Animation animation = new ScaleAnimation(0.95f, 1, 0.95f, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(300);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startActivity(new Intent(getActivity(),AddBillActivity.class));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        return animation;
     }
 }
