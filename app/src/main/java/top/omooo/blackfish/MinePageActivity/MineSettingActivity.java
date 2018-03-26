@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
+import top.omooo.blackfish.TestActivity;
 import top.omooo.blackfish.view.CustomToast;
 
 /**
@@ -70,6 +71,7 @@ public class MineSettingActivity extends BaseActivity {
                 break;
             case R.id.btn_setting_exit_login:
                 CustomToast.show(mContext, "待开发");
+                startActivity(new Intent(this, TestActivity.class));
                 break;
             case R.id.tv_mine_setting_back:
                 finish();

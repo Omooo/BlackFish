@@ -31,6 +31,8 @@
         <EditText
             android:id="@+id/et_login_phone"
             android:layout_marginTop="30dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
             android:drawableLeft="@drawable/icon_login_phone"
             android:drawableRight="@drawable/icon_edittext_delete"
             android:layout_below="@+id/iv_login_icon"
@@ -49,6 +51,8 @@
             <EditText
                 android:id="@+id/et_login_pwd"
                 android:hint="输入当前登录密码"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
                 android:drawableLeft="@drawable/icon_login_pwd_left"
                 android:drawableRight="@drawable/icon_login_pwd_right"
                 android:maxLines="1"

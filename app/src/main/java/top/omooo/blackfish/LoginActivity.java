@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import top.omooo.blackfish.utils.AdjustViewUtil;
+
 /**
  * Created by SSC on 2018/3/18.
  */
@@ -31,6 +33,8 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
 
     private static final String TAG = "LoginActivity";
     private boolean isPwdVisible = false;
+
+    private AdjustViewUtil mAdjustViewUtil;
 
 
     @Override
@@ -53,6 +57,10 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         // TODO: 2018/3/18 更改背景导致按钮按下效果丢失
         mButtonLogin.setBackground(getDrawable(R.drawable.shape_btn_pressed));
         mButtonLogin.setClickable(false);
+
+        mAdjustViewUtil = new AdjustViewUtil();
+        mAdjustViewUtil.adjustEditTextPic(mEditPhone, 0, 0, 0, 55, 55);
+        mAdjustViewUtil.adjustEditTextPic(mEditPwd, 0, 0, 0, 55, 55);
     }
 
     @Override

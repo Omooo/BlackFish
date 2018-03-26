@@ -53,6 +53,10 @@
 
         <activity android:name=".MinePageActivity.SetPwdActivity"/>
 
+        <activity android:name=".TestActivity"/>
+
+        <activity android:name=".MinePageActivity.SetNewPwdActivity"/>
+
     </application>
 
 </manifest>

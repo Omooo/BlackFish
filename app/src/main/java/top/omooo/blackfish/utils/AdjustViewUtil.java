@@ -5,6 +5,7 @@ package top.omooo.blackfish.utils;
  */
 
 import android.graphics.drawable.Drawable;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -42,5 +43,15 @@ public class AdjustViewUtil {
         }
     }
 
+    public void adjustEditTextPic(EditText editText, int type, int marginLeft, int marginTop, int picWidth, int picHeight) {
+        Drawable[] drawables = editText.getCompoundDrawables();
+        if (type == 0) {
+            Drawable drawable = drawables[0];
+            drawable.setBounds(marginLeft, marginTop, picWidth, picHeight);
+            editText.setCompoundDrawables(drawable, drawables[1], drawables[2], drawables[3]);
+        } else {
+            return;
+        }
+    }
 
 }
