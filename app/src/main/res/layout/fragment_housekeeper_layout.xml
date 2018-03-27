@@ -95,75 +95,79 @@
     </LinearLayout>
 
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cv_keeper"
+    <RelativeLayout
+        android:id="@+id/rl_keeper_card"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="15dp"
         android:layout_gravity="center"
-        android:layout_margin="10dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:text="   建行信用卡  6667"
-                android:textColor="@color/splash_main_title_color"
-                android:drawableLeft="@drawable/icon_construction_bank"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="小黑鱼..."
-                android:textSize="13sp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="今日还款"
-                android:textColor="@color/splash_main_title_color"
-                android:textSize="18sp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_keeper_card_money"
-                android:text="1000.00"
-                android:layout_centerInParent="true"
-                android:textColor="@color/splash_main_title_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="应还金额"
-                android:layout_below="@+id/tv_keeper_card_money"
-                android:layout_centerHorizontal="true"
-                android:textSize="13sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="立即还款"
-                android:background="@drawable/shape_keeper_card_text"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center"
-                android:textColor="@color/splash_main_title_color"
-                android:layout_width="80dp"
-                android:layout_height="30dp"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-    <!--<ImageView-->
-        <!--android:src="@drawable/icon_keeper_bankcard_example"-->
-        <!--android:layout_gravity="end|center_vertical"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"/>-->
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_card_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/icon_construction_bank"
+            android:text="   建行信用卡  6667"
+            android:textColor="@color/splash_main_title_color"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
+            android:text="小黑鱼..."
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:text="今日还款"
+            android:textColor="@color/splash_main_title_color"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_keeper_card_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1000.00"
+            android:textColor="@color/splash_main_title_color"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_keeper_card_money"
+            android:layout_centerHorizontal="true"
+            android:text="应还金额"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_keeper_card_text"
+            android:gravity="center"
+            android:text="立即还款"
+            android:textColor="@color/splash_main_title_color"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/icon_keeper_bankcard_example"/>
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_keeper_gift"
         android:text="  新人导卡，赠10元还款金"

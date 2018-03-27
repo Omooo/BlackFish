@@ -1,6 +1,7 @@
 package top.omooo.blackfish.KeeperPageActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -101,7 +102,7 @@ public class AddCreditBillActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.rl_handed:
-                CustomToast.show(mContext, "手动记账");
+                startActivity(new Intent(mContext, CreateCreditBillActivity.class));
                 break;
             case R.id.rl_import_email:
                 CustomToast.show(mContext, "邮箱导入");

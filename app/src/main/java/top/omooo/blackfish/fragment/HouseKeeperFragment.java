@@ -3,7 +3,6 @@ package top.omooo.blackfish.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import top.omooo.blackfish.KeeperPageActivity.AddBillActivity;
@@ -31,7 +31,7 @@ public class HouseKeeperFragment extends BaseFragment {
 
     private ImageView mImageAdd, mImageShowEyes;
     private TextView mTextMoney,mTextGrid1, mTextGrid2, mTextGrid3, mTextGrid4,mTextGift;
-    private CardView mCardView;
+    private RelativeLayout mCardLayout;
     private Button mButtonAddBill;
     private Context mContext;
 
@@ -58,7 +58,7 @@ public class HouseKeeperFragment extends BaseFragment {
         mTextGrid3 = findView(R.id.tv_keeper_grid_3);
         mTextGrid4 = findView(R.id.tv_keeper_grid_4);
         mTextGift = findView(R.id.tv_keeper_gift);
-        mCardView = findView(R.id.cv_keeper);
+        mCardLayout = findView(R.id.rl_keeper_card);
         mButtonAddBill = findView(R.id.btn_keeper_add_bill);
 
         //调整TextView的DrawableTop的大小
@@ -70,10 +70,10 @@ public class HouseKeeperFragment extends BaseFragment {
 
         mAdjustViewUtil.adjustTextViewPic(mTextGift, 0, 0, 0, 50, 50);
 
-        mCardView.setOnLongClickListener(new View.OnLongClickListener() {
+        mCardLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Animation animation = setLongClickAnimation(mCardView);
+                Animation animation = setLongClickAnimation(mCardLayout);
                 animation.start();
                 return false;
             }
@@ -88,7 +88,7 @@ public class HouseKeeperFragment extends BaseFragment {
         mTextGrid2.setOnClickListener(this);
         mTextGrid3.setOnClickListener(this);
         mTextGrid4.setOnClickListener(this);
-        mCardView.setOnClickListener(this);
+        mCardLayout.setOnClickListener(this);
         mButtonAddBill.setOnClickListener(this);
     }
 
@@ -127,8 +127,8 @@ public class HouseKeeperFragment extends BaseFragment {
             case R.id.tv_keeper_grid_4:
                 CustomToast.show(mContext,"我要贷款");
                 break;
-            case R.id.cv_keeper:
-                setClickAnimation(mCardView);
+            case R.id.rl_keeper_card:
+                setClickAnimation(mCardLayout);
                 break;
             case R.id.btn_keeper_add_bill:
                 startActivity(new Intent(mContext, AddBillActivity.class));
