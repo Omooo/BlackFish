@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
+import top.omooo.blackfish.utils.KeyBoardUtil;
 import top.omooo.blackfish.utils.SqlOpenHelperUtil;
 import top.omooo.blackfish.view.CustomToast;
 
@@ -62,6 +63,7 @@ public class SetPwdActivity extends BaseActivity {
         //执行异步任务判断是否存在密码，根据是否存在显示不同UI
         new SqlAsyncTask().execute(phone);
 
+        KeyBoardUtil.showKeyBoard(mEditPwd);
     }
 
     @Override

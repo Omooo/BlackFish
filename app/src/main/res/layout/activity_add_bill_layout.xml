@@ -13,7 +13,7 @@
             android:src="@drawable/icon_to_left"
             android:scaleType="fitXY"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="20dp"
             android:layout_height="20dp"/>
         <TextView
@@ -33,7 +33,7 @@
         android:text="解决逾期问题"
         android:textSize="12sp"
         android:layout_below="@id/fl_add_bill"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -53,15 +53,15 @@
             <ImageView
                 android:id="@+id/tv_keeper_add_bill_icon_1"
                 android:src="@drawable/icon_keeper_add_bill_bank"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
                 android:layout_width="45dp"
                 android:layout_height="45dp"/>
             <TextView
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_1"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_1"
                 android:text="信用卡账单"
                 android:textSize="15sp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/splash_main_title_color"
                 android:layout_width="wrap_content"
@@ -70,8 +70,8 @@
                 android:text="一键导入，智能管理"
                 android:textSize="12sp"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_1"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
@@ -85,14 +85,14 @@
                 android:id="@+id/tv_keeper_add_bill_icon_2"
                 android:src="@drawable/icon_keeper_add_bill_icon_2"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="45dp"
                 android:layout_height="45dp"/>
             <TextView
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_2"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_2"
                 android:text="网贷账单"
                 android:textSize="15sp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/splash_main_title_color"
                 android:layout_width="wrap_content"
@@ -101,8 +101,8 @@
                 android:text="还款提醒，不再逾期"
                 android:textSize="12sp"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_2"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
@@ -120,7 +120,7 @@
         android:text="账单查询，智能提醒"
         android:textSize="12sp"
         android:layout_below="@id/linear_layout_add_bill"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -140,15 +140,15 @@
             <ImageView
                 android:id="@+id/tv_keeper_add_bill_icon_3"
                 android:src="@drawable/icon_zfb"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
                 android:layout_width="45dp"
                 android:layout_height="45dp"/>
             <TextView
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_3"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_3"
                 android:text="支付宝"
                 android:textSize="15sp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/splash_main_title_color"
                 android:layout_width="wrap_content"
@@ -157,8 +157,8 @@
                 android:text="查询流水账单"
                 android:textSize="12sp"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_3"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
@@ -171,15 +171,15 @@
             <ImageView
                 android:id="@+id/tv_keeper_add_bill_icon_4"
                 android:src="@drawable/icon_keeper_gjj"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
                 android:layout_width="45dp"
                 android:layout_height="45dp"/>
             <TextView
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_4"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_4"
                 android:text="公积金"
                 android:textSize="15sp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/splash_main_title_color"
                 android:layout_width="wrap_content"
@@ -188,8 +188,8 @@
                 android:text="查询被遗忘的财富"
                 android:textSize="12sp"
                 android:layout_marginTop="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/tv_keeper_add_bill_icon_4"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/tv_keeper_add_bill_icon_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>

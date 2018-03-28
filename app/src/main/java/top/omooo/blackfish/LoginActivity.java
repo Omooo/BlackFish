@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import top.omooo.blackfish.utils.AdjustViewUtil;
+import top.omooo.blackfish.utils.KeyBoardUtil;
 
 /**
  * Created by SSC on 2018/3/18.
@@ -54,14 +55,16 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
 
         mPwdLayout = findView(R.id.rl_pwd_layout);
 
-        // TODO: 2018/3/18 更改背景导致按钮按下效果丢失
         mButtonLogin.setBackground(getDrawable(R.drawable.shape_btn_pressed));
         mButtonLogin.setClickable(false);
 
         mAdjustViewUtil = new AdjustViewUtil();
         mAdjustViewUtil.adjustEditTextPic(mEditPhone, 0, 0, 0, 55, 55);
         mAdjustViewUtil.adjustEditTextPic(mEditPwd, 0, 0, 0, 55, 55);
+
+        KeyBoardUtil.showKeyBoard(mEditPhone);
     }
+
 
     @Override
     public void initListener() {

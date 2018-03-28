@@ -79,6 +79,14 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="HeaderTitleBlackStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="DetailActivityTheme" parent="AppTheme">
         <item name="colorPrimaryDark">@color/colorWhite</item>
     </style>
@@ -109,5 +117,12 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/shape_dialog</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="DetailBillText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorCardDetailText</item>
     </style>
 </resources>

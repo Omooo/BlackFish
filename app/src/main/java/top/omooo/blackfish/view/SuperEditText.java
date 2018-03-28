@@ -2,6 +2,7 @@ package top.omooo.blackfish.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.listener.OnSuperEditClickListener;
+import top.omooo.blackfish.listener.OnSuperEditLayoutClickListener;
+import top.omooo.blackfish.utils.KeyBoardUtil;
 
 /**
  * Created by SSC on 2018/3/26.
@@ -29,10 +32,15 @@ public class SuperEditText extends RelativeLayout {
 
     private static final String TAG = "SuperEditText";
 
-    private OnSuperEditClickListener mClickListener;
+    private OnSuperEditLayoutClickListener mClickListener;
+    private OnSuperEditClickListener mSuperListener;
 
-    public void setOnSuperEditClickListener(OnSuperEditClickListener listener) {
+    public void setOnSuperEditClickListener(OnSuperEditLayoutClickListener listener) {
         this.mClickListener = listener;
+    }
+
+    public void setOnSuperClickListener(OnSuperEditClickListener superListener) {
+        this.mSuperListener = superListener;
     }
 
     public String getData() {
@@ -60,12 +68,41 @@ public class SuperEditText extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (null != mClickListener) {
-                    //minSdkVersion=26
-                    if (mEditText.getFocusable() == FOCUSABLE) {
-                        mEditText.requestFocus();
-                    }
                     mClickListener.onSuperEditClick(mTextView.getText().toString());
                     Log.i(TAG, "onClick: " + v.getId());
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        //minSdkVersion=26
+                        if (mEditText.getFocusable() == FOCUSABLE) {
+                            mEditText.requestFocus();
+                            KeyBoardUtil.showKeyBoard(mEditText);
+                        } else {
+                            mEditText.setInputType(InputType.TYPE_NULL);
+                            KeyBoardUtil.closeKeyBoard(mEditText);
+                        }
+                    } else {
+                        //需要点击EditText才会弹出软键盘
+                    }
+                }
+            }
+        });
+        
+        mEditText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mSuperListener) {
+                    mSuperListener.onSuperClick(mTextView.getText().toString());
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        //minSdkVersion=26
+                        if (mEditText.getFocusable() == FOCUSABLE) {
+                            mEditText.requestFocus();
+                            KeyBoardUtil.showKeyBoard(mEditText);
+                        } else {
+                            mEditText.setInputType(InputType.TYPE_NULL);
+                            KeyBoardUtil.closeKeyBoard(mEditText);
+                        }
+                    } else {
+                        //需要点击EditText才会弹出软键盘
+                    }
                 }
             }
         });
@@ -87,23 +124,24 @@ public class SuperEditText extends RelativeLayout {
         mTextView.setText(leftText);
         mImageLeft.setImageResource(drawableId);
         mEditText.setHint(hintText);
+
         if (typeMode == 0) {
 
         } else if (typeMode == 1) {
             mEditText.setHintTextColor(hintColor);
             mEditText.setCursorVisible(false);
-            mEditText.setClickable(false);
+            mEditText.setClickable(true);
             mEditText.setFocusable(false);
             mEditText.setInputType(InputType.TYPE_NULL);
         } else if (typeMode == 2) {
             mEditText.setCursorVisible(false);
-            mEditText.setClickable(false);
+            mEditText.setClickable(true);
             mEditText.setFocusable(false);
             mEditText.setInputType(InputType.TYPE_NULL);
             mImageRight.setVisibility(VISIBLE);
         } else if (typeMode == 3) {
             mEditText.setCursorVisible(false);
-            mEditText.setClickable(false);
+            mEditText.setClickable(true);
             mEditText.setFocusable(false);
             mEditText.setInputType(InputType.TYPE_NULL);
             mImageRight.setVisibility(VISIBLE);

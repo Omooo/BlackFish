@@ -21,7 +21,7 @@
             android:layout_height="20dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/shape_home_subtitle_left"
             android:backgroundTint="@color/home_header_red"/>
 
@@ -30,8 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/tv_home_goods_title_image"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/tv_home_goods_title_image"
             android:text="女生节活动专场"
             android:textColor="@color/splash_main_title_color"
             android:textSize="15sp"/>
@@ -39,10 +39,10 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/icon_home_pager_goods_title_to_right"/>
     </RelativeLayout>
     <com.facebook.drawee.view.SimpleDraweeView
@@ -58,14 +58,14 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_1"
             android:layout_weight="1"
-            android:layout_marginRight="0.1dp"
+            android:layout_marginEnd="0.1dp"
             android:scaleType="fitXY"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_2"
             android:layout_weight="1"
-            android:layout_marginLeft="0.1dp"
+            android:layout_marginEnd="0.1dp"
             android:scaleType="fitXY"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
@@ -78,14 +78,14 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_3"
             android:layout_weight="1"
-            android:layout_marginRight="0.1dp"
+            android:layout_marginEnd="0.1dp"
             android:scaleType="fitXY"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_4"
             android:layout_weight="1"
-            android:layout_marginLeft="0.1dp"
+            android:layout_marginStart="0.1dp"
             android:scaleType="fitXY"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>

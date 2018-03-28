@@ -19,7 +19,7 @@
         android:id="@+id/tv_dialog_divider"
         android:layout_below="@+id/tv_custom_dialog_title"
         style="@style/DividerTextView"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_below="@+id/tv_dialog_divider"

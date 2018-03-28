@@ -31,4 +31,6 @@
     <color name="colorQQEmailText">#42A2F9</color>
     <color name="colorOtherEmailText">#FCC93D</color>
     <color name="colorBankTextName">#505050</color>
+    <color name="colorCardDetailHeader">#333333</color>
+    <color name="colorCardDetailText">#9D9D9D</color>
 </resources>

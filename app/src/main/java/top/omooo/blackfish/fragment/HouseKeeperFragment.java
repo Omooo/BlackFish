@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import top.omooo.blackfish.KeeperPageActivity.AddBillActivity;
 import top.omooo.blackfish.KeeperPageActivity.AddCreditBillActivity;
+import top.omooo.blackfish.KeeperPageActivity.ShowDetailBillActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.AdjustViewUtil;
 import top.omooo.blackfish.utils.DensityUtil;
@@ -207,7 +208,7 @@ public class HouseKeeperFragment extends BaseFragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(getActivity(),AddBillActivity.class));
+                startActivity(new Intent(getActivity(),ShowDetailBillActivity.class));
             }
 
             @Override

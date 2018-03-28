@@ -59,6 +59,11 @@
 
         <activity android:name=".KeeperPageActivity.CreateCreditBillActivity"/>
 
+        <activity android:name=".utils.SelectCardActivity"/>
+
+        <activity android:name=".KeeperPageActivity.ShowDetailBillActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
     </application>
 
 </manifest>

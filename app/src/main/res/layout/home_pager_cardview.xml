@@ -46,7 +46,7 @@
                     android:id="@+id/btn_home_card_get"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:text="立即领取"/>
             </RelativeLayout>

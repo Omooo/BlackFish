@@ -13,7 +13,7 @@
             android:src="@drawable/icon_to_left"
             android:scaleType="fitXY"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="20dp"
             android:layout_height="20dp"/>
         <TextView
@@ -31,20 +31,20 @@
         <TextView
             android:text="反馈类型:"
             android:textSize="18sp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_sug_interface"
             android:text="体验与界面"
             android:background="@drawable/shape_sug_text_view_unselected"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:gravity="center"
             android:layout_width="100dp"
             android:layout_height="28dp"/>
         <TextView
             android:id="@+id/tv_sug_other"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/shape_sug_text_view_unselected"
             android:text="其他"
             android:gravity="center"
@@ -57,9 +57,9 @@
         android:layout_height="200dp">
         <EditText
             android:id="@+id/et_sug"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="10dp"
-            android:gravity="left|top"
+            android:gravity="start|top"
             android:background="@null"
             android:hint="我们接受赞美，也接受批评，我们为你设计，也为自己设计。"
             android:layout_width="match_parent"
@@ -67,9 +67,9 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_sug_add_image"
             android:src="@drawable/icon_sug_add_image"
-            android:layout_gravity="left|bottom"
+            android:layout_gravity="start|bottom"
             android:scaleType="fitXY"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="5dp"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
@@ -78,7 +78,7 @@
         android:id="@+id/et_sug_phone_text"
         android:hint="手机号/邮箱(选填，方便我们给您答复)"
         android:background="@color/colorWhite"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:layout_marginTop="10dp"
         android:inputType="textEmailAddress|phone"
         android:layout_width="match_parent"

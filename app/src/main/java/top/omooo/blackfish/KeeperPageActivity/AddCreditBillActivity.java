@@ -69,10 +69,10 @@ public class AddCreditBillActivity extends BaseActivity {
         mAdjustViewUtil.adjustTextViewPic(mTextQQEmail, 0, 0, 0, 130, 130);
         mAdjustViewUtil.adjustTextViewPic(mTextOtherEmail, 0, 0, 0, 130, 130);
 
-        mHandler=new Handler() {
+
+        mHandler = new Handler(new Handler.Callback() {
             @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
+            public boolean handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
                         // TODO: 2018/3/25 妈耶数据显示不出来？
@@ -81,8 +81,9 @@ public class AddCreditBillActivity extends BaseActivity {
                         break;
                     default:break;
                 }
+                return false;
             }
-        };
+        });
     }
 
     @Override

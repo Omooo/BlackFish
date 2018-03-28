@@ -158,6 +158,7 @@ public class VerifyCodeActivity extends BaseActivity{
 
             }
         });
+
     }
 
     @Override

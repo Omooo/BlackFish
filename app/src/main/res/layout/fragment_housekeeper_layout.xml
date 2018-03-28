@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
@@ -21,7 +20,7 @@
             android:id="@+id/iv_keeper_add"
             android:src="@drawable/icon_keeper_add"
             android:layout_gravity="right"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginTop="20dp"
             android:scaleType="fitXY"
             android:layout_width="25dp"
@@ -40,9 +39,9 @@
             android:text="应还款(元)"
             android:layout_marginTop="110dp"
             android:textSize="13sp"
-            android:paddingRight="70dp"
+            android:paddingEnd="70dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="140dp"
+            android:layout_marginStart="140dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <ImageView
@@ -50,7 +49,7 @@
             android:src="@drawable/icon_close_eyes"
             android:layout_marginTop="110dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="210dp"
+            android:layout_marginStart="210dp"
             android:layout_width="30dp"
             android:layout_height="20dp"/>
     </FrameLayout>
@@ -106,7 +105,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/icon_construction_bank"
             android:text="   建行信用卡  6667"
@@ -115,8 +114,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
             android:layout_marginTop="10dp"
             android:text="小黑鱼..."
             android:textSize="13sp"/>
@@ -125,9 +124,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_marginBottom="20dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="今日还款"
             android:textColor="@color/splash_main_title_color"
             android:textSize="18sp"/>
@@ -152,9 +151,9 @@
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/shape_keeper_card_text"
             android:gravity="center"
             android:text="立即还款"
@@ -163,7 +162,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/icon_keeper_bankcard_example"/>
     </RelativeLayout>
@@ -192,8 +191,8 @@
     <LinearLayout
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="30dp">

@@ -50,19 +50,19 @@
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/splash_bottom_point_unselected" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/splash_bottom_point_unselected" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/splash_bottom_point_unselected" />
     </LinearLayout>
 </RelativeLayout>

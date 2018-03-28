@@ -10,16 +10,16 @@
         android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:src="@drawable/icon_black_fish"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_width="28dp"
         android:layout_height="20dp"/>
     <TextView
-        android:layout_toRightOf="@+id/iv_custom_toast_icon"
+        android:layout_toEndOf="@+id/iv_custom_toast_icon"
         android:id="@+id/tv_custom_toast_text"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:textColor="@color/colorWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

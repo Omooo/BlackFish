@@ -13,7 +13,7 @@
             android:src="@drawable/icon_to_left"
             android:scaleType="fitXY"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="20dp"
             android:layout_height="20dp"/>
         <TextView
@@ -27,24 +27,24 @@
             android:id="@+id/tv_certify_support_bank"
             android:text="支持银行"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
         style="@style/DividerTextView"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <TextView
         android:text="本人身份信息"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         style="@style/DividerTextView"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         <TextView
             android:id="@+id/tv_certify_name"
             android:text="姓名"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_width="80dp"
@@ -64,13 +64,13 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/tv_certify_name"
+            android:layout_toEndOf="@+id/tv_certify_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
         style="@style/DividerTextView"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
         <TextView
             android:id="@+id/tv_certify_id_number"
             android:text="身份证号"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_width="80dp"
@@ -91,20 +91,20 @@
             android:maxLength="18"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:layout_toRightOf="@+id/tv_certify_id_number"
+            android:layout_toEndOf="@+id/tv_certify_id_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <TextView
         android:text="持卡人银行卡信息"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         style="@style/DividerTextView"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -112,7 +112,7 @@
         <TextView
             android:id="@+id/tv_certify_saving_card_number"
             android:text="储蓄卡号"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_width="80dp"
@@ -124,21 +124,21 @@
             android:inputType="number"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:layout_toRightOf="@+id/tv_certify_saving_card_number"
+            android:layout_toEndOf="@+id/tv_certify_saving_card_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageView
             android:id="@+id/iv_camera"
             android:src="@drawable/icon_camera"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
     </RelativeLayout>
     <TextView
     style="@style/DividerTextView"
-    android:layout_marginLeft="0dp"/>
+    android:layout_marginStart="0dp"/>
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
         <TextView
             android:id="@+id/tv_certify_reserved_phone"
             android:text="预留手机"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_width="80dp"
@@ -159,22 +159,22 @@
             android:maxLength="11"
             android:background="@null"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/tv_certify_reserved_phone"
+            android:layout_toEndOf="@+id/tv_certify_reserved_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_certify_request_code"
             android:text="获取验证码"
             android:background="@drawable/seletor_btn_general"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="100dp"
             android:layout_height="30dp"/>
     </RelativeLayout>
     <TextView
         style="@style/DividerTextView"
-        android:layout_marginLeft="0dp"/>
+        android:layout_marginStart="0dp"/>
     <RelativeLayout
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -182,7 +182,7 @@
         <TextView
             android:id="@+id/tv_certify_code"
             android:text="验证码"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:textSize="17sp"
             android:layout_centerVertical="true"
             android:layout_width="80dp"
@@ -195,7 +195,7 @@
             android:layout_centerVertical="true"
             android:background="@null"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/tv_certify_code"
+            android:layout_toEndOf="@+id/tv_certify_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
