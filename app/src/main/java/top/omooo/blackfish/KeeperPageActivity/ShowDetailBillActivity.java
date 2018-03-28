@@ -1,6 +1,8 @@
 package top.omooo.blackfish.KeeperPageActivity;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -74,9 +76,7 @@ public class ShowDetailBillActivity extends BaseActivity {
     public void processClick(View view) {
         switch (view.getId()) {
             case R.id.iv_keeper_detail_card_back:
-                CustomToast.show(mContext, "2333");
-                layoutInAndOutAnim(true);
-//                finish();
+                exitActivity();
                 break;
             case R.id.iv_detail_card_refresh:
                 CustomToast.show(mContext, "刷新");
@@ -91,20 +91,49 @@ public class ShowDetailBillActivity extends BaseActivity {
     }
 
     private void layoutInAndOutAnim(boolean isBack) {
+        Log.i(TAG, "layoutInAndOutAnim: " + isBack);
         if (!isBack) {
             Animation animationTopIn = AnimationUtils.loadAnimation(this, R.anim.view_layout_top_in);
+            animationTopIn.setFillEnabled(true);
             animationTopIn.setFillAfter(true);
             mRelativeLayout1.setAnimation(animationTopIn);
             Animation animationBottomIn = AnimationUtils.loadAnimation(this, R.anim.view_layout_bottom_in);
+            animationBottomIn.setFillEnabled(true);
             animationBottomIn.setFillAfter(true);
             mRelativeLayout2.setAnimation(animationBottomIn);
         } else {
             Animation animationTopOut = AnimationUtils.loadAnimation(this, R.anim.view_layout_top_out);
+            animationTopOut.setFillEnabled(true);
             animationTopOut.setFillAfter(true);
             mRelativeLayout1.setAnimation(animationTopOut);
             Animation animationBottomOut = AnimationUtils.loadAnimation(this, R.anim.view_layout_bottom_out);
+            animationBottomOut.setFillEnabled(true);
             animationBottomOut.setFillAfter(true);
             mRelativeLayout2.setAnimation(animationBottomOut);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitActivity();
+        }
+        return false;
+    }
+
+    private void exitActivity() {
+        mRelativeLayout1.clearAnimation();
+        mRelativeLayout1.invalidate();
+        mRelativeLayout2.clearAnimation();
+        mRelativeLayout2.invalidate();
+        layoutInAndOutAnim(true);
+        mRelativeLayout1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+                //去掉返回后透明Activity退出闪烁问题
+                overridePendingTransition(0, 0);
+            }
+        }, 500);
     }
 }
