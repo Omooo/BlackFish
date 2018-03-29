@@ -33,4 +33,5 @@
     <color name="colorBankTextName">#505050</color>
     <color name="colorCardDetailHeader">#333333</color>
     <color name="colorCardDetailText">#9D9D9D</color>
+    <color name="colorDetailCardBottomText">#ADAAAD</color>
 </resources>

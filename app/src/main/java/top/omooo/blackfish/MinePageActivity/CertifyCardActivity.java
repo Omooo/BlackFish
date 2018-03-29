@@ -1,12 +1,9 @@
 package top.omooo.blackfish.MinePageActivity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +17,7 @@ import android.widget.TextView;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
+import top.omooo.blackfish.utils.DensityUtil;
 import top.omooo.blackfish.utils.SpannableStringUtil;
 import top.omooo.blackfish.view.CustomToast;
 
@@ -175,16 +173,10 @@ public class CertifyCardActivity extends BaseActivity {
         window.setGravity(Gravity.BOTTOM);
         //获得窗体的属性，并设置宽高
         WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = (int) (getScreenWidth(this) * 0.95);
+        lp.width = (int) (DensityUtil.getScreenWidth(this) * 0.95);
         lp.y = 20;
         window.setAttributes(lp);
         dialog.show();
     }
-    //获取屏幕的宽 返回 int 型
-    private int getScreenWidth(Activity context){
-        Display display = context.getWindowManager().getDefaultDisplay();
-        Point p = new Point();
-        display.getSize(p);
-        return p.x;
-    }
+
 }
