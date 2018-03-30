@@ -1,7 +1,10 @@
 package top.omooo.blackfish;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+
+import com.cncoderx.wheelview.OnWheelChangedListener;
+import com.cncoderx.wheelview.WheelView;
 
 /**
  * Created by SSC on 2018/3/26.
@@ -9,18 +12,23 @@ import android.widget.LinearLayout;
 
 public class TestActivity extends BaseActivity {
 
-    private LinearLayout mLinearLayout;
     private static final String TAG = "TestActivity";
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_test_layout;
+        return R.layout.test;
     }
 
     @Override
     public void initViews() {
-        mLinearLayout = findView(R.id.ll_test);
-
+        WheelView wheelView = findViewById(R.id.wheel);
+        wheelView.setOnWheelChangedListener(new OnWheelChangedListener() {
+            @Override
+            public void onChanged(WheelView view, int oldIndex, int newIndex) {
+                CharSequence text = view.getItem(newIndex);
+                Log.i("WheelView", String.format("index: %d, text: %s", newIndex, text));
+            }
+        });
     }
 
 

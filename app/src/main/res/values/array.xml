@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="picker">
+        <item>测试</item>
+        <item>测试</item>
+        <item>测试</item>
+        <item>测试</item>
+        <item>测试</item>
+        <item>测试</item>
+        <item>测试</item>
+    </string-array>
+    <string-array name="pick_remind_date">
+        <item>提前 1 天</item>
+        <item>提前 2 天</item>
+        <item>提前 3 天</item>
+        <item>提前 4 天</item>
+        <item>提前 5 天</item>
+        <item>提前 6 天</item>
+        <item>提前 7 天</item>
+    </string-array>
+</resources>

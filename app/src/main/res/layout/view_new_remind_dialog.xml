@@ -34,7 +34,7 @@
         android:layout_height="30dp"/>
     <TextView
         android:id="@+id/tv_remind_date"
-        android:text="提前一天"
+        android:text="提前 1 天"
         android:background="@drawable/shape_card_view"
         android:paddingStart="20dp"
         android:gravity="center_vertical"

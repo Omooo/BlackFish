@@ -2,6 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.cncoderx.wheelview.Wheel3DView
+        android:id="@+id/wheel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cyclic="true"
+        app:entries="@array/picker"
+        app:visibleItems="9"
+        app:toward="right"/>
 </LinearLayout>

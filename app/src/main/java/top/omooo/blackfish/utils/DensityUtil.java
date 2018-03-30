@@ -2,6 +2,7 @@ package top.omooo.blackfish.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.view.Display;
 
@@ -26,5 +27,21 @@ public class DensityUtil {
         Point p = new Point();
         display.getSize(p);
         return p.x;
+    }
+    /**
+     * dp转px
+     * @param dp
+     */
+    public static int dp2px(float dp){
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density + 0.5f);
+    }
+
+    /**
+     * sp转px
+     * @param sp
+     * @return
+     */
+    public static int sp2px(float sp){
+        return (int) (sp * Resources.getSystem().getDisplayMetrics().scaledDensity + 0.5f);
     }
 }

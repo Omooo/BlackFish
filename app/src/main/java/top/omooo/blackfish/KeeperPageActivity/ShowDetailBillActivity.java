@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -19,6 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import java.util.Calendar;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
@@ -32,7 +37,7 @@ import top.omooo.blackfish.view.CustomToast;
  * Created by SSC on 2018/3/28.
  */
 
-public class ShowDetailBillActivity extends BaseActivity {
+public class ShowDetailBillActivity extends BaseActivity{
 
     private RelativeLayout mRelativeLayout1;
     private RelativeLayout mRelativeLayout2;
@@ -45,7 +50,6 @@ public class ShowDetailBillActivity extends BaseActivity {
     private TabLayout.Tab payHistoryTab;
 
     private TextView mTextRemind,mTextPayOff, mTextSign,mTextImmPay;
-    private AdjustViewUtil mAdjustViewUtil;
 
     private boolean isSelectRemindWay = true;
     private ImageView mImageNewRemindClose, mImageAddRemindClose, mImageSelectRemindWay;
@@ -54,6 +58,9 @@ public class ShowDetailBillActivity extends BaseActivity {
     private Button mBtnCancel, mBtnDetermine;
 
     private Dialog remindDialog,addRemindDialog;
+
+    private int childIndex = 0;
+    private AdjustViewUtil mAdjustViewUtil;
 
     private Context mContext;
     private static final String TAG = "ShowDetailBillActivity";
@@ -149,7 +156,11 @@ public class ShowDetailBillActivity extends BaseActivity {
                 addRemindDialog.dismiss();
                 break;
             case R.id.tv_new_remind:
-                showAddRemindDialog();
+                if (mNewRemindLayout.getChildCount() < 5) {
+                    showAddRemindDialog();
+                } else {
+                    Toast.makeText(mContext, "最多设置五条提醒", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.iv_new_remind_close:
                 remindDialog.dismiss();
@@ -169,6 +180,14 @@ public class ShowDetailBillActivity extends BaseActivity {
             case R.id.btn_remind_determine:
                 if (isSelectRemindWay) {
                     Toast.makeText(mContext, "保存成功", Toast.LENGTH_SHORT).show();
+                    addRemindItem(new OnRemoveChildViewFromIndexListener() {
+                        @Override
+                        public void onRemoveChildView(int index) {
+                            Log.i(TAG, "onRemoveChildView: " + index);
+                            // TODO: 2018/3/30 点击删除总是从最后一个开始删除 
+                            mNewRemindLayout.removeView(mNewRemindLayout.getChildAt(index-1));
+                        }
+                    });
                     addRemindDialog.dismiss();
                 } else {
                     Toast.makeText(mContext, "请选择提醒方式", Toast.LENGTH_SHORT).show();
@@ -184,14 +203,68 @@ public class ShowDetailBillActivity extends BaseActivity {
         }
     }
 
+    private void addRemindItem(final OnRemoveChildViewFromIndexListener listener) {
+        //添加已经选择完提醒
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_remind_item_layout, null);
+        TextView textView = view.findViewById(R.id.tv_remind_item_time);
+        mAdjustViewUtil = new AdjustViewUtil();
+        mAdjustViewUtil.adjustTextViewPic(textView, 2, 0, 0, 50, 50);
+        String text = "·   " + mTextRemindDate.getText() + "    " + mTextRemindTime.getText();
+        Log.i(TAG, "addRemindItem: " + text);
+        textView.setText(text);
+        ImageView imageView = view.findViewById(R.id.iv_remind_item_delete);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRemoveChildView(childIndex);
+                childIndex--;
+            }
+        });
+        mNewRemindLayout.addView(view, childIndex);
+        childIndex++;
+    }
+
+    public interface OnRemoveChildViewFromIndexListener {
+        void onRemoveChildView(int index);
+    }
+
     private void selectRemindTime() {
-        Toast.makeText(mContext, "选择提醒时间", Toast.LENGTH_SHORT).show();
-        PickerUtil pickerUtil = new PickerUtil();
-        pickerUtil.showPicker(this, new String[]{"1", "2", "3", "4", "5", "6", "7", "8"});
+//        //Android原生时间选择器，丑的鸭皮
+//        Calendar calendar = Calendar.getInstance();
+//        new TimePickerDialog( mContext,
+//                new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        Log.i(TAG, "onTimeSet: " + hourOfDay + "  " + minute);
+//                    }
+//                }
+//                // 设置初始时间
+//                , calendar.get(Calendar.HOUR_OF_DAY)
+//                , calendar.get(Calendar.MINUTE)
+//                ,false).show();
+        // https://github.com/wdullaer/MaterialDateTimePicker
+        Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+                String time = hourOfDay + ":" + minute;
+                mTextRemindTime.setText(time);
+                mTextRemindTime.setTextColor(getResources().getColor(R.color.splash_main_title_color));
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+        timePickerDialog.show(getFragmentManager(),"timePickerDialog");
     }
 
     private void selectRemindDate() {
-        Toast.makeText(mContext, "选择提醒日期", Toast.LENGTH_SHORT).show();
+        PickerUtil pickerUtil = new PickerUtil();
+        pickerUtil.showCustomPicker(this, R.array.pick_remind_date, new PickerUtil.OnSelectFinshListener() {
+            @Override
+            public String onSelected(String result) {
+                mTextRemindDate.setText(result);
+                mTextRemindDate.setTextColor(getResources().getColor(R.color.splash_main_title_color));
+                return null;
+            }
+        });
     }
 
     @Override
@@ -246,6 +319,7 @@ public class ShowDetailBillActivity extends BaseActivity {
         }, 500);
     }
 
+    // TODO: 2018/3/30 保存已经添加的提醒 
     private void showRemindDialog() {
         remindDialog = new Dialog(mContext, R.style.BottomDialogStyle);
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_remind_bottom_dialog_layout, null);
@@ -261,7 +335,8 @@ public class ShowDetailBillActivity extends BaseActivity {
         Window window = remindDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = DensityUtil.getScreenWidth(this);
-        lp.height = DensityUtil.dip2px(mContext, 130);
+//        lp.height = DensityUtil.dip2px(mContext, 130);
+        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
         window.setAttributes(lp);
         remindDialog.show();
