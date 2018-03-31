@@ -7,4 +7,5 @@
         <attr name="typeMode" format="integer"/>
         <attr name="hintTextColor" format="color"/>
     </declare-styleable>
+
 </resources>

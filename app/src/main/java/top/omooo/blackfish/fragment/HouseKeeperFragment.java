@@ -3,6 +3,7 @@ package top.omooo.blackfish.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,15 @@ public class HouseKeeperFragment extends BaseFragment {
                 return false;
             }
         });
+
+        // TODO: 2018/3/31 空指针，获取不到数据 
+        Bundle bundle = getArguments();
+        if (null != bundle) {
+            String cardType = bundle.getString("CardType");
+            CustomToast.show(mContext, cardType);
+        }
     }
+
 
     @Override
     public void initListener() {

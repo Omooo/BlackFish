@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.sql.Connection;
 
 import top.omooo.blackfish.BaseActivity;
@@ -26,6 +28,7 @@ public class SetNewPwdActivity extends BaseActivity {
     private ImageView mImageBack;
     private EditText mEditPwd;
     private Button mButtonSubmit;
+    private LottieAnimationView mLottieAnimationView;
 
     private String phone;
 
@@ -45,6 +48,7 @@ public class SetNewPwdActivity extends BaseActivity {
         mImageBack = findView(R.id.tv_mine_set_new_pwd_back);
         mEditPwd = findView(R.id.et_mine_set_new_pwd);
         mButtonSubmit = findView(R.id.btn_mine_set_new_pwd_submit);
+        mLottieAnimationView = findView(R.id.lottie_set_new_pwd_success);
     }
 
     @Override
@@ -92,7 +96,7 @@ public class SetNewPwdActivity extends BaseActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if (aBoolean) {
-                CustomToast.show(mContext, "密码重置成功");
+                CustomToast.show(mContext,"密码重置成功");
             } else {
                 CustomToast.show(mContext,"密码重置失败");
             }

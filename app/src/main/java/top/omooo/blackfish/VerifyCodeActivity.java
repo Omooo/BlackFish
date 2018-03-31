@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +32,7 @@ public class VerifyCodeActivity extends BaseActivity{
     private TextView mTextPhoneNumber,mTextVerifyTimer, mTextVerifyResult;
     private VerifyCodeView mVerifyCodeView;
     private ImageView mImageBack;
+    private LottieAnimationView mLottieIn, mLottieSuccess;
 
     private OnVerifyCodeResultListener mCodeResultListener=new OnVerifyCodeResultListener() {
         @Override
@@ -94,10 +97,17 @@ public class VerifyCodeActivity extends BaseActivity{
             } else {
                 Log.i(TAG, "submitCodeSuccess: 数据库连接失败");
             }
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mLottieSuccess.setVisibility(View.VISIBLE);
+//                    mLottieSuccess.playAnimation();
+//                }
+//            });
             finish();
             //跳转到MineFragment并清空Activity任务栈
             Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
-            intent.putExtra("flag", "verifyCodeActivity");
+            intent.putExtra("flag", "VerifyCodeActivity");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
             startActivity(intent);
         }
@@ -135,6 +145,10 @@ public class VerifyCodeActivity extends BaseActivity{
         mTextVerifyResult = findView(R.id.tv_verify_result);
         mVerifyCodeView = findView(R.id.verify_code_view);
         mImageBack = findView(R.id.iv_verify_back);
+
+        mLottieIn = findView(R.id.lottie_verify_code_in);
+//        mLottieSuccess = findView(R.id.lottie_verify_code_success);
+        mLottieIn.playAnimation();
 
         mTextVerifyTimer.setText("");
         mTextVerifyResult.setText("");

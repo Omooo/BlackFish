@@ -2,15 +2,20 @@ package top.omooo.blackfish.KeeperPageActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.HashMap;
+
 import top.omooo.blackfish.BaseActivity;
+import top.omooo.blackfish.MainActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.listener.OnSuperEditClickListener;
 import top.omooo.blackfish.listener.OnSuperEditLayoutClickListener;
+import top.omooo.blackfish.utils.PickerUtil;
 import top.omooo.blackfish.utils.SelectCardActivity;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.SuperEditText;
@@ -27,6 +32,13 @@ public class CreateCreditBillActivity extends BaseActivity {
     private Button mButtonSave;
 
     private static final String TAG = "CreateCreditActivity";
+
+    private String bankName = "";
+    private String cardType = "信用卡";
+    private String billDay = "15 日";
+    private String payBillDay = "5 日";
+
+    private PickerUtil mPickerUtil;
 
     @Override
     public int getLayoutId() {
@@ -47,6 +59,8 @@ public class CreateCreditBillActivity extends BaseActivity {
         mSuperPayBillDay = findView(R.id.super_edit_pay_bill_day);
 
         mButtonSave = findView(R.id.btn_create_save);
+
+        mPickerUtil = new PickerUtil();
     }
 
     @Override
@@ -84,12 +98,62 @@ public class CreateCreditBillActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_create_save:
-                CustomToast.show(mContext, "保存");
+                getEditText();
                 break;
             default:break;
         }
     }
 
+    //获取数据
+    private void getEditText() {
+
+        HashMap<String, String> mCardNumberMap = mSuperCardNumber.getStringHashMap();
+        String cardNumber = mCardNumberMap.get("卡号");
+        Log.i(TAG, "processClick: cardNumber   " + cardNumber);
+
+        HashMap<String, String> mUsernameMap = mSuperUsername.getStringHashMap();
+        String username = mUsernameMap.get("用户名");
+        Log.i(TAG, "processClick: username   " + username);
+
+        HashMap<String, String> mLinesMap = mSuperLines.getStringHashMap();
+        String lines = mLinesMap.get("信用额度");
+        Log.i(TAG, "processClick: lines   " + lines);
+
+        HashMap<String, String> mBillMap = mSuperBill.getStringHashMap();
+        String bills = mBillMap.get("账单金额");
+        Log.i(TAG, "processClick: bills   " + bills);
+
+        if (null == cardNumber || cardNumber.length() < 19) {
+            showToast("请正确填写卡号");
+        } else if (null == username || username.equals("")) {
+            showToast("请正确填写用户名");
+        } else if (null == lines || lines.equals("")) {
+            showToast("请正确填写信用额度");
+        } else if (null == bills || bills.equals("")) {
+            showToast("请正确填写账单金额");
+        } else if (bankName.equals("")) {
+            showToast("请选择所属银行");
+        } else {
+            Intent intent = new Intent(mContext, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("CardNumber", cardNumber);
+            bundle.putString("BankName", bankName);
+            bundle.putString("CardType", cardType);
+            bundle.putString("Username", username);
+            bundle.putString("Lines", lines);
+            bundle.putString("Bills", bills);
+            bundle.putString("BillDay", billDay);
+            bundle.putString("PayBillDay", payBillDay);
+            intent.putExtras(bundle);
+            intent.putExtra("flag", "CreateCreditBillActivity");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+            startActivity(intent);
+        }
+    }
+
+    private void showToast(String msg) {
+        CustomToast.show(mContext, msg);
+    }
     @Override
     protected void initData() {
 
@@ -108,7 +172,7 @@ public class CreateCreditBillActivity extends BaseActivity {
                     selectBank();
                     break;
                 case "卡片类型":
-                    selectCard();
+                    selectCardType();
                     break;
                 case "用户名":
 //                    CustomToast.show(mContext, "用户名 被点击" + mSuperCardNumber.getData());
@@ -139,7 +203,7 @@ public class CreateCreditBillActivity extends BaseActivity {
                     selectBank();
                     break;
                 case "卡片类型":
-                    selectCard();
+                    selectCardType();
                     break;
                 case "账单日":
                     selectBillDay();
@@ -158,26 +222,51 @@ public class CreateCreditBillActivity extends BaseActivity {
     }
 
     //选择卡片类型
-    private void selectCard() {
-        CustomToast.show(mContext,"选择卡片类型");
+    private void selectCardType() {
+        mPickerUtil.showCustomPicker(this, R.array.CardType, new PickerUtil.OnSelectFinshListener() {
+            @Override
+            public String onSelected(String result) {
+                cardType = result;
+                mSuperCardType.setEditText("        " + cardType);
+                return null;
+            }
+
+        });
     }
 
     //选择账单日
     private void selectBillDay() {
-        CustomToast.show(mContext,"选择账单日");
+        mPickerUtil.showCustomPicker(this, R.array.BillDay, new PickerUtil.OnSelectFinshListener() {
+            @Override
+            public String onSelected(String result) {
+                billDay = result;
+                mSuperBillDay.setEditText("        " + billDay);
+                return null;
+            }
+        });
     }
 
     //选择还款日
     private void selectPayBillDay() {
-        CustomToast.show(mContext,"选择还款日");
+        mPickerUtil.showCustomPicker(this, R.array.BillDay, new PickerUtil.OnSelectFinshListener() {
+            @Override
+            public String onSelected(String result) {
+                payBillDay = result;
+                mSuperPayBillDay.setEditText("        " + payBillDay);
+                return null;
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0x001 && resultCode == RESULT_OK) {
-            String name = data.getStringExtra("cardName");
-            Log.i(TAG, "onActivityResult: " + name);
+            bankName = data.getStringExtra("cardName");
+            Log.i(TAG, "onActivityResult: " + bankName);
+            mSuperBank.setEditText("        " + bankName);
         }
     }
+
+
 }

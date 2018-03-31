@@ -17,7 +17,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -46,6 +46,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation files('src/main/libs/mysql-connector-java-5.1.30-bin.jar')
     compile 'com.zhihu.android:matisse:0.4.3'
+    compile ('com.airbnb.android:lottie:2.5.1'){
+        exclude group: 'com.android.support'
+    }
+    compile 'com.android.support:multidex:1.0.1'
 
     //齿轮选择器 https://github.com/CNCoderX/WheelView
     compile 'com.cncoderx.wheelview:library:1.2.1'

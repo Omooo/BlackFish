@@ -1,10 +1,9 @@
 package top.omooo.blackfish;
 
-import android.util.Log;
 import android.view.View;
 
-import com.cncoderx.wheelview.OnWheelChangedListener;
-import com.cncoderx.wheelview.WheelView;
+import com.airbnb.lottie.LottieAnimationView;
+
 
 /**
  * Created by SSC on 2018/3/26.
@@ -21,14 +20,8 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        WheelView wheelView = findViewById(R.id.wheel);
-        wheelView.setOnWheelChangedListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView view, int oldIndex, int newIndex) {
-                CharSequence text = view.getItem(newIndex);
-                Log.i("WheelView", String.format("index: %d, text: %s", newIndex, text));
-            }
-        });
+        LottieAnimationView animationView = findView(R.id.animation_view);
+        animationView.playAnimation();
     }
 
 

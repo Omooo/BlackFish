@@ -3,7 +3,9 @@ package top.omooo.blackfish.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.HashMap;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.listener.OnSuperEditClickListener;
@@ -29,11 +33,27 @@ public class SuperEditText extends RelativeLayout {
     private TextView mTextView;
     private EditText mEditText;
     private int typeMode;
+    private HashMap<String, String> mStringHashMap = new HashMap<>();
 
     private static final String TAG = "SuperEditText";
 
     private OnSuperEditLayoutClickListener mClickListener;
     private OnSuperEditClickListener mSuperListener;
+
+
+//    public void setStringHashMap(HashMap<String, String> map) {
+//        this.mStringHashMap = map;
+//    }
+
+    //SuperEditText给外布局传数据，适用于纯EditText
+    public HashMap<String, String> getStringHashMap() {
+        return mStringHashMap;
+    }
+
+    //外布局给SuperEditText传数据，适用于非纯EdiText
+    public void setEditText(String text) {
+        mEditText.setText(text);
+    }
 
     public void setOnSuperEditClickListener(OnSuperEditLayoutClickListener listener) {
         this.mClickListener = listener;
@@ -106,6 +126,25 @@ public class SuperEditText extends RelativeLayout {
                 }
             }
         });
+
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO: 2018/3/31 每个HashMap只存了一个数据，有点浪费，选择更好的数据结构吧，但是每个SuperText只是一个单独的单元，有点难搞 
+                mStringHashMap.put(mTextView.getText().toString(), mEditText.getText().toString());
+            }
+        });
+
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SuperEditText);
         int drawableId = typedArray.getResourceId(R.styleable.SuperEditText_iconLeft, 0);

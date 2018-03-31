@@ -48,9 +48,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String flag = intent.getStringExtra("flag");
         if (flag != null) {
-            if (flag.equals("verifyCodeActivity")) {
+            if (flag.equals("VerifyCodeActivity")) {
                 //跳转到我的MineFragment
                 mViewPager.setCurrentItem(4);
+            } else if (flag.equals("CreateCreditBillActivity")) {
+                mViewPager.setCurrentItem(3);
+//                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                HouseKeeperFragment houseKeeperFragment = HouseKeeperFragment.newInstance();
+//                Bundle bundle = intent.getExtras();
+//                CustomToast.show(this, bundle.getString("CardType"));
+//                houseKeeperFragment.setArguments(intent.getExtras());
+//                transaction.replace(R.id.vp_main_content, houseKeeperFragment);
+//                transaction.commit();
             }
         }
     }

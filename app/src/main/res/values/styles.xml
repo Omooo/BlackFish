@@ -15,6 +15,7 @@
     <style name="StartAppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>    //设置满屏,没有状态栏,不需要可去掉
         <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@drawable/splash</item>  //设置欢迎页图片
         <item name="android:windowContentOverlay">@null</item>
     </style>
