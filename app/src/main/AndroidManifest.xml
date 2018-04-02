@@ -64,6 +64,8 @@
         <activity android:name=".KeeperPageActivity.ShowDetailBillActivity"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <activity android:name=".MallPagerActivity.SearchActivity"/>
+
     </application>
 
 </manifest>

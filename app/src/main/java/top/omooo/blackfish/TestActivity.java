@@ -1,8 +1,9 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.view.View;
 
-import com.airbnb.lottie.LottieAnimationView;
+import top.omooo.blackfish.MallPagerActivity.SearchActivity;
 
 
 /**
@@ -20,8 +21,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        LottieAnimationView animationView = findView(R.id.animation_view);
-        animationView.playAnimation();
+        startActivity(new Intent(this, SearchActivity.class));
     }
 
 

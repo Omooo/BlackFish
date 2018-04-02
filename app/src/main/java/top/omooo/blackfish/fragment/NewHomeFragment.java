@@ -6,11 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
-import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.Serializable;
@@ -64,12 +63,15 @@ public class NewHomeFragment extends BaseFragment{
     private List<HomeSortItemInfo> mHomeSortItemInfos;
     private Handler mHandler;
 
+    private Toolbar mToolbar;
+
     private Drawable mHeaderDrawable;
 
     private LinearLayout mLinearGoodsLayout1;
     private LinearLayout mLinearGoodsLayout2;
     private LinearLayout mLinearGoodsLayout3;
 
+    private ImageView mImageHeaderMsg;
 
     public static NewHomeFragment newInstance() {
         return new NewHomeFragment();
@@ -84,16 +86,23 @@ public class NewHomeFragment extends BaseFragment{
     public void initViews() {
         getActivity().getWindow().setStatusBarColor(Color.parseColor("#00000000"));
 
+        mImageHeaderMsg = findView(R.id.iv_home_header_msg);
+
+        mToolbar = findView(R.id.toolbar_home);
+        mToolbar.getBackground().setAlpha(0);
+
+        RelativeLayout headerLayout = (RelativeLayout) mToolbar.getChildAt(0);
+
+
+        TextView textTitle = (TextView) headerLayout.getChildAt(1);
+        textTitle.setVisibility(View.GONE);
+
         mContext = getActivity();
         mRefreshLayout = findView(R.id.swipe_container);
         mRecyclerView = findView(R.id.rv_fragment_home_container);
 
         //RecycleView的子View
         addItemViews();
-
-        //获取Header背景图
-        mHeaderDrawable = ContextCompat.getDrawable(mContext, R.drawable.image_home_header_bg);
-
 
     }
 
@@ -109,44 +118,19 @@ public class NewHomeFragment extends BaseFragment{
         mRecyclerView.setAdapter(delegateAdapter);
 
 
-        //加载标题
-        final StickyLayoutHelper layoutHelper = new StickyLayoutHelper();
-        GeneralVLayoutAdapter adapter = new GeneralVLayoutAdapter(getActivity(), layoutHelper, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(65)), 1){
-            @Override
-            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false);
-                //初始背景为完全透明
-                final RelativeLayout headerLayout = view.findViewById(R.id.rl_header_layout);
-//                mHeaderDrawable.setAlpha(0);
-//                headerLayout.setBackground(mHeaderDrawable);
-                final TextView title = view.findViewById(R.id.tv_home_title);
-                ImageView titleMessage = view.findViewById(R.id.iv_home_pager_message);
-                titleMessage.setOnClickListener(new MyOnClick("iv_home_pager_message"));
-                // TODO: 2018/3/20 处理HeaderLayout头布局颜色渐变，挖坑
-//                mRecyclerView.addOnScrollListener(new OnScrollListener() {
-//                    @Override
-//                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                        super.onScrollStateChanged(recyclerView, newState);
-//                    }
-//
-//                    @Override
-//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                        super.onScrolled(recyclerView, dx, dy);
-//
-//                        int headerHeight = headerLayout.getMeasuredHeight();
-//                        if (mRecyclerView.computeVerticalScrollOffset() < headerHeight && dy > 0) {
-//                            mHeaderDrawable.setAlpha(mRecyclerView.computeVerticalScrollOffset() / headerHeight);
-//                            headerLayout.setBackground(mHeaderDrawable);
-//                        } else {
-//                            mHeaderDrawable.setAlpha(255);
-//                            headerLayout.setBackground(mHeaderDrawable);
-//                        }
-//                    }
-//                });
-                return new MainViewHolder(view);
-            }
-        };
-        adapters.add(adapter);
+//        //加载标题
+//        final StickyLayoutHelper layoutHelper = new StickyLayoutHelper();
+//        GeneralVLayoutAdapter adapter = new GeneralVLayoutAdapter(getActivity(), layoutHelper, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(65)), 1){
+//            @Override
+//            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false);
+//                final TextView title = view.findViewById(R.id.tv_home_title);
+//                ImageView titleMessage = view.findViewById(R.id.iv_home_pager_message);
+//                titleMessage.setOnClickListener(new MyOnClick("iv_home_pager_message"));
+//                return new MainViewHolder(view);
+//            }
+//        };
+//        adapters.add(adapter);
 
         //首页Banner轮播图
         SingleLayoutHelper bannerLayoutHelper = new SingleLayoutHelper();
@@ -383,7 +367,7 @@ public class NewHomeFragment extends BaseFragment{
 
     @Override
     public void initListener() {
-
+        mImageHeaderMsg.setOnClickListener(this);
     }
 
     @Override
@@ -416,7 +400,12 @@ public class NewHomeFragment extends BaseFragment{
 
     @Override
     public void processClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.iv_home_header_msg:
+                Log.i(TAG, "processClick: 标题 Message 被点击");
+                break;
+            default:break;
+        }
     }
 
     private int dip2px(float dpValue) {
@@ -467,9 +456,6 @@ public class NewHomeFragment extends BaseFragment{
         @Override
         public void onClick(View v) {
             switch (id) {
-                case "iv_home_pager_message":
-                    Log.i(TAG, "onClick: " + "标题 Message 被点击");
-                    break;
                 case "iv_home_one_grid_icon_1":
                     Log.i(TAG, "onClick: " + "首页GridItem 1被点击");
                     break;

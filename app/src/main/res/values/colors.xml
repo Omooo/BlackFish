@@ -34,4 +34,6 @@
     <color name="colorCardDetailHeader">#333333</color>
     <color name="colorCardDetailText">#9D9D9D</color>
     <color name="colorDetailCardBottomText">#ADAAAD</color>
+    <color name="colorHomeHeaderBg">#FDDB0A</color>
+    <color name="colorSearchBg">#F0F0F0</color>
 </resources>

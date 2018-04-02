@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.SparseArray;
 import android.view.View;
 
+import top.omooo.blackfish.view.CustomToast;
+
 /**
  * Created by SSC on 2018/3/16.
  */
@@ -56,5 +58,11 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 
     public <E extends View> void setOnClick(E view) {
         view.setOnClickListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        CustomToast.cancelToast();
+        super.onBackPressed();
     }
 }
