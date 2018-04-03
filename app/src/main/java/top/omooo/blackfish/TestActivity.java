@@ -1,9 +1,7 @@
 package top.omooo.blackfish;
 
-import android.content.Intent;
+import android.inputmethodservice.KeyboardView;
 import android.view.View;
-
-import top.omooo.blackfish.MallPagerActivity.SearchActivity;
 
 
 /**
@@ -14,6 +12,8 @@ public class TestActivity extends BaseActivity {
 
     private static final String TAG = "TestActivity";
 
+    private KeyboardView mKeyboardView;
+
     @Override
     public int getLayoutId() {
         return R.layout.test;
@@ -21,7 +21,8 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        startActivity(new Intent(this, SearchActivity.class));
+//        startActivity(new Intent(this, SearchActivity.class));
+
     }
 
 

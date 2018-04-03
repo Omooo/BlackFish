@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:text="小黑鱼安全键盘"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.inputmethodservice.KeyboardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_key_board"
+        android:background="@color/colorKeyBoardBg"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyPreviewHeight="64dp"
+        android:keyTextColor="@color/splash_main_title_color"
+        android:keyTextSize="24sp"
+        android:keyBackground="@drawable/selector_key_board_number"
+        android:labelTextSize="18sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:shadowColor="#FFFFFF"
+        android:shadowRadius="0.0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.inputmethodservice.KeyboardView>
+</LinearLayout>

@@ -36,4 +36,6 @@
     <color name="colorDetailCardBottomText">#ADAAAD</color>
     <color name="colorHomeHeaderBg">#FDDB0A</color>
     <color name="colorSearchBg">#F0F0F0</color>
+    <color name="colorKeyBoardBg">#F9F9F9</color>
+    <color name="colorKeyDeleteBg">#EBEBEB</color>
 </resources>
