@@ -8,7 +8,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.text.Editable;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -24,7 +26,19 @@ import top.omooo.blackfish.R;
 public class NumberKeyBoardView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
 
     private static final int KEYCODE_EMPTY = -10;
-    private OnKeyBoardClickListener mClickListener;
+    private EditText mEditText;
+    private KeyboardView mLetterKeyboardView;
+    private KeyboardView mSymbolKeyboardView;
+    private Keyboard mLetterKeyboard;   //字母键盘
+    private Keyboard mSymbolKeyboard;   //符号键盘
+
+    private boolean isNumber = true;
+    private static boolean isUpper = false;
+    private boolean isSysmbol = false;
+
+    public void setEditText(EditText editText) {
+        this.mEditText = editText;
+    }
 
     public NumberKeyBoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +62,12 @@ public class NumberKeyBoardView extends KeyboardView implements KeyboardView.OnK
         setEnabled(true);
         setPreviewEnabled(false);
         setOnKeyboardActionListener(this);
+
+//        mLetterKeyboard = new Keyboard(context, R.xml.keyboard_letter);
+//        mLetterKeyboardView.setKeyboard(mLetterKeyboard);
+//        mLetterKeyboardView.setEnabled(true);
+//        mLetterKeyboardView.setPreviewEnabled(true);
+//        mLetterKeyboardView.setOnKeyboardActionListener(this);
     }
 
     @Override
@@ -127,15 +147,56 @@ public class NumberKeyBoardView extends KeyboardView implements KeyboardView.OnK
 
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
+        if (null == mEditText) {
+            return;
+        }
+        Editable editable = mEditText.getText();
+        int start = mEditText.getSelectionStart();
         if (primaryCode == Keyboard.KEYCODE_DELETE) {
-            if (null != mClickListener) {
-                mClickListener.onDeleteKeyEvent();
+            if (null != editable && editable.length() > 0) {
+                if (start > 0) {
+                    editable.delete(start - 1, start);
+                }
             }
-        } else if (primaryCode != KEYCODE_EMPTY) {
-            if (null != mClickListener) {
-                mClickListener.onInsertKeyEvent(Character.toString((char) primaryCode));
+        } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
+            //隐藏键盘
+            hideKeyboard();
+        } else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
+            //大小写切换
+            switchKeyboard();
+        } else {
+            editable.insert(start, Character.toString((char) primaryCode));
+        }
+    }
+
+    private void switchKeyboard() {
+        List<Keyboard.Key> keyList = mLetterKeyboard.getKeys();
+        if (isUpper) {
+            isUpper = false;
+            for (Keyboard.Key key : keyList) {
+                if (key.label != null && isLetter(key.label.toString())) {
+                    key.label = key.label.toString().toLowerCase();
+                    key.codes[0] = key.codes[0] + 32;
+                }
+            }
+        } else {
+            isUpper = true;
+            for (Keyboard.Key key : keyList) {
+                if (key.label != null && isLetter(key.label.toString())) {
+                    key.label = key.label.toString().toUpperCase();
+                    key.codes[0] = key.codes[0] - 32;
+                }
             }
         }
+    }
+
+    private boolean isLetter(String str) {
+        String wordStr = "abcdefghijklmnopqrstuvwxyz";
+        return wordStr.contains(str.toLowerCase());
+    }
+
+    private void hideKeyboard() {
+
     }
 
     @Override
@@ -143,12 +204,4 @@ public class NumberKeyBoardView extends KeyboardView implements KeyboardView.OnK
 
     }
 
-    public void setOnKeyBoardClickListener(OnKeyBoardClickListener onKeyBoardClickListener) {
-
-    }
-    public interface OnKeyBoardClickListener {
-        void onInsertKeyEvent(String text);
-
-        void onDeleteKeyEvent();
-    }
 }

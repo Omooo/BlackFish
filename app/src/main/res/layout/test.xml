@@ -3,14 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <top.omooo.blackfish.view.NumberKeyBoardView
-        android:background="@color/colorWhite"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:keyBackground="@drawable/selector_key_board_number"
-        android:keyTextColor="@color/splash_main_title_color"
-        android:shadowColor="#00000000"
-        android:shadowRadius="0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/view_key_board_layout"/>
 </LinearLayout>

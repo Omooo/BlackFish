@@ -1,7 +1,8 @@
 package top.omooo.blackfish;
 
-import android.inputmethodservice.KeyboardView;
 import android.view.View;
+
+import top.omooo.blackfish.view.NumberKeyBoardView;
 
 
 /**
@@ -12,7 +13,7 @@ public class TestActivity extends BaseActivity {
 
     private static final String TAG = "TestActivity";
 
-    private KeyboardView mKeyboardView;
+    private NumberKeyBoardView mKeyboardView;
 
     @Override
     public int getLayoutId() {
@@ -22,7 +23,7 @@ public class TestActivity extends BaseActivity {
     @Override
     public void initViews() {
 //        startActivity(new Intent(this, SearchActivity.class));
-
+        mKeyboardView = findView(R.id.view_key_board_number);
     }
 
 

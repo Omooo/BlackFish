@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import top.omooo.blackfish.utils.AdjustViewUtil;
 import top.omooo.blackfish.utils.KeyBoardUtil;
+import top.omooo.blackfish.view.NumberKeyBoardView;
 
 /**
  * Created by SSC on 2018/3/18.
@@ -26,14 +28,20 @@ import top.omooo.blackfish.utils.KeyBoardUtil;
 public class LoginActivity extends BaseActivity implements View.OnTouchListener,TextWatcher{
 
     private ImageView mImageExitActivity;
-    private TextView mTextMessage,mTextToSmsLogin,mTextForgetPwd;
+    private TextView mTextMessage,mTextToSmsLogin,mTextForgetPwd, mTextKeyFinish;
     private Button mButtonLogin;
     private EditText mEditPhone, mEditPwd;
 
+    private boolean isPwdLogin = false;
+
     private RelativeLayout mPwdLayout;
+    private RelativeLayout mKeyBoardLayout;
+    private NumberKeyBoardView mBoardView;
 
     private static final String TAG = "LoginActivity";
     private boolean isPwdVisible = false;
+    private boolean isShowBoard = true;
+
 
     private AdjustViewUtil mAdjustViewUtil;
 
@@ -54,6 +62,14 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         mEditPwd = findView(R.id.et_login_pwd);
 
         mPwdLayout = findView(R.id.rl_pwd_layout);
+        mKeyBoardLayout = findView(R.id.rl_key_board_layout);
+        mTextKeyFinish = (TextView) mKeyBoardLayout.getChildAt(3);
+        mBoardView = (NumberKeyBoardView) mKeyBoardLayout.getChildAt(2);
+
+        //自定义安全键盘
+        // TODO: 2018/4/4 太多坑了，比如光标问题等等 
+        mBoardView.setEditText(mEditPhone);
+
 
         mButtonLogin.setBackground(getDrawable(R.drawable.shape_btn_pressed));
         mButtonLogin.setClickable(false);
@@ -62,7 +78,8 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         mAdjustViewUtil.adjustEditTextPic(mEditPhone, 0, 0, 0, 55, 55);
         mAdjustViewUtil.adjustEditTextPic(mEditPwd, 0, 0, 0, 55, 55);
 
-        KeyBoardUtil.showKeyBoard(mEditPhone);
+//        KeyBoardUtil.showKeyBoard(mEditPhone);
+
     }
 
 
@@ -77,6 +94,14 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
         mEditPhone.addTextChangedListener(this);
         mEditPhone.setOnTouchListener(this);
         mEditPwd.setOnTouchListener(this);
+
+        mTextKeyFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mKeyBoardLayout.setVisibility(View.GONE);
+                isShowBoard = false;
+            }
+        });
     }
 
     @Override
@@ -90,20 +115,29 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
                 mTextMessage.setVisibility(View.GONE);
                 mPwdLayout.setVisibility(View.VISIBLE);
                 mButtonLogin.setText("登录");
+                isPwdLogin = true;
                 break;
             case R.id.btn_login:
-                Toast.makeText(this, "登录", Toast.LENGTH_SHORT).show();
-                Bundle bundle = new Bundle();
-                bundle.putString("phone_number", mEditPhone.getText().toString());
-                Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
-                intent.putExtras(bundle);
-//                finish();
-                startActivity(intent);
+                if (!isPwdLogin) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("phone_number", mEditPhone.getText().toString());
+                    Intent intent = new Intent(LoginActivity.this, VerifyCodeActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    if (mEditPwd.getText().equals("")) {
+                        Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // TODO: 2018/4/4 密码登录验证
+                        Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
+                    } 
+                }
                 break;
             case R.id.tv_to_sms_login:
                 mTextMessage.setVisibility(View.VISIBLE);
                 mPwdLayout.setVisibility(View.GONE);
                 mButtonLogin.setText("下一步");
+                isPwdLogin = false;
                 break;
             case R.id.tv_forget_pwd:
                 Toast.makeText(this, "忘记密码", Toast.LENGTH_SHORT).show();
@@ -120,6 +154,21 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
+
+            switch (v.getId()) {
+                case R.id.et_login_phone:
+                    KeyBoardUtil.closeKeyBoard(mEditPwd);
+                    mKeyBoardLayout.setVisibility(View.VISIBLE);
+                    isShowBoard = true;
+                    break;
+                case R.id.et_login_pwd:
+                    mKeyBoardLayout.setVisibility(View.GONE);
+//                    KeyBoardUtil.showKeyBoard(mEditPwd);
+                    isShowBoard = false;
+                    break;
+                default:break;
+            }
+
             Drawable drawable = mEditPhone.getCompoundDrawables()[2];
             Drawable drawable1 = mEditPwd.getCompoundDrawables()[2];
             Drawable[] drawables = mEditPwd.getCompoundDrawables();
@@ -177,5 +226,18 @@ public class LoginActivity extends BaseActivity implements View.OnTouchListener,
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && isShowBoard == true) {
+            mKeyBoardLayout.setVisibility(View.GONE);
+            isShowBoard = false;
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && isShowBoard == false) {
+            mEditPhone.setText("");
+            finish();
+        }
+        return false;
     }
 }
