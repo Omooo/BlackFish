@@ -25,6 +25,7 @@
             android:textSize="13sp"
             android:inputType="text"
             android:imeOptions="actionSearch"
+            android:focusableInTouchMode="true"
             android:layout_marginStart="10dp"
             android:layout_centerVertical="true"
             android:background="@color/colorSearchBg"

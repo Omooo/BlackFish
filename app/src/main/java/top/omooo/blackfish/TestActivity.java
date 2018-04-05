@@ -1,8 +1,9 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.view.View;
 
-import top.omooo.blackfish.view.NumberKeyBoardView;
+import top.omooo.blackfish.MallPagerActivity.ClassifyGoodsActivity;
 
 
 /**
@@ -13,7 +14,6 @@ public class TestActivity extends BaseActivity {
 
     private static final String TAG = "TestActivity";
 
-    private NumberKeyBoardView mKeyboardView;
 
     @Override
     public int getLayoutId() {
@@ -22,8 +22,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-//        startActivity(new Intent(this, SearchActivity.class));
-        mKeyboardView = findView(R.id.view_key_board_number);
+        startActivity(new Intent(this, ClassifyGoodsActivity.class));
     }
 
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import top.omooo.blackfish.R;
@@ -24,6 +25,7 @@ public class GridAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
     public GridAdapter(List<BankCardsInfo> bankCardsInfos, Context context) {
+        mBankCardsInfos = new ArrayList<>();
         mBankCardsInfos = bankCardsInfos;
         mInflater = LayoutInflater.from(context);
     }
@@ -48,7 +50,7 @@ public class GridAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.grid_bank_cards_item_layout, null);
+            convertView = mInflater.inflate(R.layout.grid_bank_cards_item_layout, parent, false);
             viewHolder.mImageView = convertView.findViewById(R.id.iv_item_bank_cards_logo);
             viewHolder.mTextView = convertView.findViewById(R.id.tv_item_bank_cards_name);
             convertView.setTag(viewHolder);

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.omooo.blackfish.bean.BankCardsInfo;
+import top.omooo.blackfish.bean.ClassifyGoodsInfo;
+import top.omooo.blackfish.bean.ClassifyGridInfo;
 import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
 
@@ -23,8 +25,19 @@ public class AnalysisJsonUtil {
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
     private List<BankCardsInfo> mBankCardsInfos;
+
+    private List<ClassifyGoodsInfo> mClassifyGoodsInfos;
+    private List<ClassifyGridInfo> mGridInfos1;
+    private List<ClassifyGridInfo> mGridInfos2;
+
     private JSONObject mJSONObject;
     private JSONArray mJSONArray;
+
+    private static final int HOME_GOODS_INFO = 0;
+    private static final int BANK_CARD_INFO = 1;
+    private static final int CLASSIFY_GOODS_INFO = 2;
+
+    private static final String TAG = "AnalysisJsonUtil";
 
     /**
      *
@@ -34,7 +47,7 @@ public class AnalysisJsonUtil {
      */
     public List getDataFromJson(String json,int type) {
         try {
-            if (type == 0) {
+            if (type == HOME_GOODS_INFO) {
                 //首页的商品信息
                 mJSONObject = new JSONObject(json);
                 mHomeSortInfos = new ArrayList<>();
@@ -54,7 +67,7 @@ public class AnalysisJsonUtil {
                     mHomeSortInfos.add(new HomeSortInfo(title, sortImageUrl, mHomeSortItemInfos));
                 }
                 return mHomeSortInfos;
-            } else if (type == 1) {
+            } else if (type == BANK_CARD_INFO) {
                 //银行卡信息
                 mBankCardsInfos = new ArrayList<>();
                 mJSONArray = new JSONArray(json);
@@ -69,6 +82,38 @@ public class AnalysisJsonUtil {
                     mBankCardsInfos.add(new BankCardsInfo(logo_url, name, abbr));
                 }
                 return mBankCardsInfos;
+            } else if (type == CLASSIFY_GOODS_INFO) {
+                //商品分类信息
+                mClassifyGoodsInfos = new ArrayList<>();
+                mGridInfos1 = new ArrayList<>();
+                mGridInfos2 = new ArrayList<>();
+                mJSONObject = new JSONObject(json);
+                mJSONArray = mJSONObject.getJSONArray("classifyTitle");
+                for (int i = 0; i < mJSONArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) mJSONArray.get(i);
+                    String title = jsonObject.getString("title");
+                    String headerImageUrl = jsonObject.getString("headerImageUrl");
+                    String subtitle1 = jsonObject.getString("subTitle1");
+                    String subtitle2 = jsonObject.getString("subTitle");
+                    JSONArray jsonArray1 = ((JSONObject) mJSONArray.get(i)).getJSONArray("gridImageUrls1");
+                    for (int j = 0; j < jsonArray1.length(); j++) {
+                        JSONObject jsonObject1 = (JSONObject) jsonArray1.get(j);
+                        int id = jsonObject1.getInt("id");
+                        String desc = jsonObject1.getString("desc");
+                        String imageUrl = jsonObject1.getString("iamgeUrl");
+                        mGridInfos1.add(new ClassifyGridInfo(id, desc, imageUrl));
+                    }
+                    JSONArray jsonArray2 = ((JSONObject) mJSONArray.get(i)).getJSONArray("gridImageUrls2");
+                    for (int j = 0; j < jsonArray2.length(); j++) {
+                        JSONObject jsonObject1 = (JSONObject) jsonArray2.get(j);
+                        int id = jsonObject1.getInt("id");
+                        String desc = jsonObject1.getString("desc");
+                        String imageUrl = jsonObject1.getString("iamgeUrl");
+                        mGridInfos2.add(new ClassifyGridInfo(id, desc, imageUrl));
+                    }
+                    mClassifyGoodsInfos.add(new ClassifyGoodsInfo(title, headerImageUrl, subtitle1, subtitle2, mGridInfos1, mGridInfos2));
+                }
+                return mClassifyGoodsInfos;
             } else {
                 return null;
             }
