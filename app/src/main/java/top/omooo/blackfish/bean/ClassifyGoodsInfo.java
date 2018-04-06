@@ -17,6 +17,7 @@ public class ClassifyGoodsInfo {
     private List<ClassifyGridInfo> gridImageUrls1;  //常用分类GridView数据
     private List<ClassifyGridInfo> gridImageUrls2;     //热门分类GridView数据
 
+
     public ClassifyGoodsInfo(String title, String headerImageUrl, String subtitle1, String subtitle2, List<ClassifyGridInfo> gridImageUrls1, List<ClassifyGridInfo> gridImageUrls2) {
         this.title = title;
         this.headerImageUrl = headerImageUrl;

@@ -1,11 +1,20 @@
 package top.omooo.blackfish.MallPagerActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -36,14 +45,54 @@ public class ClassifyGoodsActivity extends BaseActivity {
     private SimpleDraweeView mDraweeViewHeader;
     private GridViewForScroll mGridCommon;
     private GridViewForScroll mGridHot;
+    private ImageView mImageBack, mImageMsg;
+    private RelativeLayout mLayoutHeader;
 
     private ArrayList<String> mListTitles;
-    private List<ClassifyGridInfo> mGridInfosCommon;
-    private List<ClassifyGridInfo> mGridInfosHot;
-    private String headerImageUrl;
 
     private List<ClassifyGoodsInfo> mClassifyGoodsInfos;
+    private ClassifyTitleAdapter mTitleAdapter;
 
+    private Handler mHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0x01:
+                    Log.i(TAG, "handleMessage: " + mClassifyGoodsInfos.size());
+                    for (int i = 0; i < mClassifyGoodsInfos.size(); i++) {
+                        String title = mClassifyGoodsInfos.get(i).getTitle();
+                        mListTitles.add(title);
+                        if (i == 0) {
+                            setItemData(i);
+                        }
+                    }
+                    mTitleAdapter = new ClassifyTitleAdapter(mContext, mListTitles);
+                    mTitleAdapter.setOnClassifyItemClickListener(new ClassifyTitleAdapter.OnClassifyItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Log.i(TAG, "onItemClick: " + position);
+                            // TODO: 2018/4/6 滑动错位
+                            for (int i = 0; i < mRecyclerViewLeft.getChildCount(); i++) {
+                                FrameLayout frameLayout = (FrameLayout) mRecyclerViewLeft.getChildAt(i);
+                                TextView textView = (TextView) frameLayout.getChildAt(0);
+                                if (i == position) {
+                                    frameLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                    textView.setTextColor(Color.parseColor("#FECD15"));
+                                } else {
+                                    frameLayout.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                                    textView.setTextColor(Color.parseColor("#222222"));
+                                }
+                            }
+                            setItemData(position);
+                        }
+                    });
+                    mRecyclerViewLeft.setAdapter(mTitleAdapter);
+                    break;
+                default:break;
+            }
+            return false;
+        }
+    });
 
     private static final String TAG = "ClassifyGoodsActivity";
 
@@ -63,54 +112,47 @@ public class ClassifyGoodsActivity extends BaseActivity {
         mDraweeViewHeader = findView(R.id.iv_classify_goods_details_header);
         mGridCommon = findView(R.id.gv_classify_common);
         mGridHot = findView(R.id.gv_classify_hot);
+
+        mLayoutHeader = findView(R.id.rl_classify_header_layout);
+        mImageBack = findView(R.id.iv_classify_goods_back);
+        mImageMsg = findView(R.id.iv_classify_header_msg);
     }
 
     @Override
     public void initListener() {
-
+        mLayoutHeader.setOnClickListener(this);
+        mImageMsg.setOnClickListener(this);
+        mImageBack.setOnClickListener(this);
     }
 
     @Override
     public void processClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.rl_classify_header_layout:
+                startActivity(new Intent(this, SearchActivity.class));
+                break;
+            case R.id.iv_classify_goods_back:
+                finish();
+                break;
+            case R.id.iv_classify_header_msg:
+                Toast.makeText(mContext, "消息中心", Toast.LENGTH_SHORT).show();
+                break;
+            default:break;
+        }
     }
 
     @Override
     protected void initData() {
 
-        // TODO: 2018/4/5 数据懒加载 
         mClassifyGoodsInfos = new ArrayList<>();
         mListTitles = new ArrayList<>();
-        mGridInfosCommon = new ArrayList<>();
-        mGridInfosHot = new ArrayList<>();
         OkHttpUtil.getInstance().startGet(UrlInfoBean.classifyGoodsUrl, new OnNetResultListener() {
             @Override
             public void onSuccessListener(String result) {
                 AnalysisJsonUtil jsonUtil = new AnalysisJsonUtil();
                 mClassifyGoodsInfos = jsonUtil.getDataFromJson(result, 2);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i(TAG, "run: " + mClassifyGoodsInfos.size());
-                        for (int i = 0; i < mClassifyGoodsInfos.size(); i++) {
-                            String title = mClassifyGoodsInfos.get(i).getTitle();
-                            Log.i(TAG, "onSuccessListener: " + title);
-                            mListTitles.add(title);
-                            headerImageUrl = mClassifyGoodsInfos.get(i).getHeaderImageUrl();
-                            for (int j = 0; j < mClassifyGoodsInfos.get(i).getGridImageUrls1().size(); j++) {
-                                mGridInfosCommon.add(mClassifyGoodsInfos.get(i).getGridImageUrls1().get(j));
-                            }
-                            for (int j = 0; j < mClassifyGoodsInfos.get(i).getGridImageUrls2().size(); j++) {
-                                mGridInfosHot.add(mClassifyGoodsInfos.get(i).getGridImageUrls2().get(j));
-                            }
-                        }
-                        mDraweeViewHeader.setImageURI(headerImageUrl);
-                        mRecyclerViewLeft.setAdapter(new ClassifyTitleAdapter(mContext, mListTitles));
-                        mGridCommon.setAdapter(new ClassifyCommonAdapter(mContext, mGridInfosCommon));
-                        mGridHot.setAdapter(new ClassifyCommonAdapter(mContext, mGridInfosHot));
-                    }
-                });
+                Message message = mHandler.obtainMessage(0x01, mClassifyGoodsInfos);
+                mHandler.sendMessage(message);
             }
 
             @Override
@@ -118,5 +160,24 @@ public class ClassifyGoodsActivity extends BaseActivity {
                 Log.i(TAG, "onFailureListener: 网络请求失败");
             }
         });
+    }
+
+    private void setItemData(int position) {
+        List<ClassifyGridInfo> mGridInfosCommon = new ArrayList<>();
+        List<ClassifyGridInfo> mGridInfosHot = new ArrayList<>();
+        String headerImageUrl;
+        headerImageUrl = mClassifyGoodsInfos.get(position).getHeaderImageUrl();
+        int commonSize = mClassifyGoodsInfos.get(position).getGridImageUrls1().size();
+        int hotSize = mClassifyGoodsInfos.get(position).getGridImageUrls2().size();
+        for (int j = 0; j < commonSize; j++) {
+            mGridInfosCommon.add(mClassifyGoodsInfos.get(position).getGridImageUrls1().get(j));
+        }
+        for (int j = 0; j < hotSize; j++) {
+            mGridInfosHot.add(mClassifyGoodsInfos.get(position).getGridImageUrls2().get(j));
+        }
+        mDraweeViewHeader.setImageURI(headerImageUrl);
+        mGridCommon.setAdapter(new ClassifyCommonAdapter(mContext, mGridInfosCommon));
+        mGridHot.setAdapter(new ClassifyCommonAdapter(mContext, mGridInfosHot));
+
     }
 }

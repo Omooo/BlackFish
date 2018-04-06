@@ -1,5 +1,7 @@
 package top.omooo.blackfish.utils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,8 +29,6 @@ public class AnalysisJsonUtil {
     private List<BankCardsInfo> mBankCardsInfos;
 
     private List<ClassifyGoodsInfo> mClassifyGoodsInfos;
-    private List<ClassifyGridInfo> mGridInfos1;
-    private List<ClassifyGridInfo> mGridInfos2;
 
     private JSONObject mJSONObject;
     private JSONArray mJSONArray;
@@ -85,8 +85,6 @@ public class AnalysisJsonUtil {
             } else if (type == CLASSIFY_GOODS_INFO) {
                 //商品分类信息
                 mClassifyGoodsInfos = new ArrayList<>();
-                mGridInfos1 = new ArrayList<>();
-                mGridInfos2 = new ArrayList<>();
                 mJSONObject = new JSONObject(json);
                 mJSONArray = mJSONObject.getJSONArray("classifyTitle");
                 for (int i = 0; i < mJSONArray.length(); i++) {
@@ -96,6 +94,10 @@ public class AnalysisJsonUtil {
                     String subtitle1 = jsonObject.getString("subTitle1");
                     String subtitle2 = jsonObject.getString("subTitle");
                     JSONArray jsonArray1 = ((JSONObject) mJSONArray.get(i)).getJSONArray("gridImageUrls1");
+
+                    List<ClassifyGridInfo> mGridInfos1=new ArrayList<>();
+                    List<ClassifyGridInfo> mGridInfos2=new ArrayList<>();
+
                     for (int j = 0; j < jsonArray1.length(); j++) {
                         JSONObject jsonObject1 = (JSONObject) jsonArray1.get(j);
                         int id = jsonObject1.getInt("id");
