@@ -6,14 +6,17 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -26,6 +29,14 @@ import top.omooo.blackfish.MallPagerActivity.SearchActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
 import top.omooo.blackfish.bean.BannerInfo;
+import top.omooo.blackfish.bean.GridInfo;
+import top.omooo.blackfish.bean.MallGoodsInfo;
+import top.omooo.blackfish.bean.MallGoodsItemInfo;
+import top.omooo.blackfish.bean.MallPagerInfo;
+import top.omooo.blackfish.bean.UrlInfoBean;
+import top.omooo.blackfish.listener.OnNetResultListener;
+import top.omooo.blackfish.utils.AnalysisJsonUtil;
+import top.omooo.blackfish.utils.OkHttpUtil;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.RecycleViewBanner;
 
@@ -51,6 +62,12 @@ public class MallFragment extends BaseFragment {
     private VirtualLayoutManager layoutManager;
     private RecyclerView.RecycledViewPool viewPool;
     private DelegateAdapter delegateAdapter;
+
+    private SimpleDraweeView mImageGridItem;
+    private TextView mTextGridItem;
+
+    private AnalysisJsonUtil mJsonUtil = new AnalysisJsonUtil();
+    private List<MallPagerInfo> mMallPagerInfos;
 
     public static MallFragment newInstance() {
         return new MallFragment();
@@ -128,6 +145,22 @@ public class MallFragment extends BaseFragment {
             }
         };
         adapters.add(bannerAdapter);
+
+        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(5);
+        GeneralVLayoutAdapter gridAdapter = new GeneralVLayoutAdapter(mContext, gridLayoutHelper, 10){
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_two_line_grid, parent, false));
+            }
+
+            @Override
+            public void onBindViewHolder(MainViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                mImageGridItem = holder.itemView.findViewById(R.id.iv_mall_grid_item);
+                mTextGridItem = holder.itemView.findViewById(R.id.tv_mall_grid_item);
+
+            }
+        };
         delegateAdapter.setAdapters(adapters);
     }
 
@@ -140,7 +173,36 @@ public class MallFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        mJsonUtil = new AnalysisJsonUtil();
+        mMallPagerInfos = new ArrayList<>();
+        OkHttpUtil.getInstance().startGet(UrlInfoBean.mallGoodsUrl, new OnNetResultListener() {
+            @Override
+            public void onSuccessListener(String result) {
+                mMallPagerInfos = mJsonUtil.getDataFromJson(result, 3);
 
+                List<BannerInfo> bannerInfos = mMallPagerInfos.get(0).getBannerInfos();
+                Log.i(TAG, "onSuccessListener: bannerInfos     " + bannerInfos.size());
+
+                List<GridInfo> gridInfos = mMallPagerInfos.get(0).getClassifyInfos();
+                Log.i(TAG, "onSuccessListener: gridInfos     " + gridInfos.size());
+
+                String singleImageUrl = mMallPagerInfos.get(0).getSingleImageUrl();
+                Log.i(TAG, "onSuccessListener: singleImageUrl     " + singleImageUrl);
+
+                List<BannerInfo> goodsInfos = mMallPagerInfos.get(0).getGridGoodsInfos();
+                Log.i(TAG, "onSuccessListener: goodsInfos     " + goodsInfos.size());
+
+                List<MallGoodsInfo> mallGoodsInfos = mMallPagerInfos.get(0).getMallGoodsInfos();
+                Log.i(TAG, "onSuccessListener: mallGoodsInfos     " + mallGoodsInfos.size());
+                List<MallGoodsItemInfo> mallGoodsItemInfos = mallGoodsInfos.get(2).getMallGoodsItemInfos();
+                Log.i(TAG, "onSuccessListener: mallGoodsItemInfos     " + mallGoodsItemInfos.size());
+            }
+
+            @Override
+            public void onFailureListener(String result) {
+                Log.i(TAG, "onFailureListener: "+result);
+            }
+        });
     }
 
     @Override

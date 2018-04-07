@@ -1,7 +1,5 @@
 package top.omooo.blackfish.utils;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.omooo.blackfish.bean.BankCardsInfo;
+import top.omooo.blackfish.bean.BannerInfo;
 import top.omooo.blackfish.bean.ClassifyGoodsInfo;
 import top.omooo.blackfish.bean.ClassifyGridInfo;
+import top.omooo.blackfish.bean.GridInfo;
 import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
+import top.omooo.blackfish.bean.MallGoodsInfo;
+import top.omooo.blackfish.bean.MallGoodsItemInfo;
+import top.omooo.blackfish.bean.MallPagerInfo;
 
 /**
  * Created by SSC on 2018/3/3.
@@ -30,12 +33,15 @@ public class AnalysisJsonUtil {
 
     private List<ClassifyGoodsInfo> mClassifyGoodsInfos;
 
+    private List<MallPagerInfo> mMallPagerInfos;
+
     private JSONObject mJSONObject;
     private JSONArray mJSONArray;
 
     private static final int HOME_GOODS_INFO = 0;
     private static final int BANK_CARD_INFO = 1;
     private static final int CLASSIFY_GOODS_INFO = 2;
+    private static final int MALL_GOODS_INFO = 3;
 
     private static final String TAG = "AnalysisJsonUtil";
 
@@ -116,6 +122,49 @@ public class AnalysisJsonUtil {
                     mClassifyGoodsInfos.add(new ClassifyGoodsInfo(title, headerImageUrl, subtitle1, subtitle2, mGridInfos1, mGridInfos2));
                 }
                 return mClassifyGoodsInfos;
+            } else if (type == MALL_GOODS_INFO) {
+                mMallPagerInfos = new ArrayList<>();
+                List<BannerInfo> bannerInfos = new ArrayList<>();
+                List<GridInfo> gridInfos = new ArrayList<>();
+                List<BannerInfo> goodsInfos = new ArrayList<>();
+                List<MallGoodsInfo> mallGoodsInfos = new ArrayList<>();
+                mJSONObject = new JSONObject(json);
+
+                String singleImageUrl = mJSONObject.getString("single_image");
+
+                mJSONArray = mJSONObject.getJSONArray("banners");
+                for (int i = 0; i < mJSONArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) mJSONArray.get(i);
+                    bannerInfos.add(new BannerInfo(jsonObject.getString("banner_url")));
+                }
+
+                JSONArray jsonArrayGrid = mJSONObject.getJSONArray("classifyGridItems");
+                for (int i = 0; i < jsonArrayGrid.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArrayGrid.get(i);
+                    gridInfos.add(new GridInfo(jsonObject.getString("desc"), jsonObject.getString("grid_url")));
+                }
+
+                JSONArray jsonArrayGoods = mJSONObject.getJSONArray("four_goods_image");
+                for (int i = 0; i < jsonArrayGoods.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArrayGoods.get(i);
+                    goodsInfos.add(new BannerInfo(jsonObject.getString("four_image_url")));
+                }
+
+                JSONArray jsonArrayHotSorts = mJSONObject.getJSONArray("hotSort");
+                for (int i = 0; i < jsonArrayHotSorts.length(); i++) {
+                    List<MallGoodsItemInfo> mallGoodsItemInfos = new ArrayList<>();
+
+                    JSONObject jsonObject = (JSONObject) jsonArrayHotSorts.get(i);
+                    String headerImageUrl = jsonObject.getString("headerBigImage");
+                    JSONArray jsonArray = jsonObject.getJSONArray("threeGoods");
+                    for (int j = 0; j < jsonArray.length(); j++) {
+                        JSONObject jsonObject1 = (JSONObject) jsonArray.get(j);
+                        mallGoodsItemInfos.add(new MallGoodsItemInfo(jsonObject1.getString("goodsItemImage"), jsonObject1.getString("desc"), jsonObject1.getDouble("singePrice"), jsonObject1.getInt("numPeriods"), jsonObject1.getDouble("price")));
+                    }
+                    mallGoodsInfos.add(new MallGoodsInfo(headerImageUrl, mallGoodsItemInfos));
+                }
+                mMallPagerInfos.add(new MallPagerInfo(bannerInfos, gridInfos, singleImageUrl, goodsInfos, mallGoodsInfos));
+                return mMallPagerInfos;
             } else {
                 return null;
             }
