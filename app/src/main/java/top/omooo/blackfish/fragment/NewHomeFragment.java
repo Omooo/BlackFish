@@ -2,14 +2,11 @@ package top.omooo.blackfish.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -33,13 +31,14 @@ import java.util.List;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
-import top.omooo.blackfish.adapter.HomeBannerAdapter;
+import top.omooo.blackfish.bean.BannerInfo;
 import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
+import top.omooo.blackfish.view.RecycleViewBanner;
 
 /**
  * Created by SSC on 2018/3/16.
@@ -57,7 +56,7 @@ public class NewHomeFragment extends BaseFragment{
     private RecyclerView.RecycledViewPool viewPool;
     private DelegateAdapter delegateAdapter;
 
-    private String[] bannerImageUri={"https://i.loli.net/2018/03/20/5ab10bb02ca5e.jpg","https://i.loli.net/2018/03/20/5ab10bbf58326.jpg","https://i.loli.net/2018/03/20/5ab10bb02ca5e.jpg","https://i.loli.net/2018/03/20/5ab10bbf58326.jpg"};
+    private List<BannerInfo> mBannerInfos;
 
     private List<HomeSortInfo> mHomeSortInfos;
     private List<HomeSortItemInfo> mHomeSortItemInfos;
@@ -65,13 +64,13 @@ public class NewHomeFragment extends BaseFragment{
 
     private Toolbar mToolbar;
 
-    private Drawable mHeaderDrawable;
-
     private LinearLayout mLinearGoodsLayout1;
     private LinearLayout mLinearGoodsLayout2;
     private LinearLayout mLinearGoodsLayout3;
 
     private ImageView mImageHeaderMsg;
+
+    private RecycleViewBanner mRecycleViewBanner;
 
     public static NewHomeFragment newInstance() {
         return new NewHomeFragment();
@@ -117,77 +116,38 @@ public class NewHomeFragment extends BaseFragment{
         delegateAdapter = new DelegateAdapter(layoutManager, false);
         mRecyclerView.setAdapter(delegateAdapter);
 
-
-//        //加载标题
-//        final StickyLayoutHelper layoutHelper = new StickyLayoutHelper();
-//        GeneralVLayoutAdapter adapter = new GeneralVLayoutAdapter(getActivity(), layoutHelper, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dip2px(65)), 1){
-//            @Override
-//            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_pager_title, parent, false);
-//                final TextView title = view.findViewById(R.id.tv_home_title);
-//                ImageView titleMessage = view.findViewById(R.id.iv_home_pager_message);
-//                titleMessage.setOnClickListener(new MyOnClick("iv_home_pager_message"));
-//                return new MainViewHolder(view);
-//            }
-//        };
-//        adapters.add(adapter);
-
         //首页Banner轮播图
         SingleLayoutHelper bannerLayoutHelper = new SingleLayoutHelper();
         GeneralVLayoutAdapter bannerAdapter = new GeneralVLayoutAdapter(mContext, bannerLayoutHelper, 1){
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(mContext).inflate(R.layout.home_pager_banner_layout, parent, false);
-
                 return new MainViewHolder(view);
             }
 
             @Override
             public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-
-                final RecyclerView recyclerView = holder.itemView.findViewById(R.id.rv_home_banner);
-                final LinearLayout linearLayout = holder.itemView.findViewById(R.id.linear_layout_points);
-                final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(new HomeBannerAdapter(mContext,bannerImageUri));
-
-
-                // TODO: 2018/3/17 RecycleView自动滑动
-                recyclerView.addOnScrollListener(new OnScrollListener() {
-
+                mRecycleViewBanner = holder.itemView.findViewById(R.id.rvb_home_header);
+                //Banner数据
+                mBannerInfos = new ArrayList<>();
+                mBannerInfos.add(new BannerInfo("https://i.loli.net/2018/04/06/5ac733bc51d0a.png"));
+                mBannerInfos.add(new BannerInfo("https://i.loli.net/2018/04/06/5ac735502effe.png"));
+                mBannerInfos.add(new BannerInfo("https://i.loli.net/2018/04/07/5ac8459fc9b6a.png"));
+                mBannerInfos.add(new BannerInfo("https://i.loli.net/2018/04/06/5ac7339ee876e.jpg"));
+                mRecycleViewBanner.setRvBannerData(mBannerInfos);
+                mRecycleViewBanner.setOnSwitchRvBannerListener(new RecycleViewBanner.OnSwitchRvBannerListener() {
                     @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                        Log.i(TAG, "newState: " + newState);
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            int index = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                            Log.i(TAG, "index: " + index);
-                            if (index < 3) {
-                                recyclerView.scrollToPosition(index + 1);
-                            } else {
-                                recyclerView.scrollToPosition(0);
-                            }
-                            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-                                ((ImageView) linearLayout.getChildAt(i)).setImageResource(i == index ? R.drawable.icon_home_banner_selected:R.drawable.icon_home_banner_unselected);
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onScrolled(final RecyclerView recyclerView, final int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
+                    public void switchBanner(int position, SimpleDraweeView simpleDraweeView) {
+                        simpleDraweeView.setImageURI(mBannerInfos.get(position).getUrl());
                     }
                 });
-                recyclerView.postDelayed(new Runnable() {
+                mRecycleViewBanner.setOnBannerClickListener(new RecycleViewBanner.OnRvBannerClickListener() {
                     @Override
-                    public void run() {
-                        recyclerView.scrollToPosition(1);
+                    public void onClick(int position) {
+                        Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
                     }
-                }, 1500);
+                });
             }
         };
         adapters.add(bannerAdapter);
@@ -204,31 +164,40 @@ public class NewHomeFragment extends BaseFragment{
             public void onBindViewHolder(MainViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
 
-                // TODO: 2018/3/18 最好别写死吧宝贝
+                // TODO: 2018/3/18 加载网络图片
                 ImageView imageView = holder.itemView.findViewById(R.id.iv_home_one_grid_icon);
+                TextView textView = holder.itemView.findViewById(R.id.title);
                 if (position == 0) {
+                    textView.setText("充值中心");
                     imageView.setImageResource(R.drawable.icon_voucher_center);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_1"));
                 } else if (position == 1) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("手机通讯");
+                    imageView.setImageResource(R.drawable.icon_phone);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_2"));
                 } else if (position == 2) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("电影票");
+                    imageView.setImageResource(R.drawable.icon_movie);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_3"));
                 } else if (position == 3) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("全民游戏");
+                    imageView.setImageResource(R.drawable.icon_game);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_4"));
                 }else if (position == 4) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("代还信用卡");
+                    imageView.setImageResource(R.drawable.icon_pay_card);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_5"));
                 }else if (position == 5) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("现金分期");
+                    imageView.setImageResource(R.drawable.icon_cash_fenqi);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_6"));
                 }else if (position == 6) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("办信用卡");
+                    imageView.setImageResource(R.drawable.icon_ban_card);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_7"));
                 }else if (position == 7) {
-                    imageView.setImageResource(R.drawable.icon_voucher_center);
+                    textView.setText("全部分类");
+                    imageView.setImageResource(R.drawable.icon_all_classify);
                     imageView.setOnClickListener(new MyOnClick("iv_home_one_grid_icon_8"));
 
                 }
@@ -372,7 +341,8 @@ public class NewHomeFragment extends BaseFragment{
 
     @Override
     public void initData() {
-        bannerImageUri = new String[]{"https://i.loli.net/2018/03/16/5aabafe861905.jpg", "https://i.loli.net/2018/03/16/5aabb052ee397.jpg", "https://i.loli.net/2018/03/16/5aabafe861905.jpg", "https://i.loli.net/2018/03/16/5aabb052ee397.jpg"};
+
+        //商品数据
         mHomeSortInfos = new ArrayList<>();
         mHomeSortItemInfos = new ArrayList<>();
         final AnalysisJsonUtil jsonUtil = new AnalysisJsonUtil();
@@ -396,6 +366,8 @@ public class NewHomeFragment extends BaseFragment{
                 Log.i(TAG, "onFailureListener: " + "网络请求失败" + result);
             }
         });
+
+
     }
 
     @Override

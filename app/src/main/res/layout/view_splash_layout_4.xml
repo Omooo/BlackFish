@@ -54,22 +54,22 @@
         android:orientation="horizontal">
         <ImageView
             android:src="@drawable/splash_bottom_point_unselected"
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
         <ImageView
             android:src="@drawable/splash_bottom_point_unselected"
             android:layout_marginStart="10dp"
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
         <ImageView
             android:src="@drawable/splash_bottom_point_unselected"
             android:layout_marginStart="10dp"
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
         <ImageView
             android:src="@drawable/splash_bottom_point_selected"
             android:layout_marginStart="10dp"
-            android:layout_width="15dp"
-            android:layout_height="15dp" />
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
     </LinearLayout>
 </RelativeLayout>

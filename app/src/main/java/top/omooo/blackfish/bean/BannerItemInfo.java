@@ -5,7 +5,7 @@ package top.omooo.blackfish.bean;
  */
 
 /**
- * 首页轮播图
+ * 首页轮播图(弃用)
  */
 public class BannerItemInfo {
     private int imageBannerId;  //轮播图
