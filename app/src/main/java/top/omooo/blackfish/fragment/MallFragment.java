@@ -196,6 +196,7 @@ public class MallFragment extends BaseFragment {
                 Log.i(TAG, "onSuccessListener: mallGoodsInfos     " + mallGoodsInfos.size());
                 List<MallGoodsItemInfo> mallGoodsItemInfos = mallGoodsInfos.get(2).getMallGoodsItemInfos();
                 Log.i(TAG, "onSuccessListener: mallGoodsItemInfos     " + mallGoodsItemInfos.size());
+
             }
 
             @Override
