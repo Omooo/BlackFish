@@ -19,12 +19,12 @@ import top.omooo.blackfish.bean.BankCardsInfo;
  * Created by SSC on 2018/3/24.
  */
 
-public class GridAdapter extends BaseAdapter {
+public class GridBankCardAdapter extends BaseAdapter {
 
     private List<BankCardsInfo> mBankCardsInfos;
     private LayoutInflater mInflater;
 
-    public GridAdapter(List<BankCardsInfo> bankCardsInfos, Context context) {
+    public GridBankCardAdapter(List<BankCardsInfo> bankCardsInfos, Context context) {
         mBankCardsInfos = new ArrayList<>();
         mBankCardsInfos = bankCardsInfos;
         mInflater = LayoutInflater.from(context);

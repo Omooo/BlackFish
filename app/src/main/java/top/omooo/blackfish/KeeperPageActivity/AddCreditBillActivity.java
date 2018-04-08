@@ -17,7 +17,7 @@ import java.util.List;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
-import top.omooo.blackfish.adapter.GridAdapter;
+import top.omooo.blackfish.adapter.GridBankCardAdapter;
 import top.omooo.blackfish.bean.BankCardsInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
@@ -76,7 +76,7 @@ public class AddCreditBillActivity extends BaseActivity {
                 switch (msg.what) {
                     case 1:
                         // TODO: 2018/3/25 妈耶数据显示不出来？
-                        mGridBankCards.setAdapter(new GridAdapter(mBankCardsInfos,mContext));
+                        mGridBankCards.setAdapter(new GridBankCardAdapter(mBankCardsInfos,mContext));
                         Log.i(TAG, "handleMessage: " + mBankCardsInfos.size() + mBankCardsInfos.get(0).getName());
                         break;
                     default:break;

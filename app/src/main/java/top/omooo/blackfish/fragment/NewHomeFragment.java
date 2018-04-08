@@ -103,6 +103,7 @@ public class NewHomeFragment extends BaseFragment{
         //RecycleView的子View
         addItemViews();
 
+        mContext.getDrawable(R.drawable.icon_home_header_msg_black);
     }
 
     private void addItemViews() {

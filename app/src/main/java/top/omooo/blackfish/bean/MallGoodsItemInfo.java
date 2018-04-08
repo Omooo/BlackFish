@@ -18,4 +18,44 @@ public class MallGoodsItemInfo {
         this.periods = periods;
         this.price = price;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public double getSinglePrice() {
+        return singlePrice;
+    }
+
+    public void setSinglePrice(double singlePrice) {
+        this.singlePrice = singlePrice;
+    }
+
+    public int getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(int periods) {
+        this.periods = periods;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
