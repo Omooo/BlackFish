@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import top.omooo.blackfish.R;
+
 /**
  * Created by SSC on 2018/3/31.
  */
@@ -34,8 +36,7 @@ public class ToolbarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
 
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull Toolbar child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-        startOffset = 0;
-        endOffset = 300 - child.getHeight();
+        endOffset = child.getHeight();
         offset += dyConsumed;
         RelativeLayout relativeLayout = (RelativeLayout) child.getChildAt(0);
         ImageView imageLogo = (ImageView) relativeLayout.getChildAt(0);
@@ -46,9 +47,11 @@ public class ToolbarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
         if (offset <= startOffset) {  //alpha为0
             child.getBackground().setAlpha(0);
             Log.i(TAG, "onNestedScroll: " + textTitle.getText());
-//            textTitle.setVisibility(View.GONE);
             textTitle.setAlpha(0);
+
         } else if (offset > startOffset && offset < endOffset) { //alpha为0到255
+            imageLogo.setImageDrawable(mContext.getDrawable(R.drawable.icon_home_header_fish_logo));
+            imageMsg.setImageDrawable(mContext.getDrawable(R.drawable.icon_home_header_msg_white));
             float precent = (float) (offset - startOffset) / endOffset;
             int alpha = Math.round(precent * 255);
             child.getBackground().setAlpha(alpha);
@@ -61,9 +64,10 @@ public class ToolbarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
 
         } else if (offset >= endOffset) {  //alpha为255
             child.getBackground().setAlpha(255);
-
             textTitle.setVisibility(View.VISIBLE);
             textTitle.setAlpha(1);
+            imageMsg.setImageDrawable(mContext.getDrawable(R.drawable.icon_home_header_msg_black));
+            imageMsg.setAlpha(1f);
         }
     }
 }

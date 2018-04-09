@@ -38,4 +38,5 @@
     <color name="colorSearchBg">#F0F0F0</color>
     <color name="colorKeyBoardBg">#F9F9F9</color>
     <color name="colorKeyDeleteBg">#EBEBEB</color>
+    <color name="colorMallPriceRed">#EB5640</color>
 </resources>

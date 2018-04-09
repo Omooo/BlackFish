@@ -3,17 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <top.omooo.blackfish.view.RecycleViewBanner
-        android:id="@+id/rvb_1"
-        app:rvb_autoPlaying="true"
-        app:rvb_indicatorSelectedSrc="@drawable/icon_home_banner_selected"
-        app:rvb_indicatorUnselectedSrc="@drawable/icon_home_banner_unselected"
-        app:rvb_indicatorSize="5dp"
+    android:orientation="vertical">
+    <Button
+        android:text="测试"
+        android:onClick="payV2"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        app:rvb_indicatorGravity="center">
-
-    </top.omooo.blackfish.view.RecycleViewBanner>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

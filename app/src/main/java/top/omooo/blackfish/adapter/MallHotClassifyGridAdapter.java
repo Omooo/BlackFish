@@ -1,6 +1,8 @@
 package top.omooo.blackfish.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.bean.MallHotClassifyGridInfo;
+import top.omooo.blackfish.utils.SpannableStringUtil;
 
 /**
  * Created by SSC on 2018/4/8.
@@ -22,6 +25,9 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<MallHotClassifyGridInfo> mMallHotClassifyGridInfos;
+    private SpannableStringUtil mStringUtil = new SpannableStringUtil();
+
+    private static final String TAG = "MallGridAdapter";
 
     public MallHotClassifyGridAdapter(Context context, List<MallHotClassifyGridInfo> mallHotClassifyGridInfos) {
         mContext = context;
@@ -58,10 +64,24 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
             myViewHolder = (MyViewHolder) convertView.getTag();
             myViewHolder.heraderImage.setImageURI(mMallHotClassifyGridInfos.get(position).getHeaderImageUrl());
             myViewHolder.mTextDesc.setText(mMallHotClassifyGridInfos.get(position).getGoodsDesc());
-            myViewHolder.mTextPeriods.setText(mMallHotClassifyGridInfos.get(position).getGoodsPeriods());
+            String text = mMallHotClassifyGridInfos.get(position).getGoodsPeriods();
+            int spaceIndex = getFirstSpaceIndex(text.toCharArray());
+            Log.i(TAG, "getView: " + spaceIndex);
+            SpannableString periods = mStringUtil.setMallGoodsPrice(text, 0, spaceIndex);
+            myViewHolder.mTextPeriods.setText(periods);
             myViewHolder.mTextPrice.setText(mMallHotClassifyGridInfos.get(position).getGoodsPrice());
         }
         return convertView;
+    }
+
+    private int getFirstSpaceIndex(char[] text) {
+
+        for (int i = 0; i < text.length; i++) {
+            if (text[i] == ' ') {
+                return i;
+            }
+        }
+        return 0;
     }
 
     class MyViewHolder {

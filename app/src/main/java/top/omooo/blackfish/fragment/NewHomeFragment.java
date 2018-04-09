@@ -92,7 +92,6 @@ public class NewHomeFragment extends BaseFragment{
 
         RelativeLayout headerLayout = (RelativeLayout) mToolbar.getChildAt(0);
 
-
         TextView textTitle = (TextView) headerLayout.getChildAt(1);
         textTitle.setVisibility(View.GONE);
 

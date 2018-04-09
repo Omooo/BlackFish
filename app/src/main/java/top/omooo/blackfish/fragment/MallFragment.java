@@ -43,6 +43,7 @@ import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
+import top.omooo.blackfish.utils.SpannableStringUtil;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.GridViewForScroll;
 import top.omooo.blackfish.view.RecycleViewBanner;
@@ -89,6 +90,8 @@ public class MallFragment extends BaseFragment {
             return false;
         }
     });
+
+    private SpannableStringUtil mSpannableStringUtil=new SpannableStringUtil();
 
     public static MallFragment newInstance() {
         return new MallFragment();

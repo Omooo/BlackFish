@@ -35,14 +35,13 @@ public class MallBarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull Toolbar child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         startOffset = 0;
-        endOffset = 300 - child.getHeight();
+        endOffset = child.getHeight() + 50;
         offset += dyConsumed;
 
         RelativeLayout relativeLayout = (RelativeLayout) child.getChildAt(0);
         ImageView imageMenu = (ImageView) relativeLayout.getChildAt(0);
         ImageView imageMsg = (ImageView) relativeLayout.getChildAt(2);
 
-        // TODO: 2018/4/1 imageMsg从白变黑，而不是从有到无
         if (offset <= startOffset) {  //alpha为0
             child.getBackground().setAlpha(0);
 
@@ -62,9 +61,9 @@ public class MallBarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
             imageMsg.setImageDrawable(mContext.getDrawable(R.drawable.icon_home_header_msg_black));
             imageMenu.setImageDrawable(mContext.getDrawable(R.drawable.icon_mall_menu_black));
             imageMenu.setVisibility(View.VISIBLE);
-            imageMenu.setAlpha(1);
+            imageMenu.setAlpha(1f);
             imageMsg.setVisibility(View.VISIBLE);
-            imageMsg.setAlpha(1);
+            imageMsg.setAlpha(1f);
         }
     }
 }
