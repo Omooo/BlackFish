@@ -1,19 +1,20 @@
 package top.omooo.blackfish;
 
-import android.content.Intent;
-import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
-import top.omooo.blackfish.aliPay.PayDemoActivity;
-
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by SSC on 2018/3/26.
  */
 
-public class TestActivity extends BaseActivity {
+public class TestActivity extends NewBaseActivity {
 
     private static final String TAG = "TestActivity";
-
+    @BindView(R.id.btn_bank_card_add)
+    Button mBtnBankCardAdd;
 
     @Override
     public int getLayoutId() {
@@ -22,18 +23,6 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        startActivity(new Intent(this, PayDemoActivity.class));
-
-    }
-
-
-    @Override
-    public void initListener() {
-
-    }
-
-    @Override
-    public void processClick(View view) {
 
     }
 
@@ -42,4 +31,9 @@ public class TestActivity extends BaseActivity {
 
     }
 
+
+    @OnClick(R.id.btn_bank_card_add)
+    public void onViewClicked() {
+        Toast.makeText(this, "2333", Toast.LENGTH_SHORT).show();
+    }
 }

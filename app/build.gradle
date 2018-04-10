@@ -45,14 +45,16 @@ dependencies {
     }
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation files('src/main/libs/mysql-connector-java-5.1.30-bin.jar')
-    compile 'com.zhihu.android:matisse:0.4.3'
     compile('com.airbnb.android:lottie:2.5.1') {
         exclude group: 'com.android.support'
     }
-    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:multidex:1.0.3'
     //齿轮选择器 https://github.com/CNCoderX/WheelView
     compile 'com.cncoderx.wheelview:library:1.2.1'
     //时间选择器 https://github.com/wdullaer/MaterialDateTimePicker
     compile 'com.wdullaer:materialdatetimepicker:3.5.1'
     implementation files('src/main/libs/alipaySdk-20180403.jar')
+
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
