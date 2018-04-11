@@ -17,6 +17,7 @@ import top.omooo.blackfish.bean.HomeSortItemInfo;
 import top.omooo.blackfish.bean.MallGoodsInfo;
 import top.omooo.blackfish.bean.MallGoodsItemInfo;
 import top.omooo.blackfish.bean.MallPagerInfo;
+import top.omooo.blackfish.bean.RecommendGoodsInfo;
 
 /**
  * Created by SSC on 2018/3/3.
@@ -35,6 +36,8 @@ public class AnalysisJsonUtil {
 
     private List<MallPagerInfo> mMallPagerInfos;
 
+    private List<RecommendGoodsInfo> mRecommendGoodsInfoList;
+
     private JSONObject mJSONObject;
     private JSONArray mJSONArray;
 
@@ -42,6 +45,7 @@ public class AnalysisJsonUtil {
     private static final int BANK_CARD_INFO = 1;
     private static final int CLASSIFY_GOODS_INFO = 2;
     private static final int MALL_GOODS_INFO = 3;
+    private static final int RECOMMEND_GOODS = 4;
 
     private static final String TAG = "AnalysisJsonUtil";
 
@@ -163,7 +167,14 @@ public class AnalysisJsonUtil {
                     }
                     mallGoodsInfos.add(new MallGoodsInfo(headerImageUrl, mallGoodsItemInfos));
                 }
-                mMallPagerInfos.add(new MallPagerInfo(bannerInfos, gridInfos, singleImageUrl, goodsInfos, mallGoodsInfos));
+
+                JSONArray jsonArrayReco = mJSONObject.getJSONArray("recommends_goods");
+                mRecommendGoodsInfoList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayReco.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArrayReco.get(i);
+                    mRecommendGoodsInfoList.add(new RecommendGoodsInfo(jsonObject.getString("imageUrl"), jsonObject.getString("desc"), jsonObject.getDouble("singlePrice"), jsonObject.getInt("periods"), jsonObject.getDouble("totalPrice"), jsonObject.getString("rate")));
+                }
+                mMallPagerInfos.add(new MallPagerInfo(bannerInfos, gridInfos, singleImageUrl, goodsInfos, mallGoodsInfos,mRecommendGoodsInfoList));
                 return mMallPagerInfos;
             } else {
                 return null;

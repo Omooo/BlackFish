@@ -35,7 +35,7 @@ public class MallBarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull Toolbar child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         startOffset = 0;
-        endOffset = child.getHeight() + 50;
+        endOffset = child.getHeight();
         offset += dyConsumed;
 
         RelativeLayout relativeLayout = (RelativeLayout) child.getChildAt(0);

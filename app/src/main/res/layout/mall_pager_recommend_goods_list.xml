@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/rl_mall_recommend_title_layout"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <ImageView
@@ -31,8 +32,23 @@
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_mall_recommend"
+        android:background="@color/colorWhite"
+        android:layout_marginBottom="30dp"
         android:layout_below="@+id/rl_mall_recommend_title_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <FrameLayout
+        android:layout_below="@+id/rv_mall_recommend"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:text="-------------  已经到底啦  -------------"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
 </RelativeLayout>

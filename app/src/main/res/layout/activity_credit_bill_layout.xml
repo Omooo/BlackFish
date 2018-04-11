@@ -179,7 +179,7 @@
         android:id="@+id/gv_bank_cards"
         android:background="@color/colorWhite"
         android:numColumns="4"
-        android:stretchMode="spacingWidthUniform"
+        android:stretchMode="spacingWidth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

@@ -12,13 +12,15 @@ public class MallPagerInfo {
     private String singleImageUrl;
     private List<BannerInfo> mGridGoodsInfos;
     private List<MallGoodsInfo> mMallGoodsInfos;
+    private List<RecommendGoodsInfo> mRecommendGoodsInfos;
 
-    public MallPagerInfo(List<BannerInfo> bannerInfos, List<GridInfo> classifyInfos, String singleImageUrl, List<BannerInfo> gridGoodsInfos, List<MallGoodsInfo> mallGoodsInfos) {
+    public MallPagerInfo(List<BannerInfo> bannerInfos, List<GridInfo> classifyInfos, String singleImageUrl, List<BannerInfo> gridGoodsInfos, List<MallGoodsInfo> mallGoodsInfos, List<RecommendGoodsInfo> recommendGoodsInfos) {
         mBannerInfos = bannerInfos;
         mClassifyInfos = classifyInfos;
         this.singleImageUrl = singleImageUrl;
         mGridGoodsInfos = gridGoodsInfos;
         mMallGoodsInfos = mallGoodsInfos;
+        mRecommendGoodsInfos = recommendGoodsInfos;
     }
 
     public List<BannerInfo> getBannerInfos() {
@@ -59,5 +61,13 @@ public class MallPagerInfo {
 
     public void setMallGoodsInfos(List<MallGoodsInfo> mallGoodsInfos) {
         mMallGoodsInfos = mallGoodsInfos;
+    }
+
+    public List<RecommendGoodsInfo> getRecommendGoodsInfos() {
+        return mRecommendGoodsInfos;
+    }
+
+    public void setRecommendGoodsInfos(List<RecommendGoodsInfo> recommendGoodsInfos) {
+        mRecommendGoodsInfos = recommendGoodsInfos;
     }
 }

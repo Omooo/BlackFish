@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,12 +34,14 @@ import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
 import top.omooo.blackfish.adapter.GridOnlyImageAdapter;
 import top.omooo.blackfish.adapter.MallHotClassifyGridAdapter;
+import top.omooo.blackfish.adapter.RecommendGoodsAdapter;
 import top.omooo.blackfish.bean.BannerInfo;
 import top.omooo.blackfish.bean.GridInfo;
 import top.omooo.blackfish.bean.MallGoodsInfo;
 import top.omooo.blackfish.bean.MallGoodsItemInfo;
 import top.omooo.blackfish.bean.MallHotClassifyGridInfo;
 import top.omooo.blackfish.bean.MallPagerInfo;
+import top.omooo.blackfish.bean.RecommendGoodsInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
@@ -235,6 +238,24 @@ public class MallFragment extends BaseFragment {
             }
         };
         adapters.add(hotClassifyAdapter);
+
+        SingleLayoutHelper recoHelper = new SingleLayoutHelper();
+        GeneralVLayoutAdapter recoAdapter = new GeneralVLayoutAdapter(mContext, recoHelper, 1){
+            @Override
+            public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_recommend_goods_list, parent, false));
+            }
+
+            @Override
+            public void onBindViewHolder(MainViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                RecyclerView recyclerView = holder.itemView.findViewById(R.id.rv_mall_recommend);
+                List<RecommendGoodsInfo> recommendGoodsInfos = mallPagerInfo.getRecommendGoodsInfos();
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                recyclerView.setAdapter(new RecommendGoodsAdapter(mContext,recommendGoodsInfos));
+            }
+        };
+        adapters.add(recoAdapter);
 
         delegateAdapter.setAdapters(adapters);
     }

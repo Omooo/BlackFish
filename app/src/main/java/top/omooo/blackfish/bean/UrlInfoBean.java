@@ -20,4 +20,5 @@ public class UrlInfoBean {
     //商城页数据
     public static final String mallGoodsUrl = "http://www.wooyun.site/blackfish/mall_goods.json";
 
+
 }
