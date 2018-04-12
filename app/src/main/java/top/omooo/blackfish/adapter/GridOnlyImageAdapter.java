@@ -12,6 +12,7 @@ import java.util.List;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.bean.BannerInfo;
+import top.omooo.blackfish.view.CustomToast;
 
 /**
  * Created by SSC on 2018/4/8.
@@ -43,7 +44,7 @@ public class GridOnlyImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         GridViewHolder gridViewHolder;
         if (convertView == null) {
             gridViewHolder = new GridViewHolder();
@@ -54,6 +55,12 @@ public class GridOnlyImageAdapter extends BaseAdapter {
             gridViewHolder = (GridViewHolder) convertView.getTag();
         }
         gridViewHolder.mSimpleDraweeView.setImageURI(mBannerInfos.get(position).getUrl());
+        gridViewHolder.mSimpleDraweeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomToast.show(mContext, "Item " + position + " 跳转到商品详情页");
+            }
+        });
         return convertView;
     }
 

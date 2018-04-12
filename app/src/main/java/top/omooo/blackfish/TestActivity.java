@@ -1,5 +1,6 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -23,7 +24,9 @@ public class TestActivity extends NewBaseActivity {
 
     @Override
     public void initViews() {
-
+        Intent intent = new Intent(this, BaseWebViewActivity.class);
+        intent.putExtra("loadUrl", "https://h5.blackfish.cn/m/promotion/2/120?line&memberId=18800209572&deviceId=f39498916c9b5cda");
+        startActivity(intent);
     }
 
     @Override

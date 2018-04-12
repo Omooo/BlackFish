@@ -89,6 +89,8 @@
         </activity>
         <activity android:name=".aliPay.PayDemoActivity"/>
 
+        <activity android:name=".BaseWebViewActivity"/>
+
     </application>
 
 </manifest>

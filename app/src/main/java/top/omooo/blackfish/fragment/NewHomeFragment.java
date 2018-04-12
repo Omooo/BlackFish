@@ -1,6 +1,7 @@
 package top.omooo.blackfish.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import top.omooo.blackfish.BaseWebViewActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.adapter.GeneralVLayoutAdapter;
 import top.omooo.blackfish.bean.BannerInfo;
@@ -145,7 +146,10 @@ public class NewHomeFragment extends BaseFragment{
                 mRecycleViewBanner.setOnBannerClickListener(new RecycleViewBanner.OnRvBannerClickListener() {
                     @Override
                     public void onClick(int position) {
-                        Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                        intent.putExtra("loadUrl", UrlInfoBean.homeBannerUrls[position]);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
                     }
                 });
             }

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import top.omooo.blackfish.BaseWebViewActivity;
 import top.omooo.blackfish.MallPagerActivity.ClassifyGoodsActivity;
 import top.omooo.blackfish.MallPagerActivity.SearchActivity;
 import top.omooo.blackfish.R;
@@ -86,7 +87,7 @@ public class MallFragment extends BaseFragment {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 0x01:
-                    addItemViews(mMallPagerInfos.get(0));
+                    addItemViews(mMallPagerInfos.get(0),mOnViewItemClickListener);
                     break;
                 default:break;
             }
@@ -133,7 +134,7 @@ public class MallFragment extends BaseFragment {
 
     }
 
-    private void addItemViews(final MallPagerInfo mallPagerInfo) {
+    private void addItemViews(final MallPagerInfo mallPagerInfo, final OnViewItemClickListener listener) {
 
         //轮播图
         SingleLayoutHelper bannerHelper = new SingleLayoutHelper();
@@ -159,7 +160,10 @@ public class MallFragment extends BaseFragment {
                 mBanner.setOnBannerClickListener(new RecycleViewBanner.OnRvBannerClickListener() {
                     @Override
                     public void onClick(int position) {
-                        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                        intent.putExtra("loadUrl", "https://github.com/omooo");
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
                     }
                 });
             }
@@ -174,7 +178,7 @@ public class MallFragment extends BaseFragment {
             }
 
             @Override
-            public void onBindViewHolder(MainViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
                 mImageGridItem = holder.itemView.findViewById(R.id.iv_mall_grid_item);
                 mTextGridItem = holder.itemView.findViewById(R.id.tv_mall_grid_item);
@@ -182,6 +186,12 @@ public class MallFragment extends BaseFragment {
                 mImageGridItem.setImageURI(mGridInfos.get(position).getImageUrl());
                 mTextGridItem.setText(mGridInfos.get(position).getTitle());
 
+                mImageGridItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick("ClassifyGridItem"+position);
+                    }
+                });
             }
         };
         adapters.add(gridAdapter);
@@ -201,6 +211,13 @@ public class MallFragment extends BaseFragment {
                 GridViewForScroll gridFourGoods = holder.itemView.findViewById(R.id.gv_four_goods);
                 gridFourGoods.setAdapter(new GridOnlyImageAdapter(mContext,mallPagerInfo.getGridGoodsInfos()));
                 headerImage.setImageURI(mallPagerInfo.getSingleImageUrl());
+
+                headerImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick("SingleHeaderImage");
+                    }
+                });
             }
         };
         adapters.add(fourGoodsAdapter);
@@ -213,7 +230,7 @@ public class MallFragment extends BaseFragment {
             }
 
             @Override
-            public void onBindViewHolder(MainViewHolder holder, int position) {
+            public void onBindViewHolder(MainViewHolder holder, final int position) {
                 super.onBindViewHolder(holder, position);
 
                 List<MallHotClassifyGridInfo> mallHotClassifyGridInfos = new ArrayList<>();
@@ -222,6 +239,13 @@ public class MallFragment extends BaseFragment {
                 GridViewForScroll gridGoods = holder.itemView.findViewById(R.id.gv_hot_classify);
                 List<MallGoodsInfo> mallGoodsInfos = mallPagerInfo.getMallGoodsInfos();
                 headerImage.setImageURI(mallGoodsInfos.get(position).getHeaderImageUrl());
+
+                headerImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick("HotGoodsHeaderImage" + position);
+                    }
+                });
 
                 int itemSize = mallGoodsInfos.get(position).getMallGoodsItemInfos().size();
                 Log.i(TAG, "onBindViewHolder: " + itemSize);
@@ -252,6 +276,7 @@ public class MallFragment extends BaseFragment {
                 RecyclerView recyclerView = holder.itemView.findViewById(R.id.rv_mall_recommend);
                 List<RecommendGoodsInfo> recommendGoodsInfos = mallPagerInfo.getRecommendGoodsInfos();
                 recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
                 recyclerView.setAdapter(new RecommendGoodsAdapter(mContext,recommendGoodsInfos));
             }
         };
@@ -304,4 +329,34 @@ public class MallFragment extends BaseFragment {
         }
     }
 
+    private OnViewItemClickListener mOnViewItemClickListener=new OnViewItemClickListener() {
+        @Override
+        public void onItemClick(String id) {
+            for (int i = 0; i < 10; i++) {
+                if (id.equals("ClassifyGridItem" + i)) {
+                    CustomToast.show(mContext, "第 " + i + " 个Item被点击");
+                    return;
+                }
+            }
+            if (id.equals("SingleHeaderImage")) {
+                Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                intent.putExtra("loadUrl", "https://h5.blackfish.cn/m/promotion/2/89?line&memberId=18800209572&deviceId=f39498916c9b5cda");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
+                return;
+            }
+            for (int i = 0; i < 5; i++) {
+                if (id.equals("HotGoodsHeaderImage" + i)) {
+                    Intent intent = new Intent(mContext, BaseWebViewActivity.class);
+                    intent.putExtra("loadUrl", UrlInfoBean.hotGoodsHeaderUrls[i]);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
+                    return;
+                }
+            }
+        }
+    };
+    private interface OnViewItemClickListener {
+        void onItemClick(String id);
+    }
 }

@@ -62,15 +62,16 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
             convertView.setTag(myViewHolder);
         } else {
             myViewHolder = (MyViewHolder) convertView.getTag();
-            myViewHolder.heraderImage.setImageURI(mMallHotClassifyGridInfos.get(position).getHeaderImageUrl());
-            myViewHolder.mTextDesc.setText(mMallHotClassifyGridInfos.get(position).getGoodsDesc());
-            String text = mMallHotClassifyGridInfos.get(position).getGoodsPeriods();
-            int spaceIndex = getFirstSpaceIndex(text.toCharArray());
-            Log.i(TAG, "getView: " + spaceIndex);
-            SpannableString periods = mStringUtil.setMallGoodsPrice(text, 0, spaceIndex);
-            myViewHolder.mTextPeriods.setText(periods);
-            myViewHolder.mTextPrice.setText(mMallHotClassifyGridInfos.get(position).getGoodsPrice());
         }
+        myViewHolder.heraderImage.setImageURI(mMallHotClassifyGridInfos.get(position).getHeaderImageUrl());
+        myViewHolder.mTextDesc.setText(mMallHotClassifyGridInfos.get(position).getGoodsDesc());
+        String text = mMallHotClassifyGridInfos.get(position).getGoodsPeriods();
+        int spaceIndex = getFirstSpaceIndex(text.toCharArray());
+        Log.i(TAG, "getView: " + spaceIndex);
+        SpannableString periods = mStringUtil.setMallGoodsPrice(text, 0, spaceIndex);
+        myViewHolder.mTextPeriods.setText(periods);
+        myViewHolder.mTextPrice.setText(mMallHotClassifyGridInfos.get(position).getGoodsPrice());
+
         return convertView;
     }
 
@@ -84,10 +85,10 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
         return 0;
     }
 
-    class MyViewHolder {
-        public SimpleDraweeView heraderImage;
-        public TextView mTextDesc;
-        public TextView mTextPeriods;
-        public TextView mTextPrice;
+    private class MyViewHolder {
+        private SimpleDraweeView heraderImage;
+        private TextView mTextDesc;
+        private TextView mTextPeriods;
+        private TextView mTextPrice;
     }
 }
