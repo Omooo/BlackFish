@@ -40,4 +40,5 @@
     <color name="colorKeyDeleteBg">#EBEBEB</color>
     <color name="colorMallPriceRed">#EB5640</color>
     <color name="colorEvaluation">#ECECEC</color>
+    <color name="colorGray">#F3F3F3</color>
 </resources>

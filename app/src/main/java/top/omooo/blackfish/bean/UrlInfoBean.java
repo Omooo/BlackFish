@@ -35,4 +35,5 @@ public class UrlInfoBean {
             "https://h5.blackfish.cn/m/promotion/5/98?memberId=18800209572&deviceId=f39498916c9b5cda",
             "https://h5.blackfish.cn/m/promotion/5/95?memberId=18800209572&deviceId=f39498916c9b5cda"};
 
+    public static final String goodsDetailsUrl = "http://www.wooyun.site/blackfish/goods_details.json";
 }

@@ -91,6 +91,8 @@
 
         <activity android:name=".BaseWebViewActivity"/>
 
+        <activity android:name=".GoodsDetailActivity"/>
+
     </application>
 
 </manifest>

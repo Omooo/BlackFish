@@ -2,7 +2,6 @@ package top.omooo.blackfish;
 
 import android.content.Intent;
 import android.widget.Button;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,9 +23,7 @@ public class TestActivity extends NewBaseActivity {
 
     @Override
     public void initViews() {
-        Intent intent = new Intent(this, BaseWebViewActivity.class);
-        intent.putExtra("loadUrl", "https://h5.blackfish.cn/m/promotion/2/120?line&memberId=18800209572&deviceId=f39498916c9b5cda");
-        startActivity(intent);
+
     }
 
     @Override
@@ -37,6 +34,6 @@ public class TestActivity extends NewBaseActivity {
 
     @OnClick(R.id.btn_bank_card_add)
     public void onViewClicked() {
-        Toast.makeText(this, "2333", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, GoodsDetailActivity.class));
     }
 }

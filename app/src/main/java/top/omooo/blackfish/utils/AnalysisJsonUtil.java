@@ -1,5 +1,7 @@
 package top.omooo.blackfish.utils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,13 +13,16 @@ import top.omooo.blackfish.bean.BankCardsInfo;
 import top.omooo.blackfish.bean.BannerInfo;
 import top.omooo.blackfish.bean.ClassifyGoodsInfo;
 import top.omooo.blackfish.bean.ClassifyGridInfo;
+import top.omooo.blackfish.bean.GoodsDetailsInfo;
 import top.omooo.blackfish.bean.GridInfo;
 import top.omooo.blackfish.bean.HomeSortInfo;
 import top.omooo.blackfish.bean.HomeSortItemInfo;
 import top.omooo.blackfish.bean.MallGoodsInfo;
 import top.omooo.blackfish.bean.MallGoodsItemInfo;
 import top.omooo.blackfish.bean.MallPagerInfo;
+import top.omooo.blackfish.bean.OptionalTypeInfo;
 import top.omooo.blackfish.bean.RecommendGoodsInfo;
+import top.omooo.blackfish.bean.SimilarRecoInfo;
 
 /**
  * Created by SSC on 2018/3/3.
@@ -28,24 +33,11 @@ import top.omooo.blackfish.bean.RecommendGoodsInfo;
  */
 public class AnalysisJsonUtil {
 
-    private List<HomeSortInfo> mHomeSortInfos;
-    private List<HomeSortItemInfo> mHomeSortItemInfos;
-    private List<BankCardsInfo> mBankCardsInfos;
-
-    private List<ClassifyGoodsInfo> mClassifyGoodsInfos;
-
-    private List<MallPagerInfo> mMallPagerInfos;
-
-    private List<RecommendGoodsInfo> mRecommendGoodsInfoList;
-
-    private JSONObject mJSONObject;
-    private JSONArray mJSONArray;
-
     private static final int HOME_GOODS_INFO = 0;
     private static final int BANK_CARD_INFO = 1;
     private static final int CLASSIFY_GOODS_INFO = 2;
     private static final int MALL_GOODS_INFO = 3;
-    private static final int RECOMMEND_GOODS = 4;
+    private static final int GOODS_DETAILS_INFO = 4;
 
     private static final String TAG = "AnalysisJsonUtil";
 
@@ -57,11 +49,13 @@ public class AnalysisJsonUtil {
      */
     public List getDataFromJson(String json,int type) {
         try {
+            JSONObject mJSONObject;
+            JSONArray mJSONArray;
             if (type == HOME_GOODS_INFO) {
                 //首页的商品信息
                 mJSONObject = new JSONObject(json);
-                mHomeSortInfos = new ArrayList<>();
-                mHomeSortItemInfos = new ArrayList<>();
+                List<HomeSortInfo> homeSortInfos = new ArrayList<>();
+                List<HomeSortItemInfo> homeSortItemInfos = new ArrayList<>();
                 mJSONArray = mJSONObject.getJSONArray("home_sort");
                 for (int i = 0; i < mJSONArray.length(); i++) {
                     JSONObject jsonObject = (JSONObject) mJSONArray.get(i);
@@ -72,14 +66,14 @@ public class AnalysisJsonUtil {
                         JSONObject object = (JSONObject) jsonArray.get(0);
                         String id = object.getString("id");
                         String goodsImageUrl = object.getString("goodsImageUrl");
-                        mHomeSortItemInfos.add(new HomeSortItemInfo(id, goodsImageUrl));
+                        homeSortItemInfos.add(new HomeSortItemInfo(id, goodsImageUrl));
                     }
-                    mHomeSortInfos.add(new HomeSortInfo(title, sortImageUrl, mHomeSortItemInfos));
+                    homeSortInfos.add(new HomeSortInfo(title, sortImageUrl, homeSortItemInfos));
                 }
-                return mHomeSortInfos;
+                return homeSortInfos;
             } else if (type == BANK_CARD_INFO) {
                 //银行卡信息
-                mBankCardsInfos = new ArrayList<>();
+                List<BankCardsInfo> bankCardsInfos = new ArrayList<>();
                 mJSONArray = new JSONArray(json);
                 mJSONObject = (JSONObject) mJSONArray.get(0);
                 JSONArray jsonArray = mJSONObject.getJSONArray("bank_list");
@@ -89,12 +83,12 @@ public class AnalysisJsonUtil {
                     String abbr = jsonObject.getString("abbr");
                     String name = jsonObject.getString("name");
                     String logo_url = jsonObject.getString("logo_uri");
-                    mBankCardsInfos.add(new BankCardsInfo(logo_url, name, abbr));
+                    bankCardsInfos.add(new BankCardsInfo(logo_url, name, abbr));
                 }
-                return mBankCardsInfos;
+                return bankCardsInfos;
             } else if (type == CLASSIFY_GOODS_INFO) {
                 //商品分类信息
-                mClassifyGoodsInfos = new ArrayList<>();
+                List<ClassifyGoodsInfo> classifyGoodsInfos = new ArrayList<>();
                 mJSONObject = new JSONObject(json);
                 mJSONArray = mJSONObject.getJSONArray("classifyTitle");
                 for (int i = 0; i < mJSONArray.length(); i++) {
@@ -123,11 +117,11 @@ public class AnalysisJsonUtil {
                         String imageUrl = jsonObject1.getString("iamgeUrl");
                         mGridInfos2.add(new ClassifyGridInfo(id, desc, imageUrl));
                     }
-                    mClassifyGoodsInfos.add(new ClassifyGoodsInfo(title, headerImageUrl, subtitle1, subtitle2, mGridInfos1, mGridInfos2));
+                    classifyGoodsInfos.add(new ClassifyGoodsInfo(title, headerImageUrl, subtitle1, subtitle2, mGridInfos1, mGridInfos2));
                 }
-                return mClassifyGoodsInfos;
+                return classifyGoodsInfos;
             } else if (type == MALL_GOODS_INFO) {
-                mMallPagerInfos = new ArrayList<>();
+                List<MallPagerInfo> mallPagerInfos = new ArrayList<>();
                 List<BannerInfo> bannerInfos = new ArrayList<>();
                 List<GridInfo> gridInfos = new ArrayList<>();
                 List<BannerInfo> goodsInfos = new ArrayList<>();
@@ -169,13 +163,42 @@ public class AnalysisJsonUtil {
                 }
 
                 JSONArray jsonArrayReco = mJSONObject.getJSONArray("recommends_goods");
-                mRecommendGoodsInfoList = new ArrayList<>();
+                List<RecommendGoodsInfo> recommendGoodsInfoList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayReco.length(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArrayReco.get(i);
-                    mRecommendGoodsInfoList.add(new RecommendGoodsInfo(jsonObject.getString("imageUrl"), jsonObject.getString("desc"), jsonObject.getDouble("singlePrice"), jsonObject.getInt("periods"), jsonObject.getDouble("totalPrice"), jsonObject.getString("rate")));
+                    recommendGoodsInfoList.add(new RecommendGoodsInfo(jsonObject.getString("imageUrl"), jsonObject.getString("desc"), jsonObject.getDouble("singlePrice"), jsonObject.getInt("periods"), jsonObject.getDouble("totalPrice"), jsonObject.getString("rate")));
                 }
-                mMallPagerInfos.add(new MallPagerInfo(bannerInfos, gridInfos, singleImageUrl, goodsInfos, mallGoodsInfos,mRecommendGoodsInfoList));
-                return mMallPagerInfos;
+                mallPagerInfos.add(new MallPagerInfo(bannerInfos, gridInfos, singleImageUrl, goodsInfos, mallGoodsInfos, recommendGoodsInfoList));
+                return mallPagerInfos;
+            } else if (type == GOODS_DETAILS_INFO) {
+                List<GoodsDetailsInfo> detailsInfoList = new ArrayList<>();
+                List<String> bannerList = new ArrayList<>();
+                mJSONObject = new JSONObject(json);
+                mJSONArray = mJSONObject.getJSONArray("bannerUrls");
+                for (int i = 0; i < mJSONArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) mJSONArray.get(i);
+                    String bannerUrl = jsonObject.getString("imageUrl");
+                    bannerList.add(bannerUrl);
+                }
+                double totalPrice = mJSONObject.getDouble("totalPrice");
+                double singlePrice = mJSONObject.getDouble("singlePrice");
+                int periods = mJSONObject.getInt("periods");
+                String desc = mJSONObject.getString("desc");
+                String defaultType = mJSONObject.getString("defaultType");
+                List<OptionalTypeInfo> optionalTypeInfos = new ArrayList<>();
+                List<SimilarRecoInfo> similarRecoInfos = new ArrayList<>();
+                JSONArray jsonArrayOptional = mJSONObject.getJSONArray("optionalType");
+                for (int i = 0; i < jsonArrayOptional.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArrayOptional.get(i);
+                    optionalTypeInfos.add(new OptionalTypeInfo(jsonObject.getString("type"), jsonObject.getDouble("totalPrice"), jsonObject.getDouble("singlePrice")));
+                }
+                JSONArray jsonArraySimilar = mJSONObject.getJSONArray("similarRecommend");
+                for (int i = 0; i < jsonArraySimilar.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArraySimilar.get(i);
+                    similarRecoInfos.add(new SimilarRecoInfo(jsonObject.getString("imageUrl"), jsonObject.getString("desc"), jsonObject.getDouble("totalPrice"), jsonObject.getDouble("singlePrice"), jsonObject.getInt("periods")));
+                }
+                detailsInfoList.add(new GoodsDetailsInfo(bannerList, totalPrice, singlePrice, periods, desc, defaultType, optionalTypeInfos, similarRecoInfos));
+                return detailsInfoList;
             } else {
                 return null;
             }
