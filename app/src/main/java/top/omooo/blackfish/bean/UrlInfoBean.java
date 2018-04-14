@@ -24,16 +24,27 @@ public class UrlInfoBean {
     public static final String financialUrl = "https://h5.shanhulicai.cn/main/#/home?entry=bar&_k=ra1im0";
 
     //Home页轮播图跳转Url
-    public static final String[] homeBannerUrls = new String[]{"https://h5.blackfish.cn/m/promotion/1/136?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/4/133?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/1/138?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/3/106?memberId=18800209572&deviceId=f39498916c9b5cda"};
+    public static final String[] homeBannerUrls = new String[]{"https://h5.blackfish.cn/m/promotion/1/136?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/4/133?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/1/138?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/3/106?memberId=18800209473&deviceId=f39498916c9b5cda"};
 
-    public static final String[] hotGoodsHeaderUrls = new String[]{"https://h5.blackfish.cn/m/promotion/4/143?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/5/101?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/5/103?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/5/98?memberId=18800209572&deviceId=f39498916c9b5cda",
-            "https://h5.blackfish.cn/m/promotion/5/95?memberId=18800209572&deviceId=f39498916c9b5cda"};
+    //Home页商品HeaderImage
+    public static final String[] homeHeaderUrls = new String[]{"https://h5.blackfish.cn/fsh/promotion/valentinesDay.html?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/1/139?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/3/141?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "http://credit.youyuwo.com/5/credit/#/?ADTAG=1301&ichannelid=1301"};
+
+    public static final String[] hotGoodsHeaderUrls = new String[]{"https://h5.blackfish.cn/m/promotion/4/143?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/5/101?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/5/103?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/5/98?memberId=18800209473&deviceId=f39498916c9b5cda",
+            "https://h5.blackfish.cn/m/promotion/5/95?memberId=18800209473&deviceId=f39498916c9b5cda"};
 
     public static final String goodsDetailsUrl = "http://www.wooyun.site/blackfish/goods_details.json";
+
+    //全民游戏
+    public static final String gameUrl = "https://yule.hule888.com/?source=02020001020100030&isNeedLogin=1";
+    //办信用卡
+    public static final String bankCard = "http://credit.youyuwo.com/5/credit/#/?ADTAG=1301&ichannelid=1301";
 }

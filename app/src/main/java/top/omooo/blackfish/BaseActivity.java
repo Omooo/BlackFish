@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.View;
 
 import top.omooo.blackfish.view.CustomToast;
@@ -64,5 +65,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public void onBackPressed() {
         CustomToast.cancelToast();
         super.onBackPressed();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+            overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
+        }
+        return true;
     }
 }

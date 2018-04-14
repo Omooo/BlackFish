@@ -8,7 +8,6 @@
 
     <RelativeLayout
         android:id="@+id/rl_goods_title_layout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -22,8 +21,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:background="@drawable/shape_home_subtitle_left"
-            android:backgroundTint="@color/home_header_red"/>
+            android:background="@drawable/shape_home_subtitle_left1"/>
 
         <TextView
             android:id="@+id/tv_home_goods_title_text"
@@ -45,16 +43,17 @@
             android:layout_marginEnd="10dp"
             android:src="@drawable/icon_home_pager_goods_title_to_right"/>
     </RelativeLayout>
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_home_goods_big_image"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>
     <!--脏！-->
     <LinearLayout
-        android:background="@color/colorWhite"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="130dp">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_1"
             android:layout_weight="1"
@@ -65,28 +64,28 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_2"
             android:layout_weight="1"
-            android:layout_marginEnd="0.1dp"
+            android:layout_marginStart="0.1dp"
             android:scaleType="fitXY"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
     </LinearLayout>
     <LinearLayout
-        android:background="@color/colorWhite"
         android:layout_marginTop="0.2dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="130dp">
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_3"
             android:layout_weight="1"
             android:layout_marginEnd="0.1dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_home_goods_item_4"
             android:layout_weight="1"
             android:layout_marginStart="0.1dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>
     </LinearLayout>

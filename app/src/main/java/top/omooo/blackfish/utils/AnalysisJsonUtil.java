@@ -55,15 +55,17 @@ public class AnalysisJsonUtil {
                 //首页的商品信息
                 mJSONObject = new JSONObject(json);
                 List<HomeSortInfo> homeSortInfos = new ArrayList<>();
-                List<HomeSortItemInfo> homeSortItemInfos = new ArrayList<>();
                 mJSONArray = mJSONObject.getJSONArray("home_sort");
                 for (int i = 0; i < mJSONArray.length(); i++) {
+                    List<HomeSortItemInfo> homeSortItemInfos = new ArrayList<>();
+                    Log.i(TAG, "getDataFromJson: 外长度" + mJSONArray.length());
                     JSONObject jsonObject = (JSONObject) mJSONArray.get(i);
                     String title = jsonObject.getString("title");
                     String sortImageUrl = jsonObject.getString("sortImageUrl");
                     JSONArray jsonArray = jsonObject.getJSONArray("goods");
                     for (int j = 0; j < jsonArray.length(); j++) {
-                        JSONObject object = (JSONObject) jsonArray.get(0);
+                        Log.i(TAG, "getDataFromJson: 内长度" + jsonArray.length());
+                        JSONObject object = (JSONObject) jsonArray.get(j);
                         String id = object.getString("id");
                         String goodsImageUrl = object.getString("goodsImageUrl");
                         homeSortItemInfos.add(new HomeSortItemInfo(id, goodsImageUrl));

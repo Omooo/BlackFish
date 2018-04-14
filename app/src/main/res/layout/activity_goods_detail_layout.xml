@@ -45,6 +45,7 @@
         app:layout_behavior="top.omooo.blackfish.utils.CoverHeaderScrollBehavior"
         android:background="@color/colorWhite"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -223,9 +224,59 @@
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
     <TextView
-        android:text="测试"
         android:layout_gravity="bottom"
-        android:gravity="center"
+        android:layout_marginBottom="50dp"
+        style="@style/DividerTextView"
+        android:layout_width="match_parent"/>
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
+        android:divider="@drawable/shape_divider_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp">
+        <LinearLayout
+            android:id="@+id/ll_period_info"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv__price_bottom"
+                android:text="月供¥14.65起"
+                android:textColor="@color/splash_main_title_color"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:src="@drawable/icon_info"
+                android:layout_marginTop="17.5dp"
+                android:layout_marginStart="5dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_fav"
+            android:text="收藏"
+            android:drawableTop="@drawable/icon_fav_uncheck"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/tv_pay"
+            android:text="立即购买"
+            android:textColor="@color/splash_main_title_color"
+            android:background="@drawable/shape_btn_no_pressed"
+            android:layout_weight="2"
+            android:layout_margin="8dp"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

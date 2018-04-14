@@ -2,13 +2,17 @@ package top.omooo.blackfish;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.text.SpannableString;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,8 +71,17 @@ public class GoodsDetailActivity extends NewBaseActivity {
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.rl_dialog)
     RelativeLayout mRlDialog;
+    @BindView(R.id.ll_period_info)
+    LinearLayout mLinearPeriodInfo;
+    @BindView(R.id.tv_fav)
+    TextView mTextFav;
+    @BindView(R.id.tv_pay)
+    TextView mTextPay;
 
     private Context mContext;
+    private boolean isFav = false;
+
+
     private List<GoodsDetailsInfo> mGoodsDetailsInfos;
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
@@ -157,7 +170,7 @@ public class GoodsDetailActivity extends NewBaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.iv_more, R.id.iv_more_type, R.id.iv_more_address,R.id.rl_dialog })
+    @OnClick({R.id.iv_back, R.id.iv_more, R.id.iv_more_type, R.id.iv_more_address, R.id.rl_dialog, R.id.ll_period_info, R.id.tv_fav, R.id.tv_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -174,10 +187,45 @@ public class GoodsDetailActivity extends NewBaseActivity {
                 CustomToast.show(mContext, "选择配送地址");
                 break;
             case R.id.rl_dialog:
-                CustomToast.show(mContext,"正品保障&&京东供货");
+                showServiceDialog();
+                break;
+            case R.id.ll_period_info:
+                CustomToast.show(mContext, "月供详情");
+                break;
+            case R.id.tv_fav:
+                Drawable[] drawables = mTextFav.getCompoundDrawables();
+                if (!isFav) {
+                    mTextFav.setText("已收藏");
+                    Drawable drawable = getDrawable(R.drawable.icon_fav_checked);
+                    drawable.setBounds(0, 0, 50, 50);
+                    mTextFav.setCompoundDrawables(drawables[0],drawable, drawables[2], drawables[3]);
+                    isFav = true;
+                } else {
+                    mTextFav.setText("收藏");
+                    Drawable drawable = getDrawable(R.drawable.icon_fav_uncheck);
+                    drawable.setBounds(0, 0, 50, 50);
+                    mTextFav.setCompoundDrawables(drawables[0], drawable, drawables[2], drawables[3]);
+                    isFav = false;
+                }
+                break;
+            case R.id.tv_pay:
+                CustomToast.show(mContext, "立即支付");
+                break;
             default:
                 break;
         }
     }
 
+    private void showServiceDialog() {
+        final BottomSheetDialog dialog = new BottomSheetDialog(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_service_info_layout, null);
+        view.findViewById(R.id.iv_close_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(view);
+        dialog.show();
+    }
 }
