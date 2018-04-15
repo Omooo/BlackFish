@@ -1,6 +1,8 @@
 package top.omooo.blackfish;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -24,16 +26,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import top.omooo.blackfish.MallPagerActivity.ShowImageActivity;
+import top.omooo.blackfish.MallPagerActivity.SubmitOrderActivity;
 import top.omooo.blackfish.adapter.SimilarRecoAdapter;
 import top.omooo.blackfish.bean.GoodsDetailsInfo;
+import top.omooo.blackfish.bean.OptionalTypeInfo;
 import top.omooo.blackfish.bean.SimilarRecoInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
 import top.omooo.blackfish.utils.SpannableStringUtil;
+import top.omooo.blackfish.view.AmountView;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.GridViewForScroll;
+import top.omooo.blackfish.view.LabelsViewDemo;
 import top.omooo.blackfish.view.RecycleViewBanner;
 
 /**
@@ -75,12 +82,14 @@ public class GoodsDetailActivity extends NewBaseActivity {
     LinearLayout mLinearPeriodInfo;
     @BindView(R.id.tv_fav)
     TextView mTextFav;
-    @BindView(R.id.tv_pay)
-    TextView mTextPay;
+    @BindView(R.id.tv_imm_pay)
+    TextView mTextImmPay;
 
     private Context mContext;
-    private boolean isFav = false;
 
+    private boolean isFav = false;
+    private BottomSheetDialog mDialog;
+    private static final String TAG = "GoodsDetailActivity";
 
     private List<GoodsDetailsInfo> mGoodsDetailsInfos;
     private Handler mHandler = new Handler(new Handler.Callback() {
@@ -100,7 +109,7 @@ public class GoodsDetailActivity extends NewBaseActivity {
                 mRvBanner.setOnBannerClickListener(new RecycleViewBanner.OnRvBannerClickListener() {
                     @Override
                     public void onClick(int position) {
-                        Toast.makeText(mContext, "" + position, Toast.LENGTH_SHORT).show();
+                        skipActivity(new Intent(mContext, ShowImageActivity.class));
                     }
                 });
 
@@ -112,6 +121,8 @@ public class GoodsDetailActivity extends NewBaseActivity {
                 mTvDesc.setText(detailsInfo.getDesc());
                 mTvChooseType.setText(detailsInfo.getDefaultType());
                 mTvChooseAddress.setText("上海市 浦东新区");
+
+                setDialogData(detailsInfo.getOptionalTypeInfos());
 
                 // TODO: 2018/4/13 又一个GridView不显示的问题，烦得很
                 List<SimilarRecoInfo> similarRecoInfos = detailsInfo.getSimilarRecoInfos();
@@ -170,18 +181,17 @@ public class GoodsDetailActivity extends NewBaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.iv_more, R.id.iv_more_type, R.id.iv_more_address, R.id.rl_dialog, R.id.ll_period_info, R.id.tv_fav, R.id.tv_pay})
+    @OnClick({R.id.iv_back, R.id.iv_more, R.id.iv_more_type, R.id.iv_more_address, R.id.rl_dialog, R.id.ll_period_info, R.id.tv_fav, R.id.tv_imm_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
-                overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
+                finshActivity();
                 break;
             case R.id.iv_more:
                 CustomToast.show(mContext, "显示 PopupWindow");
                 break;
             case R.id.iv_more_type:
-                CustomToast.show(mContext, "选择商品类型");
+                mDialog.show();
                 break;
             case R.id.iv_more_address:
                 CustomToast.show(mContext, "选择配送地址");
@@ -198,7 +208,7 @@ public class GoodsDetailActivity extends NewBaseActivity {
                     mTextFav.setText("已收藏");
                     Drawable drawable = getDrawable(R.drawable.icon_fav_checked);
                     drawable.setBounds(0, 0, 50, 50);
-                    mTextFav.setCompoundDrawables(drawables[0],drawable, drawables[2], drawables[3]);
+                    mTextFav.setCompoundDrawables(drawables[0], drawable, drawables[2], drawables[3]);
                     isFav = true;
                 } else {
                     mTextFav.setText("收藏");
@@ -208,8 +218,8 @@ public class GoodsDetailActivity extends NewBaseActivity {
                     isFav = false;
                 }
                 break;
-            case R.id.tv_pay:
-                CustomToast.show(mContext, "立即支付");
+            case R.id.tv_imm_pay:
+                mDialog.show();
                 break;
             default:
                 break;
@@ -217,7 +227,7 @@ public class GoodsDetailActivity extends NewBaseActivity {
     }
 
     private void showServiceDialog() {
-        final BottomSheetDialog dialog = new BottomSheetDialog(mContext);
+        final Dialog dialog = new BottomSheetDialog(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_service_info_layout, null);
         view.findViewById(R.id.iv_close_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,5 +237,67 @@ public class GoodsDetailActivity extends NewBaseActivity {
         });
         dialog.setContentView(view);
         dialog.show();
+    }
+
+    private void setDialogData(List<OptionalTypeInfo> typeInfos) {
+        mDialog = new BottomSheetDialog(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_choose_type_layout, null);
+        view.findViewById(R.id.iv_close_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+        SimpleDraweeView draweeView = view.findViewById(R.id.iv_goods);
+        draweeView.setImageURI(UrlInfoBean.dialogImage);
+        draweeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                skipActivity(new Intent(mContext, ShowImageActivity.class));
+            }
+        });
+
+        TextView textPrice = view.findViewById(R.id.tv_top_price);
+        TextView textType = view.findViewById(R.id.tv_type);
+        final TextView textAmount = view.findViewById(R.id.tv_num);
+        final TextView textSingle = view.findViewById(R.id.tv_price_bottom);
+        TextView textPay = view.findViewById(R.id.tv_diter_pay);
+        textPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+                skipActivity(new Intent(mContext, SubmitOrderActivity.class));
+            }
+        });
+        LabelsViewDemo labelsViewDemo = view.findViewById(R.id.labels_view);
+//        for (int i = 0; i < typeInfos.size(); i++) {
+//            TextView textView = new TextView(mContext);
+//            textView.setText(typeInfos.get(i).getType());
+//            labelsViewDemo.addView(textView);
+//        }
+
+        //默认选择最后一个
+        final OptionalTypeInfo typeInfo = typeInfos.get(2);
+        String totalPrice = "¥" + typeInfo.getTotalPrice();
+        textPrice.setText(totalPrice);
+        final double singlePrice = typeInfo.getSinglePrice();
+        setSpann(textSingle, singlePrice);
+        AmountView amountView = view.findViewById(R.id.amount_view);
+        amountView.setMaxNumber(20);
+        amountView.setOnNumChangeListener(new AmountView.OnNumChangeListener() {
+            @Override
+            public void onChange(int num) {
+                String string = "数量：" + num;
+                textAmount.setText(string);
+                setSpann(textSingle, singlePrice * num);
+            }
+        });
+        mDialog.setContentView(view);
+    }
+
+    private void setSpann(TextView textView, double price) {
+        String singlePrice = "月供 ¥" + price + " 起";
+        SpannableString spannableString = new SpannableStringUtil().setMallGoodsPrice(singlePrice, 3, 4 + String.valueOf(price).length());
+        textView.setText(spannableString);
     }
 }

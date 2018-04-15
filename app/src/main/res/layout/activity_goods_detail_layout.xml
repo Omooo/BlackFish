@@ -269,7 +269,7 @@
             android:gravity="center"
             android:layout_height="match_parent"/>
         <TextView
-            android:id="@+id/tv_pay"
+            android:id="@+id/tv_imm_pay"
             android:text="立即购买"
             android:textColor="@color/splash_main_title_color"
             android:background="@drawable/shape_btn_no_pressed"

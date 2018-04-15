@@ -47,4 +47,12 @@ public class UrlInfoBean {
     public static final String gameUrl = "https://yule.hule888.com/?source=02020001020100030&isNeedLogin=1";
     //办信用卡
     public static final String bankCard = "http://credit.youyuwo.com/5/credit/#/?ADTAG=1301&ichannelid=1301";
+
+    //商品详情页大图
+    public static final String[] bigImageUrls = new String[]{"https://img11.360buyimg.com/n1/jfs/t2266/265/2591849131/206101/53d56006/56de3bcaN6024789e.jpg",
+            "https://img11.360buyimg.com/n1/jfs/t1993/247/2493271084/256439/eb48254/56de3bcdN84ad9e37.jpg",
+            "https://img11.360buyimg.com/n1/jfs/t2002/275/1799822542/214395/756dd7ab/56de3bd4Nff2207f2.jpg",
+            "https://img11.360buyimg.com/n1/jfs/t2248/158/1845524298/190489/daf21b38/56de3bdbN3c295ae0.jpg"};
+
+    public static final String dialogImage = "https://img11.360buyimg.com/n4/jfs/t2266/265/2591849131/206101/53d56006/56de3bcaN6024789e.jpg";
 }

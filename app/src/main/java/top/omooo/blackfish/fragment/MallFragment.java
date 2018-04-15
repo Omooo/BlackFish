@@ -318,6 +318,7 @@ public class MallFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.iv_mall_header_menu:
                 startActivity(new Intent(mContext, ClassifyGoodsActivity.class));
+                getActivity().overridePendingTransition(R.anim.activity_banner_right_in,R.anim.activity_banner_left_out);
                 break;
             case R.id.iv_mall_header_msg:
                 CustomToast.show(mContext, "消息中心");

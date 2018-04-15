@@ -9,4 +9,36 @@
         android:text="测试"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <top.omooo.blackfish.view.AmountView
+        android:id="@+id/amount_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <top.omooo.blackfish.view.LabelsViewDemo
+        android:id="@+id/labels_view_fire"
+        android:layout_marginStart="10dp"
+        android:layout_below="@id/tv_search_fire"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp">
+        <TextView
+            android:text="测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试测试测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试测试测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试测试测试测试"
+            style="@style/LabelsViewStyle"/>
+        <TextView
+            android:text="测试"
+            style="@style/LabelsViewStyle"/>
+    </top.omooo.blackfish.view.LabelsViewDemo>
 </LinearLayout>

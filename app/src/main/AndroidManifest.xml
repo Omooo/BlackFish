@@ -93,6 +93,10 @@
 
         <activity android:name=".GoodsDetailActivity"/>
 
+        <activity android:name=".MallPagerActivity.ShowImageActivity"/>
+
+        <activity android:name=".MallPagerActivity.SubmitOrderActivity"/>
+
     </application>
 
 </manifest>

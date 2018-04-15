@@ -44,4 +44,7 @@
     <color name="colorHomeLeft1">#FF9966</color>
     <color name="colorHomeLeft2">#CC3399</color>
     <color name="colorHomeLeft3">#0099CC</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorTransparent">#40000000</color>
+    <color name="colorGap">#F2F3F8</color>
 </resources>

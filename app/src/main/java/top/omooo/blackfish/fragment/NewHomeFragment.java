@@ -242,7 +242,8 @@ public class NewHomeFragment extends BaseFragment{
                 headerLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        startActivity(new Intent(mContext, ClassifyGoodsActivity.class));
+                        getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
                     }
                 });
 
@@ -261,6 +262,11 @@ public class NewHomeFragment extends BaseFragment{
                 draweeViewItem2.setImageURI(sortItemInfos.get(1).getGoodsImageUrl());
                 draweeViewItem3.setImageURI(sortItemInfos.get(2).getGoodsImageUrl());
                 draweeViewItem4.setImageURI(sortItemInfos.get(3).getGoodsImageUrl());
+
+                draweeViewItem1.setOnClickListener(new MyOnClick("iv_home_goods_item_1"));
+                draweeViewItem2.setOnClickListener(new MyOnClick("iv_home_goods_item_2"));
+                draweeViewItem3.setOnClickListener(new MyOnClick("iv_home_goods_item_3"));
+                draweeViewItem4.setOnClickListener(new MyOnClick("iv_home_goods_item_4"));
 
             }
         };
@@ -327,6 +333,13 @@ public class NewHomeFragment extends BaseFragment{
 
         @Override
         public void onClick(View v) {
+            for (int i = 1; i <= 4; i++) {
+                if (id.equals("iv_home_goods_item_" + i)) {
+                    CustomToast.show(mContext, "跳转到商品详情页");
+                    return;
+                }
+
+            }
             switch (id) {
                 case "iv_home_one_grid_icon_1":
                     CustomToast.show(mContext, "充值中心");

@@ -130,9 +130,11 @@ public class ClassifyGoodsActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rl_classify_header_layout:
                 startActivity(new Intent(this, SearchActivity.class));
+                overridePendingTransition(R.anim.activity_banner_right_in,R.anim.activity_banner_left_out);
                 break;
             case R.id.iv_classify_goods_back:
                 finish();
+                overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
                 break;
             case R.id.iv_classify_header_msg:
                 Toast.makeText(mContext, "消息中心", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package top.omooo.blackfish;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -54,5 +55,15 @@ public abstract class NewBaseActivity extends FragmentActivity {
             overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
         }
         return true;
+    }
+
+    public void skipActivity(Intent intent) {
+        startActivity(intent);
+        overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
+    }
+
+    public void finshActivity() {
+        finish();
+        overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
     }
 }
