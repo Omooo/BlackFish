@@ -97,6 +97,9 @@
 
         <activity android:name=".MallPagerActivity.SubmitOrderActivity"/>
 
+        <activity android:name=".MallPagerActivity.PayTypeActivity"/>
+
+
     </application>
 
 </manifest>

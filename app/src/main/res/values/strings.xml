@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BlackFish</string>
     <string name="goods_text">收纳博士（DR.STORAGE） 9丝加厚真空收纳压缩袋 8只装【4特大4中】内含手动抽气泵</string>
+    <string name="cover_header_behavior" translatable="false">top.omooo.blackfish.utils.CoverHeaderScrollBehavior</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

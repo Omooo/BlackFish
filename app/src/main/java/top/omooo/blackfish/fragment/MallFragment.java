@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import top.omooo.blackfish.BaseWebViewActivity;
+import top.omooo.blackfish.GoodsDetailActivity;
 import top.omooo.blackfish.MallPagerActivity.ClassifyGoodsActivity;
 import top.omooo.blackfish.MallPagerActivity.SearchActivity;
 import top.omooo.blackfish.R;
@@ -45,6 +46,7 @@ import top.omooo.blackfish.bean.MallPagerInfo;
 import top.omooo.blackfish.bean.RecommendGoodsInfo;
 import top.omooo.blackfish.bean.UrlInfoBean;
 import top.omooo.blackfish.listener.OnNetResultListener;
+import top.omooo.blackfish.listener.OnViewItemClickListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
 import top.omooo.blackfish.utils.SpannableStringUtil;
@@ -257,7 +259,9 @@ public class MallFragment extends BaseFragment {
                     String goodsPrice = "¥" + mallGoodsItemInfo.getPrice();
                     mallHotClassifyGridInfos.add(new MallHotClassifyGridInfo(goodsImage, goodsDesc, goodsPeriods, goodsPrice));
                 }
-                gridGoods.setAdapter(new MallHotClassifyGridAdapter(mContext, mallHotClassifyGridInfos));
+                MallHotClassifyGridAdapter adapter = new MallHotClassifyGridAdapter(mContext, mallHotClassifyGridInfos);
+                adapter.setOnViewItemClickListener(mOnViewItemClickListener);
+                gridGoods.setAdapter(adapter);
 
             }
         };
@@ -355,9 +359,11 @@ public class MallFragment extends BaseFragment {
                     return;
                 }
             }
+            if (id.equals("HotGoodsItem")) {
+                startActivity(new Intent(mContext, GoodsDetailActivity.class));
+                getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
+                return;
+            }
         }
     };
-    private interface OnViewItemClickListener {
-        void onItemClick(String id);
-    }
 }

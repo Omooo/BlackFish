@@ -3,14 +3,19 @@ package top.omooo.blackfish.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
  * Created by SSC on 2018/4/13.
  */
 
-public class CoverHeaderScrollBehavior extends CoordinatorLayout.Behavior<View>{
+public class CoverHeaderScrollBehavior extends CoordinatorLayout.Behavior<View> {
+
+    private static final String TAG = "CoverScrollBehavior";
+
     public CoverHeaderScrollBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -27,13 +32,15 @@ public class CoverHeaderScrollBehavior extends CoordinatorLayout.Behavior<View>{
     }
 
     @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        return super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type);
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
     public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
+        Log.i(TAG, "onNestedPreScroll: " + dy);
+//        ImageView imageView = (ImageView) coordinatorLayout.getChildAt(0);
         //在这个方法里面只处理向上滑动
         if (dy < 0) {
             return;
@@ -48,6 +55,7 @@ public class CoverHeaderScrollBehavior extends CoordinatorLayout.Behavior<View>{
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+        Log.i(TAG, "onNestedScroll: " + dyUnconsumed);
         //在这个方法里只处理向下滑动
         if (dyUnconsumed > 0) {
             return;
@@ -60,7 +68,7 @@ public class CoverHeaderScrollBehavior extends CoordinatorLayout.Behavior<View>{
     }
 
     private int getHeaderHeight() {
-        return 200;
+        return 600;
     }
 
 }

@@ -1,8 +1,11 @@
 package top.omooo.blackfish.MallPagerActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -12,7 +15,6 @@ import butterknife.OnClick;
 import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.bean.UrlInfoBean;
-import top.omooo.blackfish.view.CustomToast;
 
 /**
  * Created by SSC on 2018/4/15.
@@ -24,6 +26,8 @@ public class SubmitOrderActivity extends NewBaseActivity {
     SimpleDraweeView mIvGoods;
     @BindView(R.id.btn_submit_order)
     Button mBtnSubmitOrder;
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
 
     private Context mContext;
     private static final String TAG = "SubmitOrderActivity";
@@ -47,6 +51,7 @@ public class SubmitOrderActivity extends NewBaseActivity {
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +59,15 @@ public class SubmitOrderActivity extends NewBaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_submit_order)
-    public void onViewClicked() {
-        CustomToast.show(mContext, "提交订单");
+    @OnClick({R.id.iv_back, R.id.btn_submit_order})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finshActivity();
+                break;
+            case R.id.btn_submit_order:
+                skipActivity(new Intent(mContext, PayTypeActivity.class));
+                break;
+        }
     }
 }

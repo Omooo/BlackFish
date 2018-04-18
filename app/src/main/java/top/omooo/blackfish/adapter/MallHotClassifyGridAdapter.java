@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.bean.MallHotClassifyGridInfo;
+import top.omooo.blackfish.listener.OnViewItemClickListener;
 import top.omooo.blackfish.utils.SpannableStringUtil;
 
 /**
@@ -50,7 +52,7 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder myViewHolder;
         if (convertView == null) {
             myViewHolder = new MyViewHolder();
@@ -59,12 +61,19 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
             myViewHolder.mTextDesc = convertView.findViewById(R.id.tv_hot_classify_goods_desc);
             myViewHolder.mTextPeriods = convertView.findViewById(R.id.tv_hot_classify_goods_periods);
             myViewHolder.mTextPrice = convertView.findViewById(R.id.tv_hot_classify_goods_price);
+            myViewHolder.mLinearLayout = convertView.findViewById(R.id.ll_goods_item);
             convertView.setTag(myViewHolder);
         } else {
             myViewHolder = (MyViewHolder) convertView.getTag();
         }
         myViewHolder.heraderImage.setImageURI(mMallHotClassifyGridInfos.get(position).getHeaderImageUrl());
         myViewHolder.mTextDesc.setText(mMallHotClassifyGridInfos.get(position).getGoodsDesc());
+        myViewHolder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnViewItemClickListener.onItemClick("HotGoodsItem");
+            }
+        });
         String text = mMallHotClassifyGridInfos.get(position).getGoodsPeriods();
         int spaceIndex = getFirstSpaceIndex(text.toCharArray());
         Log.i(TAG, "getView: " + spaceIndex);
@@ -86,9 +95,16 @@ public class MallHotClassifyGridAdapter extends BaseAdapter {
     }
 
     private class MyViewHolder {
+        private LinearLayout mLinearLayout;
         private SimpleDraweeView heraderImage;
         private TextView mTextDesc;
         private TextView mTextPeriods;
         private TextView mTextPrice;
+    }
+
+    private OnViewItemClickListener mOnViewItemClickListener;
+
+    public void setOnViewItemClickListener(OnViewItemClickListener listener) {
+        this.mOnViewItemClickListener = listener;
     }
 }

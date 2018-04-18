@@ -1,12 +1,16 @@
-package top.omooo.blackfish.aliPay;
+package top.omooo.blackfish.MallPagerActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.EnvUtils;
@@ -14,13 +18,40 @@ import com.alipay.sdk.app.PayTask;
 
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
+import top.omooo.blackfish.aliPay.OrderInfoUtil2_0;
+import top.omooo.blackfish.aliPay.PayResult;
+import top.omooo.blackfish.view.CustomToast;
 
 /**
- * Created by SSC on 2018/4/9.
+ * Created by SSC on 2018/4/17.
  */
 
-public class PayDemoActivity extends FragmentActivity {
+public class PayTypeActivity extends NewBaseActivity {
+
+    @BindView(R.id.iv_back)
+    ImageView mIvBack;
+    @BindView(R.id.rl_lines)
+    RelativeLayout mRlLines;
+    @BindView(R.id.iv_cash_pay)
+    ImageView mIvCashPay;
+    @BindView(R.id.rl_cash_pay)
+    RelativeLayout mRlCashPay;
+    @BindView(R.id.iv_fenqi_pay)
+    ImageView mIvFenqiPay;
+    @BindView(R.id.rl_fenqi_pay)
+    RelativeLayout mRlFenqiPay;
+    @BindView(R.id.btn_pay)
+    Button mBtnPay;
+
+    private Context mContext;
+    private boolean isCashPay = true;
+
+    private static final String TAG = "PayTypeActivity";
 
     private static final String APP_ID = "2016091000482130";
     private static final String PID = "2088102175054434";
@@ -38,12 +69,12 @@ public class PayDemoActivity extends FragmentActivity {
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                     String resultStatus = payResult.getResultStatus();
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(PayDemoActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(PayDemoActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
                         finish();
-                    } 
+                    }
                     break;
                 default:
                     break;
@@ -56,11 +87,65 @@ public class PayDemoActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay_layout);
-        payV2();
+        setContentView(getLayoutId());
+        ButterKnife.bind(this);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        initViews();
+        initData();
     }
 
-    public void payV2() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_pay_type_layout;
+    }
+
+    @Override
+    public void initViews() {
+        getWindow().setStatusBarColor(getColor(R.color.colorKeyBoardBg));
+        mContext = PayTypeActivity.this;
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @OnClick({R.id.iv_back, R.id.rl_lines, R.id.rl_cash_pay, R.id.rl_fenqi_pay, R.id.btn_pay})
+    public void onViewClicked(View view) {
+
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finshActivity();
+                break;
+            case R.id.rl_lines:
+                CustomToast.show(mContext, "商城额度");
+                break;
+            case R.id.rl_cash_pay:
+                isCashPay = true;
+                mBtnPay.setText("支付59.0元");
+                mIvCashPay.setImageResource(R.drawable.icon_checkbox_checked);
+                mIvFenqiPay.setImageResource(R.drawable.icon_checkbox_unchecked);
+                break;
+            case R.id.rl_fenqi_pay:
+                isCashPay = false;
+                mBtnPay.setText("激活额度分期");
+                mIvCashPay.setImageResource(R.drawable.icon_checkbox_unchecked);
+                mIvFenqiPay.setImageResource(R.drawable.icon_checkbox_checked);
+                break;
+            case R.id.btn_pay:
+                if (isCashPay) {
+                    pay();
+                } else {
+                    CustomToast.show(mContext, "请先激活分期");
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void pay() {
 
         /**
          * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
@@ -81,7 +166,7 @@ public class PayDemoActivity extends FragmentActivity {
 
             @Override
             public void run() {
-                PayTask alipay = new PayTask(PayDemoActivity.this);
+                PayTask alipay = new PayTask(PayTypeActivity.this);
                 Map<String, String> result = alipay.payV2(orderInfo, true);
                 Log.i("msp", result.toString());
 
