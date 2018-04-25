@@ -12,13 +12,13 @@ import java.sql.Statement;
 
 public class SqlOpenHelperUtil {
 
-    private String url = "jdbc:mysql://10.0.2.2:3306/BFDatabase";
+    private String url = "jdbc:mysql://104.224.166.118:3306/bfdatabase";
     public Connection connDB() {
         Connection connection;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             try {
-                connection = DriverManager.getConnection(url, "root", "Test2333");
+                connection = DriverManager.getConnection(url, "Admin", "Test2333");
                 return connection;
             } catch (SQLException e) {
                 e.printStackTrace();

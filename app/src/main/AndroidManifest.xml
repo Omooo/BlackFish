@@ -99,7 +99,6 @@
 
         <activity android:name=".MallPagerActivity.PayTypeActivity"/>
 
-
     </application>
 
 </manifest>
