@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -58,16 +59,16 @@
     <FrameLayout
         android:id="@+id/fl_search"
         android:layout_below="@id/tv_search_history"
+        android:minHeight="100dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
-        <top.omooo.blackfish.view.LabelsViewDemo
-            android:id="@+id/labels_view_history"
-            android:layout_marginStart="10dp"
-            android:layout_below="@id/tv_search_fire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </top.omooo.blackfish.view.LabelsViewDemo>
+        android:layout_height="wrap_content">
+        <top.omooo.blackfish.view.TagsLayout
+            android:id="@+id/tags_recent"
+            app:tagHorizontalSpace="10dp"
+            app:tagVerticalSpace="10dp"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </FrameLayout>
     <TextView
         android:id="@+id/tv_search_fire"
@@ -80,34 +81,13 @@
     <FrameLayout
         android:layout_below="@id/tv_search_fire"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
-        <top.omooo.blackfish.view.LabelsViewDemo
-            android:id="@+id/labels_view_fire"
-            android:layout_marginStart="10dp"
-            android:layout_below="@id/tv_search_fire"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试测试测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试测试测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试测试测试测试"
-                style="@style/LabelsViewStyle"/>
-            <TextView
-                android:text="测试"
-                style="@style/LabelsViewStyle"/>
-        </top.omooo.blackfish.view.LabelsViewDemo>
+        android:layout_height="wrap_content">
+        <top.omooo.blackfish.view.TagsLayout
+            android:id="@+id/tags_hot"
+            app:tagHorizontalSpace="10dp"
+            app:tagVerticalSpace="10dp"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </FrameLayout>
 </RelativeLayout>

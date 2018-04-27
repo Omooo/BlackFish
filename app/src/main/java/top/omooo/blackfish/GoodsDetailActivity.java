@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,8 +41,8 @@ import top.omooo.blackfish.utils.SpannableStringUtil;
 import top.omooo.blackfish.view.AmountView;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.GridViewForScroll;
-import top.omooo.blackfish.view.LabelsViewDemo;
 import top.omooo.blackfish.view.RecycleViewBanner;
+import top.omooo.blackfish.view.TagsLayout;
 
 /**
  * Created by SSC on 2018/4/12.
@@ -269,12 +270,25 @@ public class GoodsDetailActivity extends NewBaseActivity {
                 skipActivity(new Intent(mContext, SubmitOrderActivity.class));
             }
         });
-        LabelsViewDemo labelsViewDemo = view.findViewById(R.id.labels_view);
-//        for (int i = 0; i < typeInfos.size(); i++) {
-//            TextView textView = new TextView(mContext);
-//            textView.setText(typeInfos.get(i).getType());
-//            labelsViewDemo.addView(textView);
-//        }
+
+        TagsLayout tagsLayout = view.findViewById(R.id.labels_view);
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < typeInfos.size(); i++) {
+            TextView textView = new TextView(mContext);
+            textView.setPadding(10, 10, 10, 10);
+            textView.setBackground(getDrawable(R.drawable.shape_search));
+            String string = "   " + typeInfos.get(i).getType() + "   ";
+            textView.setText(string);
+
+            //默认选择第二个
+            if (i == 1) {
+                textView.setBackground(getDrawable(R.drawable.shape_selected_text));
+                textView.setTextColor(getColor(R.color.colorWhite));
+            }
+
+            tagsLayout.addView(textView,lp);
+        }
+
 
         //默认选择最后一个
         final OptionalTypeInfo typeInfo = typeInfos.get(2);

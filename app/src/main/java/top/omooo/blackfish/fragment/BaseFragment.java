@@ -1,11 +1,14 @@
 package top.omooo.blackfish.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import top.omooo.blackfish.R;
 
 /**
  * Created by Omooo on 2018/2/25.
@@ -89,6 +92,11 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
 
     public <E extends View> void setOnClick(E convertView) {
         convertView.setOnClickListener(this);
+    }
+
+    public void skipActivity(Intent intent) {
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
     }
 
 }

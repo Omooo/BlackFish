@@ -328,7 +328,7 @@ public class MallFragment extends BaseFragment {
                 CustomToast.show(mContext, "消息中心");
                 break;
             case R.id.rl_mall_header_layout:
-                startActivity(new Intent(mContext, SearchActivity.class));
+                skipActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             default:break;
         }

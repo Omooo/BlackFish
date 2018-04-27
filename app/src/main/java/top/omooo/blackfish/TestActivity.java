@@ -1,15 +1,12 @@
 package top.omooo.blackfish;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Button;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import android.graphics.Color;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.OnClick;
+import top.omooo.blackfish.view.TagsLayout;
 
 /**
  * Created by SSC on 2018/3/26.
@@ -18,8 +15,9 @@ import butterknife.OnClick;
 public class TestActivity extends NewBaseActivity {
 
     private static final String TAG = "TestActivity";
-    @BindView(R.id.btn_conn)
-    Button mBtnConn;
+    @BindView(R.id.tags_layout)
+    TagsLayout mTagsLayout;
+
     private Context mContext;
 
     @Override
@@ -31,6 +29,16 @@ public class TestActivity extends NewBaseActivity {
     @Override
     public void initViews() {
         mContext = TestActivity.this;
+
+        ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        String[] string={"从我写代码那天起，我就没有打算写代码","从我写代码那天起","我就没有打算写代码","没打算","写代码"};
+        for (int i = 0; i < string.length; i++) {
+            TextView textView = new TextView(this);
+            textView.setText(string[i]);
+            textView.setTextColor(Color.WHITE);
+            textView.setBackgroundColor(getResources().getColor(R.color.colorQQEmailText));
+            mTagsLayout.addView(textView, lp);
+        }
     }
 
     @Override
@@ -38,36 +46,4 @@ public class TestActivity extends NewBaseActivity {
 
     }
 
-
-    @OnClick(R.id.btn_conn)
-    public void onViewClicked() {
-        Log.i(TAG, "onViewClicked: 点击按钮");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Connection connection = connDB();
-                if (null == connection) {
-                    Log.i(TAG, "run: 玛德爆炸");
-                } else {
-                    Log.i(TAG, "run: 美的不行");
-                }
-            }
-        }).start();
-    }
-    private String url = "jdbc:mysql://104.224.166.118:3306/bfdatabase";
-    public Connection connDB() {
-        Connection connection;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            try {
-                connection = DriverManager.getConnection(url, "Admin", "Test2333");
-                return connection;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

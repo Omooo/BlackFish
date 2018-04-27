@@ -1,33 +1,49 @@
 package top.omooo.blackfish.MallPagerActivity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import top.omooo.blackfish.BaseActivity;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.KeyBoardUtil;
 import top.omooo.blackfish.view.CustomToast;
-import top.omooo.blackfish.view.LabelsViewDemo;
+import top.omooo.blackfish.view.TagsLayout;
 
 /**
  * Created by SSC on 2018/4/1.
  */
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends NewBaseActivity {
 
-    private EditText mEditText;
-    private TextView mTextCancel;
-    private LabelsViewDemo mLabelsHistory,mLabelsFire;
+
+    @BindView(R.id.tv_search_cancel)
+    TextView mTvSearchCancel;
+    @BindView(R.id.tags_recent)
+    TagsLayout mTagsRecent;
+    @BindView(R.id.tags_hot)
+    TagsLayout mTagsHot;
+    @BindView(R.id.et_search)
+    EditText mEtSearch;
 
     private Context mContext;
     private static final String TAG = "SearchActivity";
-    private String[] searchTexts = new String[10];
+
+    private ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    private String[] hotText = new String[]{"OPPO R15", "面膜", "Iphone X", "AirPods", "防晒", "蓝牙耳机", "一加5T"};
+    private List<String> recentText = new ArrayList<>();
+    private String[] strings = new String[15];
+
+
 
     @Override
     public int getLayoutId() {
@@ -37,32 +53,33 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void initViews() {
         mContext = SearchActivity.this;
-        mEditText = findView(R.id.et_search);
-        mTextCancel = findView(R.id.tv_search_cancel);
-        mLabelsHistory = findView(R.id.labels_view_history);
-        mLabelsFire = findView(R.id.labels_view_fire);
 
         // TODO: 2018/4/2 点击EditText软键盘不显示？？？
-        mEditText.setFocusableInTouchMode(true);
-        mEditText.requestFocus();
-        KeyBoardUtil.showKeyBoard(mEditText);
+        mEtSearch.setFocusableInTouchMode(true);
+        mEtSearch.requestFocus();
+        KeyBoardUtil.showKeyBoard(mEtSearch);
 
-        addSearchText("111");
-    }
-
-    @Override
-    public void initListener() {
-        mTextCancel.setOnClickListener(this);
-
-        mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mEtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch (actionId) {
                     case EditorInfo.IME_ACTION_SEARCH:
-
-                        CustomToast.show(mContext,"搜索");
+                        // TODO: 2018/4/27 倒序排列，并去重
+                        if (!mEtSearch.getText().toString().equals("")) {
+                            CustomToast.show(mContext, "搜索中...");
+                            recentText.clear();
+                            recentText.add(mEtSearch.getText().toString());
+                            for (int i = 0; i < recentText.size(); i++) {
+                                strings[i] = recentText.get(i);
+                            }
+                            addSearchView(strings, false, mTagsRecent);
+                            mEtSearch.setText("");
+                        } else {
+                            CustomToast.show(mContext, "请输入搜索关键字");
+                        }
                         break;
-                    default:break;
+                    default:
+                        break;
                 }
                 return false;
             }
@@ -70,45 +87,72 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
-    public void processClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_search_cancel:
-                KeyBoardUtil.closeKeyBoard(mEditText);
-                finish();
-                break;
-            default:break;
-        }
-    }
-
-    @Override
     protected void initData() {
 
+        //初始化热门搜索
+        addSearchView(hotText, true, mTagsHot);
     }
+
 
     @Override
     public void onBackPressed() {
-        KeyBoardUtil.closeKeyBoard(mEditText);
+        KeyBoardUtil.closeKeyBoard(mEtSearch);
         super.onBackPressed();
     }
 
-    private void addChildView(String[] text) {
-        for (int i = 0; i < text.length; i++) {
-            TextView view = (TextView) LayoutInflater.from(mContext).inflate(R.layout.view_lables_item_layout, null);
-            view.setText(text[i]);
-            mLabelsHistory.addView(view);
+
+    @OnClick({R.id.et_search, R.id.tv_search_cancel})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.et_search:
+                // TODO: 2018/4/27 点击EditText不会自动弹出软键盘
+                mEtSearch.setFocusableInTouchMode(true);
+                mEtSearch.requestFocus();
+                KeyBoardUtil.showKeyBoard(mEtSearch);
+                break;
+            case R.id.tv_search_cancel:
+                KeyBoardUtil.closeKeyBoard(mEtSearch);
+                finshActivity();
+                break;
+            default:
+                break;
         }
     }
 
-    private void addSearchText(String text) {
-        for (int i = 9; i >= 0; i--) {
-            if (i != 0 && searchTexts[i] != null) {
-                searchTexts[i] = searchTexts[i - 1];
-            } else if (i == 0) {
-                searchTexts[i] = text;
+    private void addSearchView(String[] strings, boolean isHotSearch,TagsLayout tagsLayout) {
+        for (int i = 0; i < strings.length; i++) {
+            TextView textView = new TextView(mContext);
+            final String text = "   " + strings[i] + "   ";
+            textView.setText(text);
+            textView.setPadding(10, 10, 10, 10);
+            if (i < 3 && isHotSearch) {
+                textView.setTextColor(getColor(R.color.colorSugType));
+                textView.setBackground(getDrawable(R.drawable.shape_hot_search));
+            } else if (!text.equals("   null   ")) {
+                textView.setTextColor(getColor(R.color.splash_main_title_color));
+                textView.setBackground(getDrawable(R.drawable.shape_search));
+            } else {
+                break;
             }
-        }
-        for (int i = 0; i < searchTexts.length; i++) {
-            Log.i(TAG, "addSearchText: " + searchTexts[i]);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSearchTextClick.onClick(text);
+                }
+            });
+            tagsLayout.addView(textView, lp);
         }
     }
+
+    private OnSearchTextClick mSearchTextClick=new OnSearchTextClick() {
+        @Override
+        public void onClick(String text) {
+            CustomToast.show(mContext, "搜索 " + text.trim() + " 中...");
+        }
+    };
+
+    private interface OnSearchTextClick {
+        void onClick(String text);
+    }
+
 }
