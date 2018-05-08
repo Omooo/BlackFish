@@ -314,4 +314,6 @@ public class GoodsDetailActivity extends NewBaseActivity {
         SpannableString spannableString = new SpannableStringUtil().setMallGoodsPrice(singlePrice, 3, 4 + String.valueOf(price).length());
         textView.setText(spannableString);
     }
+
+
 }

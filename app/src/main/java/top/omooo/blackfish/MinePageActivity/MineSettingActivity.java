@@ -67,7 +67,7 @@ public class MineSettingActivity extends BaseActivity {
                 CustomToast.show(mContext, "待开发");
                 break;
             case R.id.tv_setting_manger_address:
-                CustomToast.show(mContext, "待开发");
+                skipActivity(new Intent(this, ManagerAddressActivity.class));
                 break;
             case R.id.btn_setting_exit_login:
                 startActivity(new Intent(this, TestActivity.class));

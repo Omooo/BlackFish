@@ -27,7 +27,7 @@
             android:layout_height="70dp" />
         <TextView
             android:id="@+id/tv_mine_header_phone"
-            android:text="18800209572"
+            android:text="未登录"
             android:layout_marginLeft="15dp"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/iv_mine_portrait"

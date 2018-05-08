@@ -99,6 +99,10 @@
 
         <activity android:name=".MallPagerActivity.PayTypeActivity"/>
 
+        <activity android:name=".MinePageActivity.ManagerAddressActivity"/>
+
+        <activity android:name=".MinePageActivity.NewAddressActivity"/>
+
     </application>
 
 </manifest>
