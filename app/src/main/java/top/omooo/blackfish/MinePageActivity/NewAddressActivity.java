@@ -1,5 +1,8 @@
 package top.omooo.blackfish.MinePageActivity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -7,11 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cncoderx.wheelview.OnWheelChangedListener;
-import com.cncoderx.wheelview.Wheel3DView;
-import com.cncoderx.wheelview.WheelView;
+import com.lljjcoder.Interface.OnCityItemClickListener;
+import com.lljjcoder.bean.CityBean;
+import com.lljjcoder.bean.DistrictBean;
+import com.lljjcoder.bean.ProvinceBean;
+import com.lljjcoder.citywheel.CityConfig;
+import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
@@ -36,11 +43,14 @@ public class NewAddressActivity extends NewBaseActivity {
     EditText mEtAddress;
     @BindView(R.id.btn_save)
     Button mBtnSave;
+    @BindView(R.id.checkbox)
+    AppCompatCheckBox mCheckbox;
 
-    private String mName;
-    private String mPhone;
     private String mArea;
-    private String mAddress;
+    private boolean isDefault;
+
+    private CityPickerView mPickerView = new CityPickerView();
+
 
     @Override
     public int getLayoutId() {
@@ -50,6 +60,14 @@ public class NewAddressActivity extends NewBaseActivity {
     @Override
     public void initViews() {
         getWindow().setStatusBarColor(getColor(R.color.colorWhite));
+        isDefault = getIntent().getBooleanExtra("isDefault", false);
+        if (isDefault) {
+            mCheckbox.setChecked(true);
+            mCheckbox.setClickable(false);
+        }
+        CityConfig cityConfig = new CityConfig.Builder().build();
+        mPickerView.setConfig(cityConfig);
+        mPickerView.init(this);
     }
 
     @Override
@@ -64,14 +82,31 @@ public class NewAddressActivity extends NewBaseActivity {
                 finshActivity();
                 break;
             case R.id.tv_area:
-                CustomToast.show(this, "选择所在地区");
+                mPickerView.setOnCityItemClickListener(new OnCityItemClickListener() {
+                    @Override
+                    public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                        mArea = " " + province.getName() + " " + city.getName() + " " + district.getName() + "  ";
+                        String text = "所在地区：" + mArea;
+                        mTvArea.setText(text);
+                    }
+                });
+                mPickerView.showCityPicker();
                 break;
             case R.id.btn_save:
-                mName = mEtName.getText().toString();
-                mPhone = mEtPhone.getText().toString();
-                mAddress = mEtAddress.getText().toString();
-                if (!TextUtils.isEmpty(mName) && !TextUtils.isEmpty(mPhone) && !TextUtils.isEmpty(mAddress) && !TextUtils.isEmpty(mArea)) {
+                String name = mEtName.getText().toString();
+                String phone = mEtPhone.getText().toString();
+                String address = mArea + mEtAddress.getText().toString();
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(mArea)) {
                     CustomToast.show(this, "保存");
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", name);
+                    bundle.putString("phone", phone);
+                    bundle.putString("address", address);
+                    bundle.putBoolean("isDefault",mCheckbox.isChecked());
+                    intent.putExtras(bundle);
+                    setResult(0x02, intent);
+                    finshActivity();
                 } else {
                     CustomToast.show(this, "请正确填写信息");
                 }
@@ -79,14 +114,11 @@ public class NewAddressActivity extends NewBaseActivity {
         }
     }
 
-    private void showPickDialog() {
-        Wheel3DView wheel3DView = new Wheel3DView(this);
-        wheel3DView.setOnWheelChangedListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView view, int oldIndex, int newIndex) {
 
-            }
-        });
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -20,6 +20,14 @@
             style="@style/HeaderTitleStyle"/>
     </FrameLayout>
     <LinearLayout
+        android:id="@+id/ll_address"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_no_address"
         android:layout_centerInParent="true"
         android:orientation="vertical"
