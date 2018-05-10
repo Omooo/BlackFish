@@ -18,7 +18,6 @@ import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
@@ -45,6 +44,8 @@ public class NewAddressActivity extends NewBaseActivity {
     Button mBtnSave;
     @BindView(R.id.checkbox)
     AppCompatCheckBox mCheckbox;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     private String mArea;
     private boolean isDefault;
@@ -65,6 +66,8 @@ public class NewAddressActivity extends NewBaseActivity {
             mCheckbox.setChecked(true);
             mCheckbox.setClickable(false);
         }
+
+
         CityConfig cityConfig = new CityConfig.Builder().build();
         mPickerView.setConfig(cityConfig);
         mPickerView.init(this);
@@ -72,7 +75,17 @@ public class NewAddressActivity extends NewBaseActivity {
 
     @Override
     protected void initData() {
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String name = bundle.getString("name");
+            String phone = bundle.getString("phone");
+            String address = "所在地区：" + bundle.getString("address");
+            boolean isDefault = bundle.getBoolean("isDefault");
+            mEtName.setText(name);
+            mEtPhone.setText(phone);
+//            mTvArea.setText(address);
+            mCheckbox.setChecked(isDefault);
+        }
     }
 
     @OnClick({R.id.iv_back, R.id.tv_area, R.id.btn_save})
@@ -103,7 +116,7 @@ public class NewAddressActivity extends NewBaseActivity {
                     bundle.putString("name", name);
                     bundle.putString("phone", phone);
                     bundle.putString("address", address);
-                    bundle.putBoolean("isDefault",mCheckbox.isChecked());
+                    bundle.putBoolean("isDefault", mCheckbox.isChecked());
                     intent.putExtras(bundle);
                     setResult(0x02, intent);
                     finshActivity();
@@ -114,11 +127,4 @@ public class NewAddressActivity extends NewBaseActivity {
         }
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

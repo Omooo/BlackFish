@@ -52,4 +52,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_add_address"
+        android:visibility="invisible"
+        android:text="添加地址"
+        android:background="@drawable/seletor_btn_general"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

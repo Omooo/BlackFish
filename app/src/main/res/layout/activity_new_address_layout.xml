@@ -20,6 +20,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"/>
         <TextView
+            android:id="@+id/tv_title"
             android:text="新建收货地址"
             style="@style/HeaderTitleStyle"/>
     </FrameLayout>
