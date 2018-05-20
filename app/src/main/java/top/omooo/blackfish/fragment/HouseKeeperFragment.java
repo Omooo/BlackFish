@@ -1,5 +1,6 @@
 package top.omooo.blackfish.fragment;
 
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 
 import top.omooo.blackfish.KeeperPageActivity.AddBillActivity;
 import top.omooo.blackfish.KeeperPageActivity.AddCreditBillActivity;
@@ -39,7 +42,7 @@ public class HouseKeeperFragment extends BaseFragment {
 
     private AdjustViewUtil mAdjustViewUtil;
     private boolean isShowMoney = false;
-    private String money = "233.00";
+    private float money = 233.33f;
 
     public static HouseKeeperFragment newInstance() {
         return new HouseKeeperFragment();
@@ -115,8 +118,17 @@ public class HouseKeeperFragment extends BaseFragment {
                 break;
             case R.id.tv_keeper_show_money:
                 if (!isShowMoney) {
-                    mTextMoney.setText(money);
-                    SpannableStringUtil.setRelativeSizeText(mTextMoney, 0, mTextMoney.getText().length() - 3, 1.3f, mTextMoney.getText().toString());
+                    final DecimalFormat decimalFormat = new DecimalFormat(".00");
+                    ValueAnimator animator = ValueAnimator.ofFloat(0, money);
+                    animator.setDuration(1000);
+                    animator.start();
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            mTextMoney.setText(decimalFormat.format(animation.getAnimatedValue()));
+                            SpannableStringUtil.setRelativeSizeText(mTextMoney, 0, mTextMoney.getText().length() - 3, 1.3f, mTextMoney.getText().toString());
+                        }
+                    });
                     isShowMoney = true;
                     mImageShowEyes.setImageResource(R.drawable.icon_open_eyes);
                 } else {
