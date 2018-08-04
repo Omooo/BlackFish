@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 public class SqlOpenHelperUtil {
 
-    private String url = "jdbc:mysql://104.224.166.118:3306/bfdatabase";
+    private static final String url = "jdbc:mysql://104.224.166.118:3306/bfdatabase";
     public Connection connDB() {
         Connection connection;
         try {

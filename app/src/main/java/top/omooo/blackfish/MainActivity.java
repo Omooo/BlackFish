@@ -1,6 +1,8 @@
 package top.omooo.blackfish;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,12 +15,16 @@ import android.view.View;
 import android.view.Window;
 
 import top.omooo.blackfish.adapter.NavigationViewPagerAdapter;
+import top.omooo.blackfish.broadcast.NetChangedReceiver;
 import top.omooo.blackfish.fragment.FinancialFragment;
 import top.omooo.blackfish.fragment.HouseKeeperFragment;
 import top.omooo.blackfish.fragment.MallFragment;
 import top.omooo.blackfish.fragment.NewHomeFragment;
 import top.omooo.blackfish.fragment.NewMineFragment;
+import top.omooo.blackfish.listener.OnNetChangeListener;
 import top.omooo.blackfish.utils.BottomNavigationViewHelper;
+import top.omooo.blackfish.utils.NetworkUtil;
+import top.omooo.blackfish.view.CustomToast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
+
+    private NetChangedReceiver mNetChangedReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,5 +149,31 @@ public class MainActivity extends AppCompatActivity {
 //        mRefreshLayout=manager
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            mNetChangedReceiver = new NetChangedReceiver();
+            mNetChangedReceiver.setOnNetChangeListener(new OnNetChangeListener() {
+                @Override
+                public void onNetChange(int type) {
+                    if (type == NetworkUtil.NET_NONE) {
+                        CustomToast.show(MainActivity.this, "网络异常...");
+                    }
+                }
+            });
+            registerReceiver(mNetChangedReceiver, filter);
+        }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mNetChangedReceiver != null) {
+            unregisterReceiver(mNetChangedReceiver);
+        }
+    }
 }
