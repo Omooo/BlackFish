@@ -2,9 +2,9 @@
 
 一款实用的商城类App，一图胜千言：
 
-http://wooyun.site/blackfish/bf_demo.gif
+http://www.z4a.net/images/2018/08/06/fish.gif
 
-数据是我模拟的，类似：http://www.wooyun.site/blackfish/mall_goods.json 
+数据是我模拟的，类似：http://www.wanandroid.com/tools/mockapi/448/mall_goods 
  返回Json数据，解析一下就行了。
  
 数据库是我的云服务器，连本地数据库改下IP就行。
