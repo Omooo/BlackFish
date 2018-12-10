@@ -9,16 +9,19 @@ package top.omooo.blackfish.bean;
  */
 public class UrlInfoBean {
     //首页商品信息
-    public static final String homeGoodsUrl = "http://wooyun.site/blackfish/home_sort.json";
-
+//    public static final String homeGoodsUrl = "http://wooyun.site/blackfish/home_sort.json";
+    public static final String homeGoodsUrl = "http://www.wanandroid.com/tools/mockapi/448/home_sort";
     //银行卡信息
     public static final String bankCardsInfo = "https://api.51datakey.com/conf/api/v3/banks/all";
 
     //商品分类信息
-    public static final String classifyGoodsUrl = "http://www.wooyun.site/blackfish/classify_goods.json";
+//    public static final String classifyGoodsUrl = "http://www.wooyun.site/blackfish/classify_goods.json";
+    public static final String classifyGoodsUrl = "http://www.wanandroid.com/tools/mockapi/448/classify_goods";
 
     //商城页数据
-    public static final String mallGoodsUrl = "http://www.wooyun.site/blackfish/mall_goods.json";
+//    public static final String mallGoodsUrl = "http://www.wooyun.site/blackfish/mall_goods.json";
+    public static final String mallGoodsUrl = "http://www.wanandroid.com/tools/mockapi/448/mall_goods";
+
 
     //理财 WebView
     public static final String financialUrl = "https://h5.shanhulicai.cn/main/#/home?entry=bar&_k=ra1im0";
@@ -41,7 +44,9 @@ public class UrlInfoBean {
             "https://h5.blackfish.cn/m/promotion/5/98?memberId=18800209473&deviceId=f39498916c9b5cda",
             "https://h5.blackfish.cn/m/promotion/5/95?memberId=18800209473&deviceId=f39498916c9b5cda"};
 
-    public static final String goodsDetailsUrl = "http://www.wooyun.site/blackfish/goods_details.json";
+//    public static final String goodsDetailsUrl = "http://www.wooyun.site/blackfish/goods_details.json";
+    public static final String goodsDetailsUrl = "http://www.wanandroid.com/tools/mockapi/448/goods_details";
+
 
     //全民游戏
     public static final String gameUrl = "https://yule.hule888.com/?source=02020001020100030&isNeedLogin=1";
