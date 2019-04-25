@@ -9,11 +9,12 @@ import android.widget.TextView;
 
 import top.omooo.blackfish.BaseActivity;
 import top.omooo.blackfish.R;
+import top.omooo.router_annotations.Router;
 
 /**
  * Created by SSC on 2018/3/21.
  */
-
+@Router("myBankCard")
 public class ActivityMyBankCard extends BaseActivity {
 
     private TabLayout mTabLayout;

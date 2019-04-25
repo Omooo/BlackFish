@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
 
+import top.omooo.blackfish.R;
 import top.omooo.blackfish.view.CustomToast;
 
 /**

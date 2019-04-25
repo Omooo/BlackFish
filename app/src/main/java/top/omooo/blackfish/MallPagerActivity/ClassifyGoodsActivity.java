@@ -32,11 +32,12 @@ import top.omooo.blackfish.listener.OnNetResultListener;
 import top.omooo.blackfish.utils.AnalysisJsonUtil;
 import top.omooo.blackfish.utils.OkHttpUtil;
 import top.omooo.blackfish.view.GridViewForScroll;
+import top.omooo.router_annotations.Router;
 
 /**
  * Created by SSC on 2018/4/5.
  */
-
+@Router("classifyGoods")
 public class ClassifyGoodsActivity extends BaseActivity {
 
     private Context mContext;
@@ -88,7 +89,8 @@ public class ClassifyGoodsActivity extends BaseActivity {
                     });
                     mRecyclerViewLeft.setAdapter(mTitleAdapter);
                     break;
-                default:break;
+                default:
+                    break;
             }
             return false;
         }
@@ -130,16 +132,17 @@ public class ClassifyGoodsActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rl_classify_header_layout:
                 startActivity(new Intent(this, SearchActivity.class));
-                overridePendingTransition(R.anim.activity_banner_right_in,R.anim.activity_banner_left_out);
+                overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
                 break;
             case R.id.iv_classify_goods_back:
                 finish();
-                overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
+                overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
                 break;
             case R.id.iv_classify_header_msg:
                 Toast.makeText(mContext, "消息中心", Toast.LENGTH_SHORT).show();
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 

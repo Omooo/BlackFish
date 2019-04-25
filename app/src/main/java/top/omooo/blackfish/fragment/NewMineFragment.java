@@ -17,6 +17,7 @@ import top.omooo.blackfish.MinePageActivity.ActivityMyBankCard;
 import top.omooo.blackfish.MinePageActivity.MineSettingActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.AdjustViewUtil;
+import top.omooo.router.EasyRouter;
 
 /**
  * Created by SSC on 2018/3/20.
@@ -30,13 +31,13 @@ public class NewMineFragment extends BaseFragment {
     private SimpleDraweeView mSimpleDraweeView; //头像
     private TextView mTextPhone, mTextPerCenter;
 
-    private TextView mTextBankCard,mTextCoupons,mTextFav,mTextHistory,mTextHelpCenter, mTextAbout;
+    private TextView mTextBankCard, mTextCoupons, mTextFav, mTextHistory, mTextHelpCenter, mTextAbout;
 
-    private TextView mTextPay,mTextSend,mTextGet, mTextAfterSale;
+    private TextView mTextPay, mTextSend, mTextGet, mTextAfterSale;
 
     private AdjustViewUtil mAdjustViewUtil;
 
-    public static NewMineFragment newInstance(){
+    public static NewMineFragment newInstance() {
         return new NewMineFragment();
     }
 
@@ -68,12 +69,12 @@ public class NewMineFragment extends BaseFragment {
 
         //调整drawableLeft图片的大小
         mAdjustViewUtil = new AdjustViewUtil();
-        mAdjustViewUtil.adjustTextViewPic(mTextBankCard,0, 10,5,70, 60);
-        mAdjustViewUtil.adjustTextViewPic(mTextCoupons,0, 10,5,70, 60);
-        mAdjustViewUtil.adjustTextViewPic(mTextFav, 0,10,5,70, 60);
-        mAdjustViewUtil.adjustTextViewPic(mTextHistory, 0,10,5,70, 60);
-        mAdjustViewUtil.adjustTextViewPic(mTextHelpCenter, 0,10,5,75, 70);
-        mAdjustViewUtil.adjustTextViewPic(mTextAbout, 0,10,5,70, 60);
+        mAdjustViewUtil.adjustTextViewPic(mTextBankCard, 0, 10, 5, 70, 60);
+        mAdjustViewUtil.adjustTextViewPic(mTextCoupons, 0, 10, 5, 70, 60);
+        mAdjustViewUtil.adjustTextViewPic(mTextFav, 0, 10, 5, 70, 60);
+        mAdjustViewUtil.adjustTextViewPic(mTextHistory, 0, 10, 5, 70, 60);
+        mAdjustViewUtil.adjustTextViewPic(mTextHelpCenter, 0, 10, 5, 75, 70);
+        mAdjustViewUtil.adjustTextViewPic(mTextAbout, 0, 10, 5, 70, 60);
 
         //调整drawableTop图片的大小
         mAdjustViewUtil.adjustTextViewPic(mTextPay, 1, 0, 15, 90, 90);
@@ -139,7 +140,8 @@ public class NewMineFragment extends BaseFragment {
                 break;
             case R.id.tv_mine_bank_card:
                 //我的银行卡
-                startActivity(new Intent(getActivity(), ActivityMyBankCard.class));
+//                startActivity(new Intent(getActivity(), ActivityMyBankCard.class));
+                EasyRouter.getInstance().with(mContext).navigate("myBankCard");
                 break;
             case R.id.tv_mine_coupons:
                 //我的优惠券
@@ -157,7 +159,8 @@ public class NewMineFragment extends BaseFragment {
                 //关于小黑鱼
                 startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 

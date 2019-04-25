@@ -53,6 +53,7 @@ import top.omooo.blackfish.utils.SpannableStringUtil;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.GridViewForScroll;
 import top.omooo.blackfish.view.RecycleViewBanner;
+import top.omooo.router.EasyRouter;
 
 /**
  * Created by Omooo on 2018/2/25.

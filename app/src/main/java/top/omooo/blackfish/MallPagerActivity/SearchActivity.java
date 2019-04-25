@@ -18,11 +18,13 @@ import top.omooo.blackfish.R;
 import top.omooo.blackfish.utils.KeyBoardUtil;
 import top.omooo.blackfish.view.CustomToast;
 import top.omooo.blackfish.view.TagsLayout;
+import top.omooo.router_annotations.Router;
 
 /**
  * Created by SSC on 2018/4/1.
  */
 
+@Router("search")
 public class SearchActivity extends NewBaseActivity {
 
 
