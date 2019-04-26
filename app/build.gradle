@@ -78,3 +78,20 @@ dependencies {
     api project(":router")
     annotationProcessor project (":router_processor")
 }
+
+apply plugin: 'top.omooo.tinypng_plugin'
+
+tinyInfo {
+    //资源目录
+    resourceDir = [
+            "app/src/main/res",
+    ]
+    resourcePattern = [
+            "drawable[a-z-]*",
+            "mipmap[a-z-]*"
+    ]
+    whiteList = [
+
+    ]
+    apiKey = "AInj38Kpiz4moUpTG5tiWIaXyNJYDpnY"
+}

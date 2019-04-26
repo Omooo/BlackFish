@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/router" />
             <option value="$PROJECT_DIR$/router_annotations" />
             <option value="$PROJECT_DIR$/router_processor" />
+            <option value="$PROJECT_DIR$/tinypng_plugin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
