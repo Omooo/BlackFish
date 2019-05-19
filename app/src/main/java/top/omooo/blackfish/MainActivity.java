@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import org.greenrobot.eventbus.EventBus;
+
 import top.omooo.blackfish.adapter.NavigationViewPagerAdapter;
 import top.omooo.blackfish.broadcast.NetChangedReceiver;
 import top.omooo.blackfish.fragment.FinancialFragment;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 //                transaction.commit();
             }
         }
+
     }
 
     private void initView() {

@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.View;
+
+import org.greenrobot.eventbus.EventBus;
 
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.view.CustomToast;
@@ -38,14 +41,16 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         mView = new SparseArray<>();
         setContentView(getLayoutId());
-        getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         initViews();
         initListener();
         initData();
+        Log.i("BaseActivity", "Activity: " + getPackageName() + "." + getLocalClassName());
     }
 
     /**
      * 通过ID找到View
+     *
      * @param viewId
      * @param <E>
      * @return
@@ -54,7 +59,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         E view = (E) mView.get(viewId);
         if (view == null) {
             view = findViewById(viewId);
-            mView.put(viewId,view);
+            mView.put(viewId, view);
         }
         return view;
     }
@@ -68,11 +73,12 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         CustomToast.cancelToast();
         super.onBackPressed();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
-            overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
+            overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
         }
         return true;
     }
@@ -85,5 +91,10 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     public void finshActivity() {
         finish();
         overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

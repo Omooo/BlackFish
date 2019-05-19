@@ -1,6 +1,7 @@
 package top.omooo.blackfish.MallPagerActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import top.omooo.blackfish.MainActivity;
 import top.omooo.blackfish.NewBaseActivity;
 import top.omooo.blackfish.R;
 import top.omooo.blackfish.aliPay.OrderInfoUtil2_0;
@@ -70,7 +72,9 @@ public class PayTypeActivity extends NewBaseActivity {
                     String resultStatus = payResult.getResultStatus();
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(PayTypeActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        skipActivity(intent);
                     } else {
                         Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
                         finish();

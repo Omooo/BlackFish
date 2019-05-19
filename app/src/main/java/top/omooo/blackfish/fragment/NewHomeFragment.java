@@ -65,6 +65,9 @@ public class NewHomeFragment extends BaseFragment{
         public boolean handleMessage(Message msg) {
             if (msg.what == 0x01) {
                 addItemViews(mHomeSortInfos);
+                if (mRefreshLayout.isRefreshing()){
+                    mRefreshLayout.setRefreshing(false);
+                }
             }
             return false;
         }
@@ -112,6 +115,13 @@ public class NewHomeFragment extends BaseFragment{
 
         delegateAdapter = new DelegateAdapter(layoutManager, false);
         mRecyclerView.setAdapter(delegateAdapter);
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
     }
 
     private void addItemViews(final List<HomeSortInfo> homeSortInfos) {

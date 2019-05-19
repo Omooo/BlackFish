@@ -1,13 +1,17 @@
 package top.omooo.blackfish;
 
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.airbnb.lottie.LottieAnimationView;
+import com.lljjcoder.style.citylist.Toast.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,6 +21,7 @@ import java.util.Date;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import top.omooo.blackfish.event.LoginSuccessEvent;
 import top.omooo.blackfish.listener.InputCompleteListener;
 import top.omooo.blackfish.listener.OnVerifyCodeResultListener;
 import top.omooo.blackfish.utils.CountDownUtil;
@@ -27,14 +32,14 @@ import top.omooo.blackfish.view.VerifyCodeView;
  * Created by SSC on 2018/3/19.
  */
 
-public class VerifyCodeActivity extends BaseActivity{
+public class VerifyCodeActivity extends BaseActivity {
 
-    private TextView mTextPhoneNumber,mTextVerifyTimer, mTextVerifyResult;
+    private TextView mTextPhoneNumber, mTextVerifyTimer, mTextVerifyResult;
     private VerifyCodeView mVerifyCodeView;
     private ImageView mImageBack;
     private LottieAnimationView mLottieIn, mLottieSuccess;
 
-    private OnVerifyCodeResultListener mCodeResultListener=new OnVerifyCodeResultListener() {
+    private OnVerifyCodeResultListener mCodeResultListener = new OnVerifyCodeResultListener() {
         @Override
         public void sendCodeSuccess() {
             runOnUiThread(new Runnable() {
@@ -54,6 +59,13 @@ public class VerifyCodeActivity extends BaseActivity{
 
         @Override
         public void submitCodeSuccess(String phoneNumber,String date) {
+            finish();
+            //跳转到MineFragment并清空Activity任务栈
+            Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
+            intent.putExtra("flag", "VerifyCodeActivity");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+            startActivity(intent);
+
             SqlOpenHelperUtil sqlOpenHelperUtil = new SqlOpenHelperUtil();
             Connection connection = sqlOpenHelperUtil.connDB();
             if (connection != null) {
@@ -104,12 +116,7 @@ public class VerifyCodeActivity extends BaseActivity{
 //                    mLottieSuccess.playAnimation();
 //                }
 //            });
-            finish();
-            //跳转到MineFragment并清空Activity任务栈
-            Intent intent = new Intent(VerifyCodeActivity.this, MainActivity.class);
-            intent.putExtra("flag", "VerifyCodeActivity");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-            startActivity(intent);
+
         }
 
         @Override
@@ -133,6 +140,7 @@ public class VerifyCodeActivity extends BaseActivity{
     private String phoneNumber = "";
 
     private static final String TAG = "VerifyCodeActivity";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_verify_code_layout;
@@ -163,7 +171,6 @@ public class VerifyCodeActivity extends BaseActivity{
         mVerifyCodeView.setInputCompleteListener(new InputCompleteListener() {
             @Override
             public void inputComplete() {
-                Toast.makeText(VerifyCodeActivity.this, "inputComplete: " + mVerifyCodeView.getEditContent(), Toast.LENGTH_SHORT).show();
                 submitCode("86", phoneNumber, mVerifyCodeView.getEditContent());
             }
 
@@ -201,7 +208,7 @@ public class VerifyCodeActivity extends BaseActivity{
 
     //请求验证码
     private void sendCode(String country, String phoneNumber) {
-        SMSSDK.registerEventHandler(new EventHandler(){
+        SMSSDK.registerEventHandler(new EventHandler() {
             @Override
             public void afterEvent(int i, int i1, Object o) {
                 if (i1 == SMSSDK.RESULT_COMPLETE) {
@@ -213,12 +220,12 @@ public class VerifyCodeActivity extends BaseActivity{
                 }
             }
         });
-        SMSSDK.getVerificationCode(country,phoneNumber);
+        SMSSDK.getVerificationCode(country, phoneNumber);
     }
 
     //提交验证码
     private void submitCode(String country, final String phoneNumber, String code) {
-        SMSSDK.registerEventHandler(new EventHandler(){
+        SMSSDK.registerEventHandler(new EventHandler() {
             @Override
             public void afterEvent(int i, int i1, Object o) {
                 if (i1 == SMSSDK.RESULT_COMPLETE) {

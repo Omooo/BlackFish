@@ -5,17 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import top.omooo.blackfish.LoginActivity;
 import top.omooo.blackfish.MinePageActivity.AboutActivity;
 import top.omooo.blackfish.MinePageActivity.ActivityMyBankCard;
 import top.omooo.blackfish.MinePageActivity.MineSettingActivity;
 import top.omooo.blackfish.R;
+import top.omooo.blackfish.event.LoginSuccessEvent;
 import top.omooo.blackfish.utils.AdjustViewUtil;
 import top.omooo.router.EasyRouter;
 

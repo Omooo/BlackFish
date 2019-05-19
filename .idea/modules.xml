@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/BlackFish.iml" filepath="$PROJECT_DIR$/.idea/BlackFish.iml" />
       <module fileurl="file://$PROJECT_DIR$/BlackFish.iml" filepath="$PROJECT_DIR$/BlackFish.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auto_track/auto_track.iml" filepath="$PROJECT_DIR$/auto_track/auto_track.iml" />
       <module fileurl="file://$PROJECT_DIR$/logger/logger.iml" filepath="$PROJECT_DIR$/logger/logger.iml" />
       <module fileurl="file://$PROJECT_DIR$/router/router.iml" filepath="$PROJECT_DIR$/router/router.iml" />
       <module fileurl="file://$PROJECT_DIR$/router_annotations/router_annotations.iml" filepath="$PROJECT_DIR$/router_annotations/router_annotations.iml" />

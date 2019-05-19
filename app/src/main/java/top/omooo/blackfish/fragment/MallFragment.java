@@ -90,15 +90,20 @@ public class MallFragment extends BaseFragment {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 0x01:
-                    addItemViews(mMallPagerInfos.get(0),mOnViewItemClickListener);
+                    addItemViews(mMallPagerInfos.get(0), mOnViewItemClickListener);
+
                     break;
-                default:break;
+                default:
+                    break;
+            }
+            if (mRefreshLayout.isRefreshing()) {
+                mRefreshLayout.setRefreshing(false);
             }
             return false;
         }
     });
 
-    private SpannableStringUtil mSpannableStringUtil=new SpannableStringUtil();
+    private SpannableStringUtil mSpannableStringUtil = new SpannableStringUtil();
 
     public static MallFragment newInstance() {
         return new MallFragment();
@@ -135,6 +140,12 @@ public class MallFragment extends BaseFragment {
         delegateAdapter = new DelegateAdapter(layoutManager, false);
         mRecyclerView.setAdapter(delegateAdapter);
 
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initData();
+            }
+        });
     }
 
     private void addItemViews(final MallPagerInfo mallPagerInfo, final OnViewItemClickListener listener) {
@@ -145,7 +156,7 @@ public class MallFragment extends BaseFragment {
 
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_banner_layout, parent,false));
+                return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_banner_layout, parent, false));
             }
 
             @Override
@@ -174,7 +185,7 @@ public class MallFragment extends BaseFragment {
         adapters.add(bannerAdapter);
 
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(5);
-        GeneralVLayoutAdapter gridAdapter = new GeneralVLayoutAdapter(mContext, gridLayoutHelper, 10){
+        GeneralVLayoutAdapter gridAdapter = new GeneralVLayoutAdapter(mContext, gridLayoutHelper, 10) {
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_two_line_grid, parent, false));
@@ -192,7 +203,7 @@ public class MallFragment extends BaseFragment {
                 mImageGridItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.onItemClick("ClassifyGridItem"+position);
+                        listener.onItemClick("ClassifyGridItem" + position);
                     }
                 });
             }
@@ -212,7 +223,7 @@ public class MallFragment extends BaseFragment {
                 super.onBindViewHolder(holder, position);
                 SimpleDraweeView headerImage = holder.itemView.findViewById(R.id.iv_four_header_image);
                 GridViewForScroll gridFourGoods = holder.itemView.findViewById(R.id.gv_four_goods);
-                gridFourGoods.setAdapter(new GridOnlyImageAdapter(mContext,mallPagerInfo.getGridGoodsInfos()));
+                gridFourGoods.setAdapter(new GridOnlyImageAdapter(mContext, mallPagerInfo.getGridGoodsInfos()));
                 headerImage.setImageURI(mallPagerInfo.getSingleImageUrl());
 
                 headerImage.setOnClickListener(new View.OnClickListener() {
@@ -226,7 +237,7 @@ public class MallFragment extends BaseFragment {
         adapters.add(fourGoodsAdapter);
 
         GridLayoutHelper gridHotClassifyHelper = new GridLayoutHelper(1);
-        GeneralVLayoutAdapter hotClassifyAdapter = new GeneralVLayoutAdapter(mContext, gridHotClassifyHelper, mallPagerInfo.getMallGoodsInfos().size()){
+        GeneralVLayoutAdapter hotClassifyAdapter = new GeneralVLayoutAdapter(mContext, gridHotClassifyHelper, mallPagerInfo.getMallGoodsInfos().size()) {
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_hot_classify_grid_layout, parent, false));
@@ -269,7 +280,7 @@ public class MallFragment extends BaseFragment {
         adapters.add(hotClassifyAdapter);
 
         SingleLayoutHelper recoHelper = new SingleLayoutHelper();
-        GeneralVLayoutAdapter recoAdapter = new GeneralVLayoutAdapter(mContext, recoHelper, 1){
+        GeneralVLayoutAdapter recoAdapter = new GeneralVLayoutAdapter(mContext, recoHelper, 1) {
             @Override
             public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.mall_pager_recommend_goods_list, parent, false));
@@ -282,7 +293,7 @@ public class MallFragment extends BaseFragment {
                 List<RecommendGoodsInfo> recommendGoodsInfos = mallPagerInfo.getRecommendGoodsInfos();
                 recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                 recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-                recyclerView.setAdapter(new RecommendGoodsAdapter(mContext,recommendGoodsInfos));
+                recyclerView.setAdapter(new RecommendGoodsAdapter(mContext, recommendGoodsInfos));
             }
         };
         adapters.add(recoAdapter);
@@ -313,7 +324,7 @@ public class MallFragment extends BaseFragment {
 
             @Override
             public void onFailureListener(String result) {
-                Log.i(TAG, "onFailureListener: "+result);
+                Log.i(TAG, "onFailureListener: " + result);
             }
         });
     }
@@ -323,7 +334,7 @@ public class MallFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.iv_mall_header_menu:
                 startActivity(new Intent(mContext, ClassifyGoodsActivity.class));
-                getActivity().overridePendingTransition(R.anim.activity_banner_right_in,R.anim.activity_banner_left_out);
+                getActivity().overridePendingTransition(R.anim.activity_banner_right_in, R.anim.activity_banner_left_out);
                 break;
             case R.id.iv_mall_header_msg:
                 CustomToast.show(mContext, "消息中心");
@@ -331,11 +342,12 @@ public class MallFragment extends BaseFragment {
             case R.id.rl_mall_header_layout:
                 skipActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
-    private OnViewItemClickListener mOnViewItemClickListener=new OnViewItemClickListener() {
+    private OnViewItemClickListener mOnViewItemClickListener = new OnViewItemClickListener() {
         @Override
         public void onItemClick(String id) {
             for (int i = 0; i < 10; i++) {

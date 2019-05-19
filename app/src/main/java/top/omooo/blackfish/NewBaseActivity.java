@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -31,9 +34,10 @@ public abstract class NewBaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         mUnbinder = ButterKnife.bind(this);
-        getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         initViews();
         initData();
+        Log.i("BaseActivity", "Activity: " + getPackageName() + "." + getLocalClassName());
     }
 
     @Override
@@ -52,7 +56,7 @@ public abstract class NewBaseActivity extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
-            overridePendingTransition(R.anim.activity_banner_left_in,R.anim.activity_banner_right_out);
+            overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
         }
         return true;
     }
@@ -66,4 +70,5 @@ public abstract class NewBaseActivity extends FragmentActivity {
         finish();
         overridePendingTransition(R.anim.activity_banner_left_in, R.anim.activity_banner_right_out);
     }
+
 }

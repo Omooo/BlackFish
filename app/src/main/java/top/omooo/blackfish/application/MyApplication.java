@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
 
+import top.omooo.auto_track.SensorsDataAPI;
 import top.omooo.router.EasyRouter;
 
 /**
@@ -19,5 +20,6 @@ public class MyApplication extends Application {
         MobSDK.init(this);
 //        LeakCanary.install(this);
         EasyRouter.getInstance().inject(this);
+        SensorsDataAPI.init(this);
     }
 }

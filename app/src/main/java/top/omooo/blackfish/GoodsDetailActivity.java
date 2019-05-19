@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -286,7 +287,7 @@ public class GoodsDetailActivity extends NewBaseActivity {
                 textView.setTextColor(getColor(R.color.colorWhite));
             }
 
-            tagsLayout.addView(textView,lp);
+            tagsLayout.addView(textView, lp);
         }
 
 
@@ -295,15 +296,17 @@ public class GoodsDetailActivity extends NewBaseActivity {
         String totalPrice = "¥" + typeInfo.getTotalPrice();
         textPrice.setText(totalPrice);
         final double singlePrice = typeInfo.getSinglePrice();
-        setSpann(textSingle, singlePrice);
+        final BigDecimal decimal = new BigDecimal(singlePrice);
+        setSpann(textSingle, decimal.doubleValue());
         AmountView amountView = view.findViewById(R.id.amount_view);
         amountView.setMaxNumber(20);
         amountView.setOnNumChangeListener(new AmountView.OnNumChangeListener() {
             @Override
             public void onChange(int num) {
+                BigDecimal multiply = new BigDecimal(num);
                 String string = "数量：" + num;
                 textAmount.setText(string);
-                setSpann(textSingle, singlePrice * num);
+                setSpann(textSingle, decimal.multiply(multiply).doubleValue());
             }
         });
         mDialog.setContentView(view);
